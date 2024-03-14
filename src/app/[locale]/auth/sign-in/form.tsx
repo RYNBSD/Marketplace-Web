@@ -1,43 +1,51 @@
-"use client";
-import type { ElementRef } from "react";
-import { useCallback, useRef, useState } from "react";
-import { useLocale } from "next-intl";
+"use server";
+import type { FormState } from "~/types";
+import { getLocale } from "next-intl/server";
 import Link from "next/link";
-import { signIn } from "next-auth/react"
-import { Form } from "~/components";
-import { useIsSignOut } from "~/hooks";
+import { SubmitButton, Csrf } from "~/components";
+import { setCookie } from "~/action/fn";
+import { redirect } from "next/navigation";
+import { KEYS } from "~/constant";
+import { cookies } from "next/headers";
 
-export default function SignInForm() {
-  useIsSignOut();
-  const locale = useLocale();
+const { BASE_URL, INPUT, HTTP } = KEYS;
 
-  const [disabled, setDisabled] = useState(false);
-  const email = useRef<ElementRef<"input">>(null);
-  const password = useRef<ElementRef<"input">>(null);
+export default async function SignInForm() {
+  const locale = await getLocale();
 
-  const handleSubmit = useCallback(async () => {
-    setDisabled(true);
+  async function signIn(formData: FormData): Promise<FormState> {
+    "use server";
 
-    try {
-      await signIn({
-        email: email.current?.value ?? "",
-        password: password.current?.value ?? "",
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setDisabled(false);
-    }
-  }, []);
+    const res = await fetch(`${BASE_URL}/api/auth/sign-in`, {
+      method: "POST",
+      credentials: "include",
+      // @ts-ignore
+      headers: {
+        cookie: cookies().toString(),
+        [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF) ?? "",
+      },
+      body: formData,
+    });
+
+    await setCookie(res.headers);
+    const json = await res.json();
+
+    if (!res.ok)
+      return {
+        error: json.message,
+      };
+
+    redirect(`/${locale}/${json.data.user.id}`);
+  }
 
   return (
-    <Form className="card-body" handleSubmit={handleSubmit}>
+    <form className="card-body">
+      <Csrf />
       <div className="form-control">
         <label className="label">
           <span className="label-text">Email</span>
         </label>
         <input
-          ref={email}
           type="email"
           placeholder="email"
           className="input input-bordered"
@@ -49,7 +57,6 @@ export default function SignInForm() {
           <span className="label-text">Password</span>
         </label>
         <input
-          ref={password}
           type="password"
           placeholder="password"
           className="input input-bordered"
@@ -65,9 +72,11 @@ export default function SignInForm() {
         </label>
       </div>
       <div className="form-control mt-6">
-        <button className="btn btn-primary" type="submit" disabled={disabled}>
-          Sign in
-        </button>
+        <SubmitButton
+          action={signIn}
+          className="btn btn-primary"
+          content="Sign in"
+        />
       </div>
       <div className="form-control">
         <label className="label justify-normal gap-2">
@@ -79,6 +88,6 @@ export default function SignInForm() {
           </Link>
         </label>
       </div>
-    </Form>
+    </form>
   );
 }

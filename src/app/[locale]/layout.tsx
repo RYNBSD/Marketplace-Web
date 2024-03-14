@@ -3,6 +3,9 @@ import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { Footer, Navbar } from "~/components";
 import { SettingProvider, UserProvider, CartProvider } from "~/context";
+import { ToastContainer } from "react-toastify";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export default async function LocaleLayout({
   children,
@@ -29,6 +32,7 @@ export default async function LocaleLayout({
               </CartProvider>
             </SettingProvider>
           </UserProvider>
+          <ToastContainer />
         </NextIntlClientProvider>
       </body>
     </html>

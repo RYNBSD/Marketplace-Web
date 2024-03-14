@@ -1,22 +1,19 @@
 export default {
+  BASE_URL: "http://localhost:8000/v1",
   HTTP: {
     HEADERS: {
       CSRF: "X-CSRF-Token",
-      JWT: "X-JWT-Token",
-      USER_ID: "X-User-Id",
+      // JWT: "X-JWT-Token",
+      // USER_ID: "X-User-Id",
       ACCESS_TOKEN: "Access-Token",
     },
   },
   COOKIE: {
-    JWT: "jwt",
     SESSION: "session",
     AUTHORIZE: "authorize",
   },
   GLOBAL: {
     PUBLIC: "public",
-    UPLOADS: "uploads",
-    IMAGES: "images",
-    MODELS: "models",
   },
   BROWSER: {
     LOCALE_STORAGE: {
@@ -24,4 +21,7 @@ export default {
       CART: "cart",
     },
   },
+  INPUT: {
+    CSRF: "csrf"
+  }
 } as const;

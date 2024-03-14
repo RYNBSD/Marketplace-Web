@@ -19,6 +19,8 @@ export default function CartProvider({ children }: Props) {
   useEffect(() => {
     try {
       const localCart = localStorage.getItem(CART) ?? "";
+      if (localCart.length === 0) return;
+
       const cart = JSON.parse(localCart) as LocalCart;
       setCart(cart);
     } catch (error) {
@@ -29,8 +31,8 @@ export default function CartProvider({ children }: Props) {
   const saveCart = useCallback(() => {
     const stringify = JSON.stringify(cart);
     localStorage.setItem(CART, stringify);
-  }, [cart])
-  
+  }, [cart]);
+
   const addToCart = useCallback((option: CartOption) => {
     setCart((prev) => [...prev, option]);
   }, []);

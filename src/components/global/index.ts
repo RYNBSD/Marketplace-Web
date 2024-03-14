@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 
+export const SubmitButton = dynamic(() => import("./submit-button"));
 export const Container = dynamic(() => import("./container"));
 export const Motion = dynamic(() => import("./motion"));
 export const Navbar = dynamic(() => import("./navbar"));

@@ -22,9 +22,9 @@ export default function NavbarProfile() {
               user === null ? "/assets/images/blank-profile.webp" : user.image
             }
             alt={user === null ? "Blank picture" : user.username}
-            loading="lazy"
             height={40}
             width={40}
+            priority
             style={{ objectFit: "cover" }}
           />
         </div>
