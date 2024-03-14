@@ -3,7 +3,7 @@ import type { FormState } from "~/types";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { SubmitButton, Csrf } from "~/components";
 import { KEYS } from "~/constant";
 
@@ -15,6 +15,7 @@ const { BASE_URL, INPUT, HTTP } = KEYS;
 
 export default async function SignUpForm() {
   const locale = await getLocale();
+  const t = await getTranslations("Auth.Sign-Up.Form");
 
   async function signUp(formData: FormData): Promise<FormState> {
     "use server";
@@ -46,44 +47,44 @@ export default async function SignUpForm() {
       <Csrf />
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Username</span>
+          <span className="label-text">{t("username")}</span>
         </label>
         <input
           required
           type="text"
           name="username"
-          placeholder="Username"
+          placeholder={t("username")}
           className="input input-bordered"
         />
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Email</span>
+          <span className="label-text">{t("email")}</span>
         </label>
         <input
           required
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder={t("email")}
           className="input input-bordered"
         />
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Password</span>
+          <span className="label-text">{t("password")}</span>
         </label>
         <input
           required
           minLength={8}
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder={t("password")}
           className="input input-bordered"
         />
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Pick a profile picture</span>
+          <span className="label-text">{t("pick-image")}</span>
         </label>
         <input
           required
@@ -95,7 +96,7 @@ export default async function SignUpForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Pick a language</span>
+          <span className="label-text">{t("pick-locale")}</span>
         </label>
         <div className="join">
           <Locale />
@@ -103,7 +104,7 @@ export default async function SignUpForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Pick a theme</span>
+          <span className="label-text">{t("pick-theme")}</span>
         </label>
         <div className="join">
           <Theme />
@@ -113,7 +114,7 @@ export default async function SignUpForm() {
         <SubmitButton
           action={signUp}
           className="btn btn-primary"
-          content="Sign up"
+          content={t("sign-up")}
         />
       </div>
       <div className="form-control">
@@ -122,7 +123,7 @@ export default async function SignUpForm() {
             href={`/${locale}/auth/sign-in`}
             className="label-text-alt link link-hover"
           >
-            Already have an account
+            {t("have-account")}
           </Link>
         </label>
       </div>

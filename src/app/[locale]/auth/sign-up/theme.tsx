@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { THEMES } from "~/constant";
 import { useSettings } from "~/context";
 

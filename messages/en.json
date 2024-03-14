@@ -1,5 +1,34 @@
 {
   "Navbar": {
     "sign-in": "Sign in"
+  },
+  "Auth": {
+    "Sign-Up": {
+      "title": "Sign up now!",
+      "description": "Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.",
+      "Form": {
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "pick-image": "Pick a profile picture",
+        "pick-locale": "Pick a language",
+        "locale": "Locale",
+        "pick-theme": "Pick a theme",
+        "theme": "Theme",
+        "have-account": "Already have an account",
+        "sign-up": "Sign up"
+      }
+    },
+    "Sign-In": {
+      "title": "Sign in now!",
+      "description": "Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.",
+      "Form": {
+        "email": "Email",
+        "password": "Password",
+        "forgot-password": "Forgot password?",
+        "don't-have-account": "Don't have an account?",
+        "sign-in": "Sign in"
+      }
+    }
   }
 }

@@ -1,5 +1,34 @@
 {
   "Navbar": {
     "sign-in": "تسجيل الدخول"
+  },
+  "Auth": {
+    "Sign-Up": {
+      "title": "أنشئ حساب الأن!",
+      "description": "Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.",
+      "Form": {
+        "username": "اسم المستخدم",
+        "email": "بريد إلكتروني",
+        "password": "كلمة المرور",
+        "pick-image": "اختر صورة الملف الشخصي",
+        "pick-locale": "اختر لغة",
+        "locale": "لغة",
+        "pick-theme": "اختر سمة",
+        "theme": "سمة",
+        "have-account": "لدي حساب بالفعل",
+        "sign-up": "أنشئ حساب"
+      }
+    },
+    "Sign-In": {
+      "title": "قم بتسجيل دخولك الآن!",
+      "description": "Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.",
+      "Form": {
+        "email": "بريد إلكتروني",
+        "password": "كلمة المرور",
+        "forgot-password": "هل نسيت كلمة السر؟",
+        "don't-have-account": "ليس لديك حساب؟",
+        "sign-in": "تسجيل الدخول"
+      }
+    }
   }
 }

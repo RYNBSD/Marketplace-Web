@@ -3,11 +3,13 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { useUser } from "~/context";
+import { signOut } from "~/action";
 
 export default function NavbarProfile() {
-  const { user, signOut } = useUser()!;
+  const { user } = useUser()!;
   const locale = useLocale();
   const t = useTranslations("Navbar");
+
 
   return (
     <div className="dropdown dropdown-end">
@@ -56,7 +58,7 @@ export default function NavbarProfile() {
               </Link>
             </li>
             <li>
-              <button type="button" onClick={() => signOut!()}>
+              <button type="button" onClick={signOut}>
                 Sign out
               </button>
             </li>

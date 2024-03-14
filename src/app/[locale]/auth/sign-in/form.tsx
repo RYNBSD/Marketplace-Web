@@ -1,6 +1,6 @@
 "use server";
 import type { FormState } from "~/types";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { SubmitButton, Csrf } from "~/components";
 import { setCookie } from "~/action/fn";
@@ -12,6 +12,7 @@ const { BASE_URL, INPUT, HTTP } = KEYS;
 
 export default async function SignInForm() {
   const locale = await getLocale();
+  const t = await getTranslations("Auth.Sign-In.Form")
 
   async function signIn(formData: FormData): Promise<FormState> {
     "use server";
@@ -43,22 +44,22 @@ export default async function SignInForm() {
       <Csrf />
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Email</span>
+          <span className="label-text">{t("email")}</span>
         </label>
         <input
           type="email"
-          placeholder="email"
+          placeholder={t("email")}
           className="input input-bordered"
           required
         />
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Password</span>
+          <span className="label-text">{t("password")}</span>
         </label>
         <input
           type="password"
-          placeholder="password"
+          placeholder={t("password")}
           className="input input-bordered"
           required
         />
@@ -67,7 +68,7 @@ export default async function SignInForm() {
             href={`/${locale}/auth/forgot-password`}
             className="label-text-alt link link-hover"
           >
-            Forgot password?
+            {t("forgot-password")}
           </Link>
         </label>
       </div>
@@ -75,7 +76,7 @@ export default async function SignInForm() {
         <SubmitButton
           action={signIn}
           className="btn btn-primary"
-          content="Sign in"
+          content={t("sign-in")}
         />
       </div>
       <div className="form-control">
@@ -84,7 +85,7 @@ export default async function SignInForm() {
             href={`/${locale}/auth/sign-up`}
             className="label-text-alt link link-hover"
           >
-            Don&apos;t have an account?
+            {t("don't-have-account")}
           </Link>
         </label>
       </div>
