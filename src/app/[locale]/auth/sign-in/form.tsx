@@ -12,7 +12,7 @@ const { BASE_URL, INPUT, HTTP } = KEYS;
 
 export default async function SignInForm() {
   const locale = await getLocale();
-  const t = await getTranslations("Auth.Sign-In.Form")
+  const t = await getTranslations("Auth.Sign-In.Form");
 
   async function signIn(formData: FormData): Promise<FormState> {
     "use server";
@@ -33,6 +33,7 @@ export default async function SignInForm() {
 
     if (!res.ok)
       return {
+        success: false,
         error: json.message,
       };
 
@@ -49,6 +50,7 @@ export default async function SignInForm() {
         <input
           type="email"
           placeholder={t("email")}
+          name="email"
           className="input input-bordered"
           required
         />
@@ -60,6 +62,7 @@ export default async function SignInForm() {
         <input
           type="password"
           placeholder={t("password")}
+          name="password"
           className="input input-bordered"
           required
         />

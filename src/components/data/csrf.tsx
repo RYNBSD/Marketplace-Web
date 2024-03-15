@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { fetchCsrf } from "~/action";
 import { KEYS } from "~/constant";
@@ -10,6 +9,8 @@ export default function Csrf() {
   const [csrf, setCrf] = useState("");
 
   useEffect(() => {
+    console.log(1);
+    
     fetchCsrf().then(setCrf).catch(console.error);
   }, []);
 

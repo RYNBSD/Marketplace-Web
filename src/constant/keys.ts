@@ -22,6 +22,7 @@ export default {
     },
   },
   INPUT: {
-    CSRF: "csrf"
+    CSRF: "csrf",
+    ACCESS_TOKEN: "access-token"
   }
 } as const;

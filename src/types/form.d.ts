@@ -1,5 +1,6 @@
 export type FormState =
   | {
+      success: false;
       error: string;
     }
-  | { data: unknown };
+  | { success: true; data: unknown };

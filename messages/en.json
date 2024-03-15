@@ -29,6 +29,16 @@
         "don't-have-account": "Don't have an account?",
         "sign-in": "Sign in"
       }
+    },
+    "Forgot-Password": {
+      "title": "Forgot password",
+      "description": "Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.",
+      "Form": {
+        "email": "Email",
+        "code": "Code",
+        "password": "Password",
+        "confirm-password": "Confirm password"
+      }
     }
   }
 }

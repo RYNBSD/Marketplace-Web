@@ -35,6 +35,7 @@ export default async function SignUpForm() {
     if (!res.ok) {
       const json = await res.json();
       return {
+        success: false,
         error: json.message,
       };
     }

@@ -1,7 +1,7 @@
 "use client";
 
 import type { Lang, Theme } from "~/types";
-import { LANG, THEMES } from "~/constant";
+import { LOCALE, THEMES } from "~/constant";
 import { useSettings } from "~/context";
 
 export default function Setting() {
@@ -15,9 +15,9 @@ export default function Setting() {
           value={setting.lang}
           className="select select-bordered w-full max-w-xs"
         >
-          {LANG.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang}
+          {LOCALE.map((locale) => (
+            <option key={locale} value={locale}>
+              {locale}
             </option>
           ))}
         </select>

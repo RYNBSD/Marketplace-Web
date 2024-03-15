@@ -29,6 +29,16 @@
         "don't-have-account": "ليس لديك حساب؟",
         "sign-in": "تسجيل الدخول"
       }
+    },
+    "Forgot-Password": {
+      "title": "هل نسيت كلمة السر",
+      "description": "Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.",
+      "Form": {
+        "email": "بريد إلكتروني",
+        "code": "رمز",
+        "password": "كلمة المرور",
+        "confirm-password": "تأكيد كلمة المرور"
+      }
     }
   }
 }
