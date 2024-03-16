@@ -1,6 +1,9 @@
 "use server";
 import { cookies } from "next/headers";
 import { parse as cookieParser, splitCookiesString } from "set-cookie-parser";
+import { KEYS } from "~/constant";
+
+const { BASE_URL, API_VERSION } = KEYS;
 
 export async function setCookie(headers: Headers) {
   const setCookies = headers.getSetCookie();
@@ -22,4 +25,18 @@ export async function setCookie(headers: Headers) {
       httpOnly: cookie.httpOnly,
     })
   );
+}
+
+export async function request(path: string, init: RequestInit = {}) {
+  const res = await fetch(`${BASE_URL}${API_VERSION}${path}`, {
+    ...init,
+    credentials: "include",
+    headers: {
+      cookie: cookies().toString(),
+      ...init?.headers,
+    },
+  });
+
+  await setCookie(res.headers);
+  return res;
 }

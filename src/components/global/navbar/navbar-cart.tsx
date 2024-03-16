@@ -1,12 +1,11 @@
 "use client";
-import type { Lang } from "~/types";
 import Link from "next/link";
 import { useMemo } from "react";
 import { useCart } from "~/context";
 import { useLocale } from "next-intl";
 
 export default function NavbarCart() {
-  const locale = useLocale() as Lang;
+  const locale = useLocale();
   const { cart } = useCart()!;
 
   const totalPrice = useMemo(
@@ -19,7 +18,7 @@ export default function NavbarCart() {
   );
   const numberOfProducts = useMemo(() => {
     const length = cart.length;
-    const notation = length === 0 ? "Item" : "Items";
+    const notation = length <= 1 ? "Item" : "Items";
     return { length, notation };
   }, [cart]);
 

@@ -1,32 +1,23 @@
-import { Header } from "~/components";
 import { getLocale } from "next-intl/server";
-import { headers } from "next/headers";
-import { KEYS } from "~/constant";
-
-const { BASE_URL } = KEYS;
+import { Header } from "~/components";
+import { request } from "~/action/fn";
 
 async function fetchStores() {
-  const stores = await fetch(`${BASE_URL}/api/store/stores`, {
-    credentials: "same-origin",
-    headers: headers(),
-  });
+  const stores = await request("/api/store/stores");
   return stores.ok ? stores.json() : [];
 }
 
 async function fetchProducts() {
-  const products = await fetch(`${BASE_URL}`, {
-    credentials: "same-origin",
-    headers: headers(),
-  });
+  const products = await request("");
   return products.ok ? products.json() : [];
 }
 
 export default async function Home() {
   const locale = await getLocale();
-  const stores = await fetchStores();
-  const products = await fetchProducts();
+  // const stores = await fetchStores();
+  // const products = await fetchProducts();
 
-  console.log(stores);
+  // console.log(stores);
 
   return (
     <>

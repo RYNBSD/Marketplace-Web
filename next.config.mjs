@@ -3,7 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 import { createSecureHeaders } from "next-secure-headers";
 
-const withIntl = createNextIntlPlugin("./src/i18n.ts");
+const withIntl = createNextIntlPlugin();
 const withAnalyser = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
@@ -42,6 +42,14 @@ const nextConfig = {
   images: {
     formats: ["image/webp"],
     minimumCacheTTL: 60,
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "8000",
+        pathname: "/upload/**"
+      }
+    ]
   },
   typescript: {
     tsconfigPath: "./tsconfig.json",

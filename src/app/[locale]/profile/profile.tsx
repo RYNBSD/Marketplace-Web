@@ -1,16 +1,31 @@
+import Link from "next/link";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
-import Link from "next/link";
+import { request } from "~/action/fn";
+import { KEYS } from "~/constant";
+import { fetchProfile } from "~/action/user";
 
-export default async function Profile({ user }: Props) {
+const { BASE_URL } = KEYS;
+
+async function fetchStore() {
+  const res = await request("/api/store");
+  if (!res.ok) return null;
+
+  const json = await res.json();
+  return json.data.store;
+}
+
+export default async function Profile() {
   const locale = await getLocale();
+  const profile = await fetchProfile();
+  const store = await fetchStore();
 
   return (
     <section id="profile">
       <div className="flex flex-col items-center justify-center gap-3">
         <Image
-          src={user.image}
-          alt={user.username}
+          src={`${BASE_URL}${profile.image}`}
+          alt={profile.username}
           width={128}
           height={128}
           loading="lazy"
@@ -27,25 +42,21 @@ export default async function Profile({ user }: Props) {
           </svg>
           <input
             type="text"
-            value={user.username}
+            value={profile.username}
             disabled
             className="grow"
-            placeholder="Username"
+            placeholder="username"
           />
         </label>
         <Link
-          href={`/${locale}/${user.id}/${
-            user.seller === null ? "seller" : `dashboard/${user.seller.id}`
+          href={`/${locale}/profile/${
+            store === null ? "seller" : `dashboard/${store.id}`
           }`}
           className="btn"
         >
-          {user?.seller === null ? "Become a seller" : "Go to dashboard"}
+          {store === null ? "Become a seller" : "Go to dashboard"}
         </Link>
       </div>
     </section>
   );
 }
-
-type Props = {
-  user: null;
-};

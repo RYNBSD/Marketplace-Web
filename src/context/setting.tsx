@@ -18,7 +18,7 @@ export default function SittingProvider({ children }: Props) {
     theme: "light",
     forceTheme: false,
     disableAnimations: false,
-    lang: "en",
+    locale: "en",
   });
 
   useEffect(() => {

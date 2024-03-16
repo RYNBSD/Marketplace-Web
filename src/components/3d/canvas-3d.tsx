@@ -28,13 +28,13 @@ function Loader() {
 }
 
 const Canvas3D: FC<Props> = ({ model, ar = false }) => {
-  const { settings } = useSettings()!;
+  const { setting } = useSettings()!;
   const isMobile = useIsMobile();
   const scene = useMemo(
     () => (
       <>
         <OrbitControls
-          autoRotate={!settings.disableAnimations} // Auto-rotate the model
+          autoRotate={!setting.disableAnimations && !ar} // Auto-rotate the model
           enableZoom={true} // Enable zoom
           maxPolarAngle={Math.PI / 2} // Limit the angle to prevent flipping
           minPolarAngle={0} // Limit the angle to prevent flipping
@@ -60,7 +60,7 @@ const Canvas3D: FC<Props> = ({ model, ar = false }) => {
         </Center>
       </>
     ),
-    [model, settings.disableAnimations]
+    [ar, model, setting.disableAnimations]
   );
   const arScene = useMemo(() => <XR>{scene}</XR>, [scene]);
 

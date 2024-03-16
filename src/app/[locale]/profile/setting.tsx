@@ -1,6 +1,6 @@
 "use client";
 
-import type { Lang, Theme } from "~/types";
+import type { Locale, Theme } from "~/types";
 import { LOCALE, THEMES } from "~/constant";
 import { useSettings } from "~/context";
 
@@ -11,8 +11,8 @@ export default function Setting() {
     <section className="flex items-center justify-center" id="setting">
       <div className="grid grid-cols-1 place-items-center gap-5 w-full max-w-[768px] md:grid-cols-2">
         <select
-          onChange={(e) => changeSetting("lang", e.target.value as Lang)}
-          value={setting.lang}
+          onChange={(e) => changeSetting("locale", e.target.value as Locale)}
+          value={setting.locale}
           className="select select-bordered w-full max-w-xs"
         >
           {LOCALE.map((locale) => (

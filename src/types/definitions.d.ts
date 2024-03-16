@@ -1,5 +1,5 @@
 import type { z } from "zod";
-import type { LANG } from "~/constant/index";
+import type { LOCALE } from "~/constant/index";
 import type { THEMES } from "~/constant";
 import type { schema } from "~/schema";
 
@@ -8,7 +8,7 @@ export type RegularObject<
   V extends unknown = unknown
 > = Record<K, V>;
 
-export type Lang = (typeof LANG)[number];
+export type Locale = (typeof LOCALE)[number];
 export type Theme = (typeof THEMES)[number];
 
 export type LocalStorage = {
@@ -16,7 +16,7 @@ export type LocalStorage = {
     theme: Theme;
     forceTheme: boolean; // force the user theme (ignore seller theme)
     disableAnimations: boolean;
-    lang: Lang;
+    locale: Locale;
   };
   cart: {
     id: string;

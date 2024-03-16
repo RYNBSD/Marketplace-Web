@@ -1,5 +1,6 @@
 export default {
-  BASE_URL: "http://localhost:8000/v1",
+  BASE_URL: "http://localhost:8000",
+  API_VERSION: "/v1",
   HTTP: {
     HEADERS: {
       CSRF: "X-CSRF-Token",
@@ -10,7 +11,7 @@ export default {
   },
   COOKIE: {
     SESSION: "session",
-    AUTHORIZE: "authorize",
+    AUTHORIZATION: "authorization",
   },
   GLOBAL: {
     PUBLIC: "public",

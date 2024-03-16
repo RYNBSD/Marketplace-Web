@@ -7,8 +7,8 @@ import PropTypes from "prop-types";
 import { useSettings } from "~/context";
 
 const SubmitButton: FC<Props> = ({
-  className,
   action,
+  className,
   content = "Submit",
   toastPromise = {
     pending: "Waiting",
@@ -25,15 +25,11 @@ const SubmitButton: FC<Props> = ({
       const toastId = toast.loading(toastPromise.pending, {
         theme: setting.theme,
       });
-      toast.dismiss(toastId)
-
+      
       try {
-        const res = await toast.promise(action(formaData), toastPromise!, {
-          theme: setting.theme,
-        });
-
-        if (res && undefined && !res.success) throw new Error(res.error);
-
+        const res = await action(formaData);
+        if (res !== undefined && !res.success) throw new Error(res.error);
+        
         toast.update(toastId, {
           render: toastPromise.success,
           type: "success",
@@ -41,10 +37,11 @@ const SubmitButton: FC<Props> = ({
         });
       } catch (error) {
         const render =
-          error instanceof Error ? error.message : JSON.stringify(error);
+        error instanceof Error ? error.message : JSON.stringify(error);
         toast.update(toastId, { render, type: "error", isLoading: false });
       } finally {
         setPending(false);
+        toast.dismiss(toastId)
       }
     },
     [action, setting.theme, toastPromise]
@@ -65,6 +62,7 @@ const SubmitButton: FC<Props> = ({
 
 SubmitButton.propTypes = {
   className: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
   content: PropTypes.string,
   toastPromise: PropTypes.shape({
     pending: PropTypes.string.isRequired,

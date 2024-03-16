@@ -1,12 +1,11 @@
-import type { Lang } from "~/types";
 import Link from "next/link";
-import Container from "./container";
+import Container from "../container";
 import { getLocale } from "next-intl/server"
 import NavbarCart from "./navbar-cart";
 import NavbarProfile from "./navbar-profile";
 
 export default async function Navbar() {
-  const locale = await getLocale() as Lang
+  const locale = await getLocale()
   return (
     <Container bg="bg-base-100">
       <nav className="navbar bg-base-100">

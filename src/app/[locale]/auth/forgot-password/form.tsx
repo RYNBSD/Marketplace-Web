@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { Csrf, SubmitButton } from "~/components";
 import { forgotPassword } from "./action";
-import { accessEmail } from "~/action";
+import { accessEmail } from "~/action/security";
 import { KEYS } from "~/constant";
 
 const { INPUT } = KEYS;
