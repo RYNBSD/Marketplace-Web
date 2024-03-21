@@ -57,9 +57,12 @@ export async function signIn(formData: FormData): Promise<FormState> {
 }
 
 export async function signOut() {
-  const locale = await getLocale();
   const res = await request("/api/auth/sign-out", { method: "POST" });
-  if (res.ok) redirect(`/${locale}`);
+  if (res.ok) {
+    cookies().delete(COOKIE.AUTHORIZATION);
+    cookies().delete(COOKIE.SESSION);
+  }
+  return res.ok
 }
 
 export async function me(): Promise<FormState> {
@@ -72,6 +75,9 @@ export async function me(): Promise<FormState> {
       Authorization: `Bearer ${authorization}`,
     },
   });
+  if (res.status === StatusCodes.NOT_FOUND)
+    cookies().delete(COOKIE.AUTHORIZATION);
+
   const json = await res.json();
 
   if (!res.ok) return { success: false, error: json.message };

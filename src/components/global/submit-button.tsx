@@ -1,50 +1,28 @@
 "use client";
 import type { FC } from "react";
 import type { FormState } from "~/types";
+import { useRouter } from "next/navigation";
 import { memo, useCallback, useState } from "react";
-import { toast } from "react-toastify";
 import PropTypes from "prop-types";
-import { useSettings } from "~/context";
+import { useNotification } from "~/context";
 
-const SubmitButton: FC<Props> = ({
-  action,
-  className,
-  content = "Submit",
-  toastPromise = {
-    pending: "Waiting",
-    success: "Success",
-    error: "Error",
-  },
-}) => {
+const SubmitButton: FC<Props> = ({ action, className, content = "Submit" }) => {
+  const router = useRouter();
   const [pending, setPending] = useState(false);
-  const { setting } = useSettings()!;
+  const { toastify } = useNotification()!;
 
   const formAction = useCallback(
     async (formaData: FormData) => {
       setPending(true);
-      const toastId = toast.loading(toastPromise.pending, {
-        theme: setting.theme,
-      });
-      
+
       try {
-        const res = await action(formaData);
-        if (res !== undefined && !res.success) throw new Error(res.error);
-        
-        toast.update(toastId, {
-          render: toastPromise.success,
-          type: "success",
-          isLoading: false,
-        });
-      } catch (error) {
-        const render =
-        error instanceof Error ? error.message : JSON.stringify(error);
-        toast.update(toastId, { render, type: "error", isLoading: false });
+        const res = await toastify(action(formaData));
+        if (!res.success) router.refresh();
       } finally {
         setPending(false);
-        toast.dismiss(toastId)
       }
     },
-    [action, setting.theme, toastPromise]
+    [action, router, toastify]
   );
 
   return (
@@ -64,21 +42,11 @@ SubmitButton.propTypes = {
   className: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
   content: PropTypes.string,
-  toastPromise: PropTypes.shape({
-    pending: PropTypes.string.isRequired,
-    success: PropTypes.string.isRequired,
-    error: PropTypes.string.isRequired,
-  }),
 };
 
 type Props = {
   className: string;
   content?: string;
-  toastPromise?: {
-    pending: string;
-    success: string;
-    error: string;
-  };
   action: (formaData: FormData) => Promise<FormState>;
 };
 

@@ -1,52 +1,21 @@
 "use server";
-// import type { FormState } from "~/types";
 import Link from "next/link";
-// import { redirect } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Csrf } from "~/components";
-// import { KEYS } from "~/constant";
 
-import Theme from "./theme";
-import Locale from "./locale";
+import { Email, Locale, Theme } from "./fields";
 import Submit from "./submit";
-// import { request, setCookie } from "~/action/fn";
-
-// const { INPUT, HTTP } = KEYS;
 
 export default async function SignUpForm() {
   const locale = await getLocale();
   const t = await getTranslations("Auth.Sign-Up.Form");
-
-  // async function signUp(formData: FormData): Promise<FormState> {
-  //   "use server";
-  //   const res = await request("/api/auth/sign-up", {
-  //     method: "POST",
-  //     // @ts-ignore
-  //     headers: {
-  //       [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF) ?? "",
-  //     },
-  //     body: formData,
-  //   });
-
-  //   await setCookie(res.headers);
-
-  //   if (!res.ok) {
-  //     const json = await res.json();
-  //     return {
-  //       success: false,
-  //       error: json.message,
-  //     };
-  //   }
-
-  //   redirect(`/${locale}/auth/sign-in`);
-  // }
 
   return (
     <form className="card-body">
       <Csrf />
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("username")}</span>
+          <span className="label-text">{t("username")} *</span>
         </label>
         <input
           required
@@ -58,19 +27,13 @@ export default async function SignUpForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("email")}</span>
+          <span className="label-text">{t("email")} *</span>
         </label>
-        <input
-          required
-          type="email"
-          name="email"
-          placeholder={t("email")}
-          className="input input-bordered"
-        />
+        <Email />
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("password")}</span>
+          <span className="label-text">{t("password")} *</span>
         </label>
         <input
           required
@@ -83,7 +46,7 @@ export default async function SignUpForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("pick-image")}</span>
+          <span className="label-text">{t("pick-image")} *</span>
         </label>
         <input
           required
@@ -95,7 +58,7 @@ export default async function SignUpForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("pick-locale")}</span>
+          <span className="label-text">{t("pick-locale")} *</span>
         </label>
         <div className="join">
           <Locale />
@@ -103,7 +66,7 @@ export default async function SignUpForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("pick-theme")}</span>
+          <span className="label-text">{t("pick-theme")} *</span>
         </label>
         <div className="join">
           <Theme />

@@ -1,5 +1,10 @@
-import type { Metadata, Viewport } from "next"
-import "./globals.css"
+import type { Metadata, Viewport } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 
 export const viewport: Viewport = {
   minimumScale: 1,
@@ -10,13 +15,28 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  manifest: "/manifest.json"
-}
+  manifest: "/manifest.json",
+};
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  const messages = await getMessages();
+  const locale = await getLocale();
+  return (
+    <html
+      lang={locale}
+      dir={locale === "en" ? "ltr" : "rtl"}
+      data-theme="light"
+    >
+      <body>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+        <ToastContainer />
+      </body>
+    </html>
+  );
 }

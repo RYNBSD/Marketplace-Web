@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import Container from "./container";
 
-export default async function Footer({ instagram, facebook }: Props) {
+export default async function Footer() {
   return (
     <Container bg="bg-base-300">
       <footer className="footer items-center p-4 bg-base-300 text-base-content">
@@ -20,10 +20,10 @@ export default async function Footer({ instagram, facebook }: Props) {
           </p>
         </aside>
         <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-          <a href={instagram}>
+          <a href={""}>
             <FaInstagram width={24} height={24} />
           </a>
-          <a href={facebook}>
+          <a href={""}>
             <FaFacebookF width={24} height={24} />
           </a>
         </nav>
@@ -31,8 +31,3 @@ export default async function Footer({ instagram, facebook }: Props) {
     </Container>
   );
 }
-
-type Props = {
-  instagram: string;
-  facebook: string;
-};

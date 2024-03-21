@@ -1,41 +1,29 @@
 import type { Metadata } from "next";
-import { getLocale, getMessages } from "next-intl/server";
-import { NextIntlClientProvider } from "next-intl";
 import { Footer, Navbar } from "~/components";
-import { SettingProvider, UserProvider, CartProvider } from "~/context";
-import { ToastContainer } from "react-toastify";
-
-import 'react-toastify/dist/ReactToastify.css';
+import {
+  SettingProvider,
+  UserProvider,
+  CartProvider,
+  NotificationPromise,
+} from "~/context";
 
 export default async function LocaleLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const messages = await getMessages();
-  const locale = await getLocale();
-
   return (
-    <html
-      lang={locale}
-      dir={locale === "en" ? "ltr" : "rtl"}
-      data-theme="light"
-    >
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <UserProvider>
-            <SettingProvider>
-              <CartProvider>
-                <Navbar />
-                <main className="w-full min-h-screen">{children}</main>
-                <Footer instagram="" facebook="" />
-              </CartProvider>
-            </SettingProvider>
-          </UserProvider>
-          <ToastContainer />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <UserProvider>
+      <SettingProvider>
+        <CartProvider>
+          <NotificationPromise>
+            <Navbar />
+            <main className="w-full min-h-screen">{children}</main>
+            <Footer />
+          </NotificationPromise>
+        </CartProvider>
+      </SettingProvider>
+    </UserProvider>
   );
 }
 

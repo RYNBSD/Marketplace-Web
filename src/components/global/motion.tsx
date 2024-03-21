@@ -1,7 +1,7 @@
 "use client";
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
-import { useSettings } from "~/context";
+import { useSetting } from "~/context";
 
 const fadeOpacity = () => {
   return {
@@ -31,7 +31,7 @@ const fadeY = () => {};
 const fadeYReverse = () => {};
 
 export default function Motion({ children, fade }: Props) {
-  const { setting } = useSettings()!;
+  const { setting } = useSetting()!;
   return setting.disableAnimations ? (
     children
   ) : (

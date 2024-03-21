@@ -1,52 +1,20 @@
 "use server";
-// import type { FormState } from "~/types";
 import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { Csrf } from "~/components";
 import Submit from "./submit";
-// import { setCookie } from "~/action/fn";
-// import { redirect } from "next/navigation";
-// import { KEYS } from "~/constant";
-// import { cookies } from "next/headers";
 
-// const { BASE_URL, INPUT, HTTP } = KEYS;
 
 export default async function SignInForm() {
   const locale = await getLocale();
   const t = await getTranslations("Auth.Sign-In.Form");
-
-  // async function signIn(formData: FormData): Promise<FormState> {
-  //   "use server";
-
-  //   const res = await fetch(`${BASE_URL}/api/auth/sign-in`, {
-  //     method: "POST",
-  //     credentials: "include",
-  //     // @ts-ignore
-  //     headers: {
-  //       cookie: cookies().toString(),
-  //       [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF) ?? "",
-  //     },
-  //     body: formData,
-  //   });
-
-  //   await setCookie(res.headers);
-  //   const json = await res.json();
-
-  //   if (!res.ok)
-  //     return {
-  //       success: false,
-  //       error: json.message,
-  //     };
-
-  //   redirect(`/${locale}/${json.data.user.id}`);
-  // }
 
   return (
     <form className="card-body">
       <Csrf />
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("email")}</span>
+          <span className="label-text">{t("email")} *</span>
         </label>
         <input
           type="email"
@@ -58,7 +26,7 @@ export default async function SignInForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("password")}</span>
+          <span className="label-text">{t("password")} *</span>
         </label>
         <input
           type="password"

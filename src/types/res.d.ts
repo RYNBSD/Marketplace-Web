@@ -3,7 +3,7 @@ type Fail = {
   message: string;
 };
 
-type ResponseBody = Record<string, unknown>;
+type ResponseBody = Record<string, any>;
 
 type Success = {
   success: true;

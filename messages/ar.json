@@ -1,4 +1,5 @@
 {
+  "validating": "التحقق من صحة",
   "Navbar": {
     "sign-in": "تسجيل الدخول"
   },
@@ -9,6 +10,8 @@
       "Form": {
         "username": "اسم المستخدم",
         "email": "بريد إلكتروني",
+        "email-valid": "البريد الإلكتروني صالح",
+        "email-not-valid": "البريد الإلكتروني غير صالح",
         "password": "كلمة المرور",
         "pick-image": "اختر صورة الملف الشخصي",
         "pick-locale": "اختر لغة",
@@ -39,6 +42,11 @@
         "password": "كلمة المرور",
         "confirm-password": "تأكيد كلمة المرور"
       }
+    }
+  },
+  "Profile": {
+    "Become-Seller": {
+      
     }
   }
 }

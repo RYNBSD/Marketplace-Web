@@ -1,4 +1,5 @@
 {
+  "validating": "validating",
   "Navbar": {
     "sign-in": "Sign in"
   },
@@ -9,6 +10,8 @@
       "Form": {
         "username": "Username",
         "email": "Email",
+        "email-valid": "Email valid",
+        "email-not-valid": "Email not valid",
         "password": "Password",
         "pick-image": "Pick a profile picture",
         "pick-locale": "Pick a language",

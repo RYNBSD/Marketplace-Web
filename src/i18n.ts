@@ -4,7 +4,7 @@ import { LOCALE } from "./constant";
 
 export default getRequestConfig(async ({ locale }) => {
   // Validate that the incoming `locale` parameter is valid
-  if (!LOCALE.includes(locale as any)) return notFound();
+  if (!LOCALE.includes(locale as any)) notFound();
 
   return {
     messages: (await import(`../messages/${locale}.json`)).default,

@@ -1,6 +1,6 @@
 "use client";
 import type { FC } from "react";
-import { useMemo, Suspense, memo } from "react";
+import { useMemo, Suspense, memo, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   PerspectiveCamera,
@@ -11,12 +11,13 @@ import {
   Stage,
   Html,
   Preload,
+  Stats,
 } from "@react-three/drei";
 import { ARButton, XR } from "@react-three/xr";
 import PropTypes from "prop-types";
 import Model from "./model";
 import { useIsMobile } from "~/hooks";
-import { useSettings } from "~/context";
+import { useSetting } from "~/context";
 
 function Loader() {
   const { progress } = useProgress();
@@ -28,8 +29,14 @@ function Loader() {
 }
 
 const Canvas3D: FC<Props> = ({ model, ar = false }) => {
-  const { setting } = useSettings()!;
+  const [isClient, setIsClient] = useState(false);
+  const { setting } = useSetting()!;
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const scene = useMemo(
     () => (
       <>
@@ -42,36 +49,39 @@ const Canvas3D: FC<Props> = ({ model, ar = false }) => {
           maxDistance={10} // Limit the maximum distance of zoom
         />
         <PerspectiveCamera makeDefault position={[0, 1, 2.5]} />
-        <Center>
-          <Stage
-            environment="studio"
-            preset="rembrandt"
-            intensity={1}
-            adjustCamera
-            shadows
-          >
-            <Resize width>
-              <Suspense fallback={<Loader />}>
-                <Model model={model} />
-                <Preload all />
-              </Suspense>
-            </Resize>
-          </Stage>
-        </Center>
+        <Stage preset="rembrandt" intensity={1} adjustCamera shadows>
+          <Resize width>
+            <Model model={model} />
+            <Preload all />
+          </Resize>
+        </Stage>
       </>
     ),
     [ar, model, setting.disableAnimations]
   );
-  const arScene = useMemo(() => <XR>{scene}</XR>, [scene]);
 
-  return (
-    <div className="w-full h-screen">
-      {ar && isMobile ? <ARButton /> : null}
-      <Canvas shadows frameloop="demand">
-        {ar && isMobile ? arScene : scene}
-      </Canvas>
-    </div>
+  const arButton = useMemo(
+    () => (isMobile && ar ? <ARButton /> : null),
+    [ar, isMobile]
   );
+  const arScene = useMemo(
+    () => (isMobile ? <XR>{scene}</XR> : scene),
+    [isMobile, scene]
+  );
+
+  return isClient ? (
+    <div className="w-full h-screen">
+      <Suspense fallback={null}>
+        <Stats />
+        {arButton}
+        <Canvas shadows frameloop="demand">
+          <Center>
+            <Suspense fallback={<Loader />}>{ar ? arScene : scene}</Suspense>
+          </Center>
+        </Canvas>
+      </Suspense>
+    </div>
+  ) : null;
 };
 
 Canvas3D.propTypes = {
