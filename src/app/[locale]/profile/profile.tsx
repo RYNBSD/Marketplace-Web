@@ -1,34 +1,34 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
-import { request } from "~/action/fn";
+// import { request } from "~/action/fn";
 import { KEYS } from "~/constant";
 import { fetchProfile } from "~/action/user";
+import Delete from "./delete";
 
 const { BASE_URL } = KEYS;
 
-async function fetchStore() {
-  const res = await request("/api/store");
-  if (!res.ok) return null;
+// async function fetchStore() {
+//   const res = await request("/api/store");
+//   if (!res.ok) return null;
 
-  const json = await res.json();
-  return json.data.store;
-}
+//   const json = await res.json();
+//   return json.data.store;
+// }
 
 export default async function Profile() {
   const locale = await getLocale();
-  const profile = await fetchProfile();
-  const store = await fetchStore();
+  const { user, store } = await fetchProfile();
 
   return (
     <section className="flex flex-col justify-center items-center gap-3" id="profile">
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
         <Image
-          src={`${BASE_URL}${profile.image}`}
-          alt={profile.username}
+          src={`${BASE_URL}${user.image}`}
+          alt={user.username}
           width={128}
           height={128}
-          loading="lazy"
+          priority
           className="w-32 h-32 object-cover rounded-full"
         />
         <div className="flex flex-col items-center sm:items-start gap-3">
@@ -43,7 +43,7 @@ export default async function Profile() {
             </svg>
             <input
               type="text"
-              value={profile.username}
+              value={user.username}
               disabled
               className="grow"
               placeholder="username"
@@ -53,9 +53,7 @@ export default async function Profile() {
             <Link className="btn btn-info" href={`/${locale}/profile/update`}>
               Update
             </Link>
-            <button className="btn btn-error" type="button">
-              Delete
-            </button>
+            <Delete />
           </div>
         </div>
       </div>

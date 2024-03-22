@@ -31,7 +31,13 @@ export default function NotificationProvider({ children }: Props) {
         { theme: setting.theme }
       );
 
-      if (!res.success) toast.error(res.error, { theme: setting.theme });
+      if (!res.success)
+        toast.error(res.error, {
+          theme:
+            setting.theme !== "light" && setting.theme !== "dark"
+              ? "colored"
+              : setting.theme,
+        });
 
       return res;
     },

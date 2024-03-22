@@ -13,17 +13,17 @@ export default async function LocaleLayout({
   children: React.ReactNode;
 }) {
   return (
-    <UserProvider>
-      <SettingProvider>
-        <CartProvider>
-          <NotificationPromise>
+    <SettingProvider>
+      <CartProvider>
+        <NotificationPromise>
+          <UserProvider>
             <Navbar />
             <main className="w-full min-h-screen">{children}</main>
             <Footer />
-          </NotificationPromise>
-        </CartProvider>
-      </SettingProvider>
-    </UserProvider>
+          </UserProvider>
+        </NotificationPromise>
+      </CartProvider>
+    </SettingProvider>
   );
 }
 

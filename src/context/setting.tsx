@@ -11,7 +11,6 @@ import {
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { KEYS } from "~/constant";
-import { useUser } from "./user";
 import { patchSetting } from "~/action/user";
 
 const SettingContext = createContext<TSettingContext | null>(null);
@@ -20,7 +19,6 @@ const { SETTING } = KEYS.BROWSER.LOCALE_STORAGE;
 export default function SittingProvider({ children }: Props) {
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useUser()!;
   const [setting, setSetting] = useState<LocalSetting>({
     theme: "light",
     forceTheme: false,
@@ -29,23 +27,19 @@ export default function SittingProvider({ children }: Props) {
   });
 
   useLayoutEffect(() => {
-    try {
-      const localSetting = localStorage.getItem(SETTING) ?? "";
-      if (localSetting.length === 0) return;
+    const localSetting = localStorage.getItem(SETTING) ?? "";
+    if (localSetting.length === 0) return;
 
-      const setting = JSON.parse(localSetting) as LocalSetting;
-      setSetting(setting);
+    const setting = JSON.parse(localSetting) as LocalSetting;
+    setSetting(setting);
 
-      // Compare locale storage setting(locale) with the current pathname and redirect if there are not the same
-      if (pathname.startsWith("/en") && setting.locale === "ar") {
-        const newPathName = pathname.replace("/en", "/ar");
-        router.push(newPathName);
-      } else if (pathname.startsWith("/ar") && setting.locale === "en") {
-        const newPathName = pathname.replace("/ar", "/en");
-        router.push(newPathName);
-      }
-    } catch (error) {
-      console.error(error);
+    // Compare locale storage setting(locale) with the current pathname and redirect if there are not the same
+    if (pathname.startsWith("/en") && setting.locale === "ar") {
+      const newPathName = pathname.replace("/en", "/ar");
+      router.push(newPathName);
+    } else if (pathname.startsWith("/ar") && setting.locale === "en") {
+      const newPathName = pathname.replace("/ar", "/en");
+      router.push(newPathName);
     }
   }, [pathname, router]);
 
@@ -55,31 +49,18 @@ export default function SittingProvider({ children }: Props) {
     html.setAttribute(DATA_THEME, setting.theme);
   }, [setting.theme]);
 
-  useEffect(() => {
-    if (user === null) return;
-  }, [user]);
-
   const changeSetting = useCallback(
     async <K extends SettingKeys = SettingKeys>(
       key: K,
       value: LocalSetting[K]
     ) => {
-      const formData = new FormData();
       const newSetting = { ...setting, [key]: value };
-
-      Object.entries(newSetting).forEach(([key, value]) => {
-        formData.append(key, `${value}`);
-      });
-
-      const res = await patchSetting(formData);
-      if (res.success) setSetting(newSetting);
-
-
-
+      setSetting(newSetting);
+      patchSetting(newSetting);
       const stringify = JSON.stringify(newSetting);
       localStorage.setItem(SETTING, stringify);
     },
-    [setting]
+    [setSetting, setting]
   );
 
   return (

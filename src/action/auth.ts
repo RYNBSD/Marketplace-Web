@@ -49,7 +49,6 @@ export async function signIn(formData: FormData): Promise<FormState> {
       error: json.message,
     };
 
-  // redirect(`/${locale}/${json.data.user.id}`);
   return {
     success: true,
     data: json.data.user,

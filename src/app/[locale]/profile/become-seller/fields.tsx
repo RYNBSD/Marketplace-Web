@@ -2,13 +2,7 @@
 
 import type { ChangeEvent } from "react";
 import type { Theme } from "~/types";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  useTransition,
-} from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { THEMES } from "~/constant";
 import { useSetting } from "~/context";
 import { validateStoreName } from "~/action/validate";
@@ -61,16 +55,6 @@ export function Themes() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const options = useMemo(
-    () =>
-      THEMES.map((theme) => (
-        <option key={theme} value={theme}>
-          {theme}
-        </option>
-      )),
-    []
-  );
-
   return (
     <select
       name="theme"
@@ -78,7 +62,11 @@ export function Themes() {
       onChange={(e) => changeSetting("theme", e.target.value as Theme)}
       className="select select-bordered w-full max-w-xs"
     >
-      {options}
+      {THEMES.map((theme) => (
+        <option key={theme} value={theme}>
+          {theme}
+        </option>
+      ))}
     </select>
   );
 }

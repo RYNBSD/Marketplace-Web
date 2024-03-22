@@ -41,8 +41,8 @@ export default function ForgotPasswordForm() {
   );
 
   return (
-    <form className="card-body">
-      <Csrf key={Number(state.disableEmail)} />
+    <form className="card-body" action={handleSubmit}>
+      <Csrf />
       <input
         type="hidden"
         value={state.accessToken}
