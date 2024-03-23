@@ -10,7 +10,7 @@ import { KEYS } from "~/constant";
 const { INPUT } = KEYS;
 
 export default function ForgotPasswordForm() {
-  const t = useTranslations("Auth.Forgot-Password.Form");
+  const tForm = useTranslations("Auth.Forgot-Password.Form");
   const [state, setState] = useState({
     accessToken: "",
     disableEmail: false,
@@ -50,11 +50,11 @@ export default function ForgotPasswordForm() {
       />
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("email")}</span>
+          <span className="label-text">{tForm("email")}</span>
         </label>
         <input
           type="email"
-          placeholder={t("email")}
+          placeholder={tForm("email")}
           name="email"
           disabled={state.disableEmail}
           required={!state.disableEmail}
@@ -63,11 +63,11 @@ export default function ForgotPasswordForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("code")}</span>
+          <span className="label-text">{tForm("code")}</span>
         </label>
         <input
           type="text"
-          placeholder={t("code")}
+          placeholder={tForm("code")}
           name="code"
           disabled={!state.disableEmail}
           required={state.disableEmail}
@@ -76,11 +76,11 @@ export default function ForgotPasswordForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("password")}</span>
+          <span className="label-text">{tForm("password")}</span>
         </label>
         <input
           type="password"
-          placeholder={t("password")}
+          placeholder={tForm("password")}
           name="password"
           disabled={!state.disableEmail}
           required={state.disableEmail}
@@ -89,11 +89,11 @@ export default function ForgotPasswordForm() {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">{t("confirm-password")}</span>
+          <span className="label-text">{tForm("confirm-password")}</span>
         </label>
         <input
           type="password"
-          placeholder={t("confirm-password")}
+          placeholder={tForm("confirm-password")}
           name="confirmPassword"
           disabled={!state.disableEmail}
           required={state.disableEmail}
@@ -103,7 +103,9 @@ export default function ForgotPasswordForm() {
       <div className="form-control mt-6">
         <SubmitButton
           className="btn btn-primary"
-          content={state.disableEmail ? "Reset password" : "Verify email"}
+          content={
+            state.disableEmail ? tForm("reset-password") : tForm("verify-email")
+          }
           action={handleSubmit}
         />
       </div>

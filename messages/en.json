@@ -51,7 +51,9 @@
         "email": "Email",
         "code": "Code",
         "password": "Password",
-        "confirm-password": "Confirm password"
+        "confirm-password": "Confirm password",
+        "verify-email": "Verify email",
+        "reset-password": "Reset password"
       }
     }
   },
