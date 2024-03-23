@@ -22,6 +22,7 @@ export async function accessEmail(formData: FormData): Promise<FormState> {
     headers: {
       [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF) ?? "",
     },
+    body: formData,
   });
 
   const json = await res.json();

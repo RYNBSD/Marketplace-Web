@@ -1,7 +1,18 @@
 {
   "validating": "التحقق من صحة",
   "Navbar": {
-    "sign-in": "تسجيل الدخول"
+    "sign-in": "تسجيل الدخول",
+    "Profile": {
+      "profile": "حساب",
+      "setting": "إعدادات",
+      "sign-out": "تسجيل الخروج"
+    },
+    "Cart": {
+      "item": "غرض",
+      "items": "أغراض",
+      "total-price": "السعر الكلي",
+      "view-cart": "عرض العربة"
+    }
   },
   "Auth": {
     "Sign-Up": {
@@ -45,8 +56,38 @@
     }
   },
   "Profile": {
+    "Info": {
+      "update": "تحديث",
+      "delete": "حذف",
+      "become-a-seller": "كن بائعًا",
+      "go-to-dashboard": "الذهاب إلى لوحة القيادة"
+    },
+    "Setting": {
+      "setting": "إعدادات",
+      "disable-animations": "تعطيل الرسوم المتحركة",
+      "force-theme": "اجبار النمط"
+    },
+    "Order": {
+      "orders": "طلبات"
+    },
     "Become-Seller": {
-      
+      "new-seller": "بائع جديد",
+      "Form": {
+        "name": "اسم",
+        "store-valid": "اسم المتجر صالح",
+        "store-not-valid": "اسم المتجر غير صالح",
+        "pick-image": "اختر صورة",
+        "pick-theme": "اختر سمة",
+        "become-seller": "كن بائعًا"
+      }
+    },
+    "Update": {
+      "update-profile": "تحديث الملف",
+      "Form": {
+        "username": "اسم المستخدم",
+        "pick-new-image": "اختر صورة جديدة",
+        "update": "تحديث"
+      }
     }
   }
 }

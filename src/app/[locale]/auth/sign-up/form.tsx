@@ -12,7 +12,7 @@ export default async function SignUpForm() {
 
   return (
     <form className="card-body">
-      <Csrf key={Date.now()} />
+      <Csrf />
       <div className="form-control">
         <label className="label">
           <span className="label-text">{t("username")} *</span>

@@ -1,7 +1,18 @@
 {
   "validating": "validating",
   "Navbar": {
-    "sign-in": "Sign in"
+    "sign-in": "Sign in",
+    "Profile": {
+      "profile": "Profile",
+      "setting": "Setting",
+      "sign-out": "Sign out"
+    },
+    "Cart": {
+      "item": "Item",
+      "items": "Items",
+      "total-price": "Total price",
+      "view-cart": "View cart"
+    }
   },
   "Auth": {
     "Sign-Up": {
@@ -41,6 +52,41 @@
         "code": "Code",
         "password": "Password",
         "confirm-password": "Confirm password"
+      }
+    }
+  },
+  "Profile": {
+    "Info": {
+      "update": "update",
+      "delete": "delete",
+      "become-a-seller": "Become a seller",
+      "go-to-dashboard": "Go to dashboard"
+    },
+    "Setting": {
+      "setting": "Setting",
+      "disable-animations": "Disable animations",
+      "force-theme": "Force theme"
+    },
+    "Order": {
+      "orders": "Orders"
+    },
+    "Become-Seller": {
+      "new-seller": "New seller",
+      "Form": {
+        "name": "Name",
+        "store-valid": "Store name valid",
+        "store-not-valid": "Store name not valid",
+        "pick-image": "Pick a picture",
+        "pick-theme": "Pick a theme",
+        "become-seller": "Become seller"
+      }
+    },
+    "Update": {
+      "update-profile": "Update profile",
+      "Form": {
+        "username": "Username",
+        "pick-new-image": "Pick new image",
+        "update": "Update"
       }
     }
   }

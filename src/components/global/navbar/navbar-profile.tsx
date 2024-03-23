@@ -1,9 +1,8 @@
-"use client"
+"use client";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { KEYS } from "~/constant";
-import SignOut from "./sign-out";
 import { useUser } from "~/context";
 
 const { BASE_URL } = KEYS;
@@ -11,7 +10,8 @@ const { BASE_URL } = KEYS;
 export default function NavbarProfile() {
   const locale = useLocale();
   const t = useTranslations("Navbar");
-  const { user } = useUser()!;
+  const tProfile = useTranslations("Navbar.Profile");
+  const { user, signOut } = useUser()!;
 
   return (
     <div className="dropdown dropdown-end">
@@ -49,7 +49,7 @@ export default function NavbarProfile() {
           <>
             <li>
               <Link href={`/${locale}/profile`} className="justify-between">
-                Profile
+                {tProfile("profile")}
               </Link>
             </li>
             <li>
@@ -57,11 +57,17 @@ export default function NavbarProfile() {
                 href={`/${locale}/profile#settings`}
                 className="justify-between"
               >
-                Settings
+                {tProfile("setting")}
               </Link>
             </li>
             <li>
-              <SignOut />
+              <button
+                className="justify-between"
+                type="button"
+                onClick={signOut}
+              >
+                {tProfile("sign-out")}
+              </button>
             </li>
           </>
         )}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 // import { request } from "~/action/fn";
 import { KEYS } from "~/constant";
 import { fetchProfile } from "~/action/user";
@@ -18,10 +18,14 @@ const { BASE_URL } = KEYS;
 
 export default async function Profile() {
   const locale = await getLocale();
+  const tInfo = await getTranslations("Profile.Info");
   const { user, store } = await fetchProfile();
 
   return (
-    <section className="flex flex-col justify-center items-center gap-3" id="profile">
+    <section
+      className="flex flex-col justify-center items-center gap-3"
+      id="profile"
+    >
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
         <Image
           src={`${BASE_URL}${user.image}`}
@@ -51,7 +55,7 @@ export default async function Profile() {
           </label>
           <div className="flex gap-2">
             <Link className="btn btn-info" href={`/${locale}/profile/update`}>
-              Update
+              {tInfo("update")}
             </Link>
             <Delete />
           </div>
@@ -63,7 +67,7 @@ export default async function Profile() {
         }`}
         className="btn"
       >
-        {store === null ? "Become a seller" : "Go to dashboard"}
+        {store === null ? tInfo("become-a-seller") : tInfo("go-to-dashboard")}
       </Link>
     </section>
   );

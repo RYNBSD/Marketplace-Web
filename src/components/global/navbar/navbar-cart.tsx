@@ -2,10 +2,11 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { useCart } from "~/context";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function NavbarCart() {
   const locale = useLocale();
+  const tCart = useTranslations("Navbar.Cart")
   const { cart } = useCart()!;
 
   const totalPrice = useMemo(
@@ -18,9 +19,9 @@ export default function NavbarCart() {
   );
   const numberOfProducts = useMemo(() => {
     const length = cart.length;
-    const notation = length <= 1 ? "Item" : "Items";
+    const notation = length <= 1 ? tCart("item") : tCart("items");
     return { length, notation };
-  }, [cart]);
+  }, [cart.length, tCart]);
 
   return (
     <div className="dropdown dropdown-end">
@@ -53,10 +54,10 @@ export default function NavbarCart() {
           <span className="font-bold text-lg">
             {numberOfProducts.length} {numberOfProducts.notation}
           </span>
-          <span className="text-info">TotalPrice: ${totalPrice}</span>
+          <span className="text-info">{tCart("total-price")}: ${totalPrice}</span>
           <div className="card-actions">
             <Link href={`/${locale}`} className="btn btn-primary btn-block">
-              View cart
+              {tCart("view-cart")}
             </Link>
           </div>
         </div>

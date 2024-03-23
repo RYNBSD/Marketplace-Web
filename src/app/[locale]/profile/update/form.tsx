@@ -1,20 +1,23 @@
 import { Csrf } from "~/components";
 import { Username } from "./fields";
 import Submit from "./submit";
+import { getTranslations } from "next-intl/server";
 
 export default async function UpdateForm() {
+  const tForm = await getTranslations("Profile.Update.Form");
+
   return (
     <form className="card-body">
       <Csrf />
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Username *</span>
+          <span className="label-text">{tForm("username")} *</span>
         </label>
         <Username />
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">pick new image</span>
+          <span className="label-text">{tForm("pick-new-image")}</span>
         </label>
         <input
           type="file"

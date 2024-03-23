@@ -6,8 +6,11 @@ import { useCallback, useEffect, useState, useTransition } from "react";
 import { THEMES } from "~/constant";
 import { useSetting } from "~/context";
 import { validateStoreName } from "~/action/validate";
+import { useTranslations } from "next-intl";
 
 export function Name() {
+  const t = useTranslations()
+  const tValidating = useTranslations("Profile.Become-Seller.Form")
   const [isNameValid, setIsNameValid] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -34,10 +37,10 @@ export function Name() {
       <div className="label">
         <span className="label-text-alt">
           {isPending
-            ? "validating"
+            ? t("validating")
             : isNameValid
-            ? "store name valid"
-            : "store name not valid"}
+            ? tValidating("store-valid")
+            : tValidating("store-not-valid")}
         </span>
       </div>
     </>
