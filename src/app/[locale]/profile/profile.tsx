@@ -1,20 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
-// import { request } from "~/action/fn";
 import { KEYS } from "~/constant";
 import { fetchProfile } from "~/action/user";
 import Delete from "./delete";
 
 const { BASE_URL } = KEYS;
-
-// async function fetchStore() {
-//   const res = await request("/api/store");
-//   if (!res.ok) return null;
-
-//   const json = await res.json();
-//   return json.data.store;
-// }
 
 export default async function Profile() {
   const locale = await getLocale();
