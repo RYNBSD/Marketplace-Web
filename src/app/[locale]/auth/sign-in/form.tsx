@@ -1,7 +1,6 @@
 "use server";
 import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
-import { Csrf } from "~/components";
 import Submit from "./submit";
 
 
@@ -11,7 +10,6 @@ export default async function SignInForm() {
 
   return (
     <form className="card-body">
-      <Csrf />
       <div className="form-control">
         <label className="label">
           <span className="label-text">{t("email")} *</span>

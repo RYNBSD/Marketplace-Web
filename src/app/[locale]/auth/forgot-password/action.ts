@@ -14,7 +14,6 @@ export async function forgotPassword(formData: FormData): Promise<FormState> {
     method: "PUT",
     // @ts-ignore
     headers: {
-      [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF) ?? "",
       [HTTP.HEADERS.ACCESS_TOKEN]: formData.get(INPUT.ACCESS_TOKEN) ?? "",
     },
     body: formData,

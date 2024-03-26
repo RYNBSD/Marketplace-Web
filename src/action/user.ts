@@ -4,9 +4,6 @@ import type { FormState } from "~/types";
 import { request } from "./fn";
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
-import { KEYS } from "~/constant";
-
-const { HTTP, INPUT } = KEYS;
 
 export async function fetchProfile() {
   const res = await request("/api/user");
@@ -41,10 +38,6 @@ export async function becomeSeller(formData: FormData): Promise<FormState> {
   const res = await request("/api/user/become-seller", {
     method: "POST",
     body: formData,
-    // @ts-ignore
-    headers: {
-      [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF),
-    },
   });
 
   if (!res.ok) {
@@ -63,10 +56,6 @@ export async function update(formData: FormData): Promise<FormState> {
   const res = await request("/api/user/", {
     method: "PUT",
     body: formData,
-    // @ts-ignore
-    headers: {
-      [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF),
-    },
   });
   const json = await res.json();
 

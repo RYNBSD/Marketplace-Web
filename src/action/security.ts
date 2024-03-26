@@ -3,25 +3,21 @@ import type { FormState } from "~/types";
 import { KEYS } from "~/constant";
 import { request } from "./fn";
 
-const { HTTP, INPUT } = KEYS;
+const { HTTP } = KEYS;
 
 const SECURITY = "security";
 const ACCESS = "access";
 const VALIDATE = "validate";
 const STORE = "store";
 
-export async function fetchCsrf() {
-  const res = await request(`/${SECURITY}/csrf`);
-  return res.headers.get(HTTP.HEADERS.CSRF)!;
-}
+// export async function fetchCsrf() {
+//   const res = await request(`/${SECURITY}/csrf`);
+//   return res.headers.get(HTTP.HEADERS.CSRF)!;
+// }
 
 export async function accessEmail(formData: FormData): Promise<FormState> {
   const res = await request(`/${SECURITY}/${ACCESS}/email`, {
     method: "POST",
-    // @ts-ignore
-    headers: {
-      [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF) ?? "",
-    },
     body: formData,
   });
 

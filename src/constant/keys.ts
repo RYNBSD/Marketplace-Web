@@ -3,7 +3,7 @@ export default {
   API_VERSION: "/v1",
   HTTP: {
     HEADERS: {
-      CSRF: "X-CSRF-Token",
+      // CSRF: "X-CSRF-Token",
       // JWT: "X-JWT-Token",
       // USER_ID: "X-User-Id",
       ACCESS_TOKEN: "Access-Token",
@@ -23,7 +23,7 @@ export default {
     },
   },
   INPUT: {
-    CSRF: "csrf",
+    // CSRF: "csrf",
     ACCESS_TOKEN: "access-token",
     IMAGE: "image"
   }

@@ -2,7 +2,7 @@
 import type { FormState } from "~/types";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
-import { Csrf, SubmitButton } from "~/components";
+import { SubmitButton } from "~/components";
 import { forgotPassword } from "./action";
 import { accessEmail } from "~/action/security";
 import { KEYS } from "~/constant";
@@ -42,7 +42,6 @@ export default function ForgotPasswordForm() {
 
   return (
     <form className="card-body">
-      <Csrf key={Number(state.disableEmail)} />
       <input
         type="hidden"
         value={state.accessToken}

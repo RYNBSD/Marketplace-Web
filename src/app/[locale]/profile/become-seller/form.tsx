@@ -1,4 +1,4 @@
-import { Csrf, SubmitButton } from "~/components";
+import { SubmitButton } from "~/components";
 import { Name, Themes } from "./fields";
 import { becomeSeller } from "~/action/user";
 import { getTranslations } from "next-intl/server";
@@ -8,7 +8,6 @@ export default async function BecomeSellerForm() {
 
   return (
     <form className="card-body">
-      <Csrf />
       <div className="form-control">
         <label className="label">
           <span className="label-text">{tForm("name")}</span>

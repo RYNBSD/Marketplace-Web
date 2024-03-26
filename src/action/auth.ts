@@ -7,16 +7,12 @@ import { KEYS } from "~/constant";
 import { cookies } from "next/headers";
 import { StatusCodes } from "http-status-codes";
 
-const { HTTP, INPUT, COOKIE } = KEYS;
+const { COOKIE } = KEYS;
 
 export async function signUp(formData: FormData): Promise<FormState> {
   const locale = await getLocale();
   const res = await request("/api/auth/sign-up", {
     method: "POST",
-    // @ts-ignore
-    headers: {
-      [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF) ?? "",
-    },
     body: formData,
   });
 
@@ -34,10 +30,6 @@ export async function signUp(formData: FormData): Promise<FormState> {
 export async function signIn(formData: FormData): Promise<FormState> {
   const res = await request("/api/auth/sign-in", {
     method: "POST",
-    // @ts-ignore
-    headers: {
-      [HTTP.HEADERS.CSRF]: formData.get(INPUT.CSRF) ?? "",
-    },
     body: formData,
   });
 

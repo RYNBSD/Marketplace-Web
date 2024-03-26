@@ -1,4 +1,3 @@
-import { Csrf } from "~/components";
 import { Username } from "./fields";
 import Submit from "./submit";
 import { getTranslations } from "next-intl/server";
@@ -8,7 +7,6 @@ export default async function UpdateForm() {
 
   return (
     <form className="card-body">
-      <Csrf />
       <div className="form-control">
         <label className="label">
           <span className="label-text">{tForm("username")} *</span>
