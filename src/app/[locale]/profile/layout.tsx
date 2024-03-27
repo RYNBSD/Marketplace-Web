@@ -1,8 +1,13 @@
-import type { ReactNode } from "react"
+"use client"
+import { useLayoutEffect, type ReactNode } from "react";
 import { isAuthenticated } from "~/action/auth"
+import { useUser } from "~/context";
 
-export default async function ProfileLayout({ children }: Props) {
-  await isAuthenticated()
+export default function ProfileLayout({ children }: Props) {
+  const { user } = useUser()!;
+  useLayoutEffect(() => {
+    isAuthenticated()
+  }, [user])
   return children
 }
 

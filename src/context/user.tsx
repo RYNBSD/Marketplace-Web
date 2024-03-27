@@ -6,7 +6,7 @@ import {
   useContext,
   useCallback,
   useState,
-  useLayoutEffect,
+  useEffect,
 } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
@@ -20,9 +20,11 @@ import {
 import {
   update as updateAction,
   deleteProfile as deleteProfileAction,
+  becomeSeller as becomeSellerAction,
 } from "~/action/user";
 import { KEYS } from "~/constant";
 import { useNotification } from "./notification";
+import { useStore } from "~/hooks";
 
 type TUserContext = {
   user: User | null;
@@ -31,7 +33,7 @@ type TUserContext = {
   signOut: () => Promise<void>;
   update: (formData: FormData) => Promise<FormState>;
   remove: () => Promise<void>;
-  // setSeller: (() => Promise<void>) | null;
+  becomeSeller: (formData: FormData) => Promise<FormState>;
 };
 
 const UserContext = createContext<TUserContext | null>(null);
@@ -42,15 +44,23 @@ export default function UserProvider({ children }: Props) {
   const locale = useLocale();
   const router = useRouter();
   const { toastify } = useNotification()!;
+  const store = useStore(state => state);
   const [user, setUser] = useState<User | null>(null);
 
-  const me = useCallback(async () => {
-    const user = await meAction();
-    if (!user.success) return;
-    setUser(user.data as User);
-  }, []);
+  console.log(store);
 
-  useLayoutEffect(() => {
+  const me = useCallback(async () => {
+    const res = await meAction();
+    console.log(res);
+    
+    if (!res.success) return;
+    // @ts-ignore
+    setUser(res.data.user);
+    // @ts-ignore
+    store.set(res.data.store)
+  }, [store]);
+
+  useEffect(() => {
     me();
     return () => {
       Cookies.remove(COOKIE.SESSION);
@@ -106,6 +116,17 @@ export default function UserProvider({ children }: Props) {
     }
   }, [locale, router, toastify]);
 
+  const becomeSeller = useCallback(
+    async (formData: FormData) => {
+      const res = await becomeSellerAction(formData);
+      if (res.success) {
+        store.set(res.data as any);
+      }
+      return res;
+    },
+    [store]
+  );
+
   return (
     <UserContext.Provider
       value={{
@@ -115,6 +136,7 @@ export default function UserProvider({ children }: Props) {
         signOut,
         update,
         remove,
+        becomeSeller,
       }}
     >
       {children}

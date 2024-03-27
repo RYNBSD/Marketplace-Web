@@ -1,27 +1,11 @@
-"use client";
+"use server";
 import Link from "next/link";
-import { useMemo } from "react";
-import { useCart } from "~/context";
-import { useLocale, useTranslations } from "next-intl";
+import { NumberOfProducts, TotalPrice } from "./cart-sections";
+import { getLocale, getTranslations } from "next-intl/server";
 
-export default function NavbarCart() {
-  const locale = useLocale();
-  const tCart = useTranslations("Navbar.Cart")
-  const { cart } = useCart()!;
-
-  const totalPrice = useMemo(
-    () =>
-      cart.reduce(
-        (prev, current) => prev + current.quantity * current.price,
-        0
-      ),
-    [cart]
-  );
-  const numberOfProducts = useMemo(() => {
-    const length = cart.length;
-    const notation = length <= 1 ? tCart("item") : tCart("items");
-    return { length, notation };
-  }, [cart.length, tCart]);
+export default async function NavbarCart() {
+  const locale = await getLocale();
+  const tCart = await getTranslations("Navbar.Cart");
 
   return (
     <div className="dropdown dropdown-end">
@@ -42,7 +26,7 @@ export default function NavbarCart() {
             />
           </svg>
           <span className="badge badge-sm indicator-item">
-            {numberOfProducts.length}
+            <NumberOfProducts />
           </span>
         </div>
       </div>
@@ -51,10 +35,10 @@ export default function NavbarCart() {
         className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
       >
         <div className="card-body">
-          <span className="font-bold text-lg">
-            {numberOfProducts.length} {numberOfProducts.notation}
+          <span className="font-bold text-lg"></span>
+          <span className="text-info">
+            {tCart("total-price")}: $<TotalPrice />
           </span>
-          <span className="text-info">{tCart("total-price")}: ${totalPrice}</span>
           <div className="card-actions">
             <Link href={`/${locale}`} className="btn btn-primary btn-block">
               {tCart("view-cart")}

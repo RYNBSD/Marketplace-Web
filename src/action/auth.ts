@@ -74,12 +74,12 @@ export async function me(): Promise<FormState> {
   if (!res.ok) return { success: false, error: json.message };
   return {
     success: true,
-    data: json.data.user,
+    data: json.data,
   };
 }
 
 export async function isAuthenticated() {
-  const res = await request("/api/user");
+  const res = await request("/api/user", {});
 
   if (res.status === StatusCodes.UNAUTHORIZED) {
     const locale = await getLocale();
@@ -88,7 +88,7 @@ export async function isAuthenticated() {
 }
 
 export async function notAuthenticated() {
-  const res = await request("/api/user");
+  const res = await request("/api/user", {});
 
   if (res.ok) {
     const locale = await getLocale();

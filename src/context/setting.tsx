@@ -6,7 +6,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useState,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
@@ -26,7 +25,7 @@ export default function SittingProvider({ children }: Props) {
     locale: "en",
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const localSetting = localStorage.getItem(SETTING) ?? "";
     if (localSetting.length === 0) return;
 
@@ -43,7 +42,7 @@ export default function SittingProvider({ children }: Props) {
     }
   }, [pathname, router]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const html = document.querySelector("html")!;
     const DATA_THEME = "data-theme";
     html.setAttribute(DATA_THEME, setting.theme);

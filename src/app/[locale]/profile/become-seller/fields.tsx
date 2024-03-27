@@ -9,8 +9,8 @@ import { validateStoreName } from "~/action/validate";
 import { useTranslations } from "next-intl";
 
 export function Name() {
-  const t = useTranslations()
-  const tValidating = useTranslations("Profile.Become-Seller.Form")
+  const t = useTranslations();
+  const tValidating = useTranslations("Profile.Become-Seller.Form");
   const [isNameValid, setIsNameValid] = useState(false);
   const [isPending, startTransition] = useTransition();
 

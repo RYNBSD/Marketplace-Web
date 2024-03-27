@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Container from "../container";
 import { getLocale } from "next-intl/server"
-import NavbarCart from "./navbar-cart";
-import NavbarProfile from "./navbar-profile";
+import NavbarCart from "./cart";
+import NavbarProfile from "./profile";
 
 export default async function Navbar() {
   const locale = await getLocale()

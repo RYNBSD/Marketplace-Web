@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import { request } from "~/action/fn";
 
 export const viewport: Viewport = {
   minimumScale: 1,
