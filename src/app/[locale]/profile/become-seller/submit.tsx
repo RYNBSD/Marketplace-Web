@@ -1,3 +1,4 @@
+"use client"
 import { useTranslations } from "next-intl";
 import { SubmitButton } from "~/components";
 import { useUser } from "~/context";

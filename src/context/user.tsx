@@ -44,20 +44,21 @@ export default function UserProvider({ children }: Props) {
   const locale = useLocale();
   const router = useRouter();
   const { toastify } = useNotification()!;
-  const store = useStore(state => state);
+  const store = useStore((state) => state);
   const [user, setUser] = useState<User | null>(null);
-
-  console.log(store);
 
   const me = useCallback(async () => {
     const res = await meAction();
-    console.log(res);
-    
     if (!res.success) return;
+
     // @ts-ignore
     setUser(res.data.user);
+
     // @ts-ignore
-    store.set(res.data.store)
+    if (res.data!.store !== null) {
+      // @ts-ignore
+      store.set(res.data.store);
+    }
   }, [store]);
 
   useEffect(() => {
@@ -68,31 +69,46 @@ export default function UserProvider({ children }: Props) {
   }, [me]);
 
   const signUp = useCallback(
-    async (formData: FormData) => signUpAction(formData),
-    []
+    async (formData: FormData) => {
+      const res = await signUpAction(formData);
+
+      if (res.success) router.push(`/${locale}/auth/sign-in`);
+
+      return res;
+    },
+    [locale, router]
   );
 
   const signIn = useCallback(
     async (formData: FormData) => {
       const res = await signInAction(formData);
+
       if (res.success) {
-        setUser(res.data as User);
+        
+        // @ts-ignore
+        setUser(res.data.user);
+
+        // @ts-ignore
+        if (res.data!.store !== null) {
+          // @ts-ignore
+          store.set(res.data.store);
+        }
+
         router.push(`/${locale}/profile`);
       }
       return res;
     },
-    [locale, router]
+    [locale, router, store]
   );
 
   const signOut = useCallback(async () => {
     const res = await signOutAction();
     if (res) {
       setUser(null);
+      store.unset();
       router.push(`/${locale}`);
     }
-    // Cookies.remove(COOKIE.SESSION);
-    // Cookies.remove(COOKIE.AUTHORIZATION);
-  }, [locale, router]);
+  }, [locale, router, store]);
 
   const update = useCallback(
     async (formData: FormData): Promise<FormState> => {
@@ -110,21 +126,23 @@ export default function UserProvider({ children }: Props) {
     const res = await toastify(deleteProfileAction());
     if (res.success) {
       setUser(null);
-      Cookies.remove(COOKIE.SESSION);
-      Cookies.remove(COOKIE.AUTHORIZATION);
+      store.unset();
       router.push(`/${locale}`);
     }
-  }, [locale, router, toastify]);
+  }, [locale, router, store, toastify]);
 
   const becomeSeller = useCallback(
     async (formData: FormData) => {
       const res = await becomeSellerAction(formData);
+
       if (res.success) {
-        store.set(res.data as any);
+        // @ts-ignore
+        store.set(res.data);
+        router.push(`/${locale}/profile`);
       }
       return res;
     },
-    [store]
+    [locale, router, store]
   );
 
   return (

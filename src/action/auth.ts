@@ -1,7 +1,5 @@
 "use server";
 import type { FormState } from "~/types";
-import { redirect } from "next/navigation";
-import { getLocale } from "next-intl/server";
 import { request } from "./fn";
 import { KEYS } from "~/constant";
 import { cookies } from "next/headers";
@@ -10,7 +8,6 @@ import { StatusCodes } from "http-status-codes";
 const { COOKIE } = KEYS;
 
 export async function signUp(formData: FormData): Promise<FormState> {
-  const locale = await getLocale();
   const res = await request("/api/auth/sign-up", {
     method: "POST",
     body: formData,
@@ -24,7 +21,10 @@ export async function signUp(formData: FormData): Promise<FormState> {
     };
   }
 
-  redirect(`/${locale}/auth/sign-in`);
+  return {
+    success: true,
+    data: null
+  }
 }
 
 export async function signIn(formData: FormData): Promise<FormState> {
@@ -43,7 +43,7 @@ export async function signIn(formData: FormData): Promise<FormState> {
 
   return {
     success: true,
-    data: json.data.user,
+    data: json.data,
   };
 }
 
@@ -79,19 +79,7 @@ export async function me(): Promise<FormState> {
 }
 
 export async function isAuthenticated() {
-  const res = await request("/api/user", {});
-
-  if (res.status === StatusCodes.UNAUTHORIZED) {
-    const locale = await getLocale();
-    redirect(`/${locale}/auth/sign-in`);
-  }
+  const res = await request("/api/user");
+  return res.ok
 }
 
-export async function notAuthenticated() {
-  const res = await request("/api/user", {});
-
-  if (res.ok) {
-    const locale = await getLocale();
-    redirect(`/${locale}`);
-  }
-}

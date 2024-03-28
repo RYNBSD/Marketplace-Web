@@ -1,13 +1,27 @@
 "use client";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useLayoutEffect, type ReactNode } from "react";
-import { notAuthenticated } from "~/action/auth";
-import { useUser } from "~/context";
+import { isAuthenticated } from "~/action/auth";
 
+/**
+ * In auth section user must be not authentication
+ * to prevent sign in duplication
+ */
 export default function AuthLayout({ children }: Props) {
-  const { user } = useUser()!;
+  const locale = useLocale();
+  const router = useRouter();
+
   useLayoutEffect(() => {
-    notAuthenticated();
-  }, [user]);
+    console.log(3);
+    
+    const checkAuthentication = async () => {
+      const status = await isAuthenticated();
+      if (status) router.push(`/${locale}`);
+    };
+    checkAuthentication();
+  }, [locale, router]);
+
   return children;
 }
 

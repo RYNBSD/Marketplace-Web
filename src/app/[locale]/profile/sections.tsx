@@ -47,7 +47,7 @@ export function DeleteBtn() {
 
 export function StoreBtn() {
   const locale = useLocale();
-  const { id } = useStore();
+  const { id } = useStore((state) => state);
   const tInfo = useTranslations("Profile.Info");
 
   const isSeller = id.length !== 0;

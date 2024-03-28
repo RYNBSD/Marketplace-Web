@@ -1,7 +1,6 @@
-import { SubmitButton } from "~/components";
 import { Name, Themes } from "./fields";
-import { becomeSeller } from "~/action/user";
 import { getTranslations } from "next-intl/server";
+import Submit from "./submit";
 
 export default async function BecomeSellerForm() {
   const tForm = await getTranslations("Profile.Become-Seller.Form");
@@ -33,11 +32,7 @@ export default async function BecomeSellerForm() {
         <Themes />
       </div>
       <div className="form-control mt-6">
-        <SubmitButton
-          className="btn btn-primary"
-          content={tForm("become-seller")}
-          action={becomeSeller}
-        />
+        <Submit />
       </div>
     </form>
   );
