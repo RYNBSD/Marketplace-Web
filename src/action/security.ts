@@ -1,5 +1,5 @@
 "use server";
-import type { FormState } from "~/types";
+import type { ResponseState } from "~/types";
 import { KEYS } from "~/constant";
 import { request } from "./fn";
 
@@ -15,7 +15,7 @@ const STORE = "store";
 //   return res.headers.get(HTTP.HEADERS.CSRF)!;
 // }
 
-export async function accessEmail(formData: FormData): Promise<FormState> {
+export async function accessEmail(formData: FormData): Promise<ResponseState> {
   const res = await request(`/${SECURITY}/${ACCESS}/email`, {
     method: "POST",
     body: formData,

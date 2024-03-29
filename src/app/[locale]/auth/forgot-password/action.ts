@@ -1,6 +1,6 @@
 "use server";
 
-import type { FormState } from "~/types";
+import type { ResponseState } from "~/types";
 import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import { KEYS } from "~/constant";
@@ -8,7 +8,7 @@ import { request } from "~/action/fn";
 
 const { HTTP, INPUT } = KEYS;
 
-export async function forgotPassword(formData: FormData): Promise<FormState> {
+export async function forgotPassword(formData: FormData): Promise<ResponseState> {
   const locale = await getLocale();
   const res = await request("/api/auth/forgot-password", {
     method: "PUT",

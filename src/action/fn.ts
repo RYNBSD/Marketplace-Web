@@ -30,7 +30,6 @@ export async function setCookie(headers: Headers) {
 export async function request(
   path: string,
   init: RequestInit = {},
-  saveCookie: boolean = true
 ) {
   /*
     We perform 3 request to try if any
@@ -50,7 +49,7 @@ export async function request(
       },
     });
 
-    await setCookie(res!.headers);
+    await setCookie(res.headers);
     if (res.ok) break;
   }
 

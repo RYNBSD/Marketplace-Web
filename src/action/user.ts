@@ -1,19 +1,29 @@
 "use server";
 
-import type { FormState } from "~/types";
+import type { ResponseState } from "~/types";
 import { request } from "./fn";
 import { cookies } from "next/headers";
 import { KEYS } from "~/constant";
 
 const { COOKIE } = KEYS;
 
-export async function fetchProfile() {
+export async function fetchProfile(): Promise<ResponseState> {
   const res = await request("/api/user");
   const json = await res.json();
-  return json.data;
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: json.data,
+  };
 }
 
-export async function patchSetting(setting: object): Promise<FormState> {
+export async function patchSetting(setting: object): Promise<ResponseState> {
   const res = await request("/api/user/setting", {
     method: "PATCH",
     headers: {
@@ -35,9 +45,7 @@ export async function patchSetting(setting: object): Promise<FormState> {
   };
 }
 
-export async function becomeSeller(formData: FormData): Promise<FormState> {
-  console.log(2);
-  
+export async function becomeSeller(formData: FormData): Promise<ResponseState> {
   const res = await request("/api/user/become-seller", {
     method: "POST",
     body: formData,
@@ -57,7 +65,7 @@ export async function becomeSeller(formData: FormData): Promise<FormState> {
   };
 }
 
-export async function update(formData: FormData): Promise<FormState> {
+export async function update(formData: FormData): Promise<ResponseState> {
   const res = await request("/api/user/", {
     method: "PUT",
     body: formData,
@@ -76,7 +84,7 @@ export async function update(formData: FormData): Promise<FormState> {
   };
 }
 
-export async function deleteProfile(): Promise<FormState> {
+export async function deleteProfile(): Promise<ResponseState> {
   const res = await request("/api/user", {
     method: "DELETE",
   });

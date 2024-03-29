@@ -3,4 +3,5 @@ import { LOCALE } from '~/constant'
 
 export default async function Page() {
   redirect(`/${LOCALE[1]}`)
+  return <></>
 }

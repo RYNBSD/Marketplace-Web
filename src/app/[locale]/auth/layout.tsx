@@ -13,8 +13,6 @@ export default function AuthLayout({ children }: Props) {
   const router = useRouter();
 
   useLayoutEffect(() => {
-    console.log(3);
-    
     const checkAuthentication = async () => {
       const status = await isAuthenticated();
       if (status) router.push(`/${locale}`);

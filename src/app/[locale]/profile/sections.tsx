@@ -4,7 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useUser } from "~/context";
 import { KEYS } from "~/constant";
-import { useStore } from "~/hooks";
+import { useEffect, useState } from "react";
+import { sellerProfile } from "~/action/store";
 
 const { BASE_URL } = KEYS;
 
@@ -47,15 +48,19 @@ export function DeleteBtn() {
 
 export function StoreBtn() {
   const locale = useLocale();
-  const { id } = useStore((state) => state);
   const tInfo = useTranslations("Profile.Info");
+  const [isSeller, setIsSeller] = useState(false);
 
-  const isSeller = id.length !== 0;
+  useEffect(() => {
+    sellerProfile().then((res) =>
+      setIsSeller(res.success)
+    );
+  }, []);
 
   return (
     <Link
       href={`/${locale}/${
-        isSeller ? `dashboard/${id}` : "profile/become-seller"
+        isSeller ? `dashboard/store` : "profile/become-seller"
       }`}
       className="btn"
     >

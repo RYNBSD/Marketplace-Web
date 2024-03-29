@@ -1,5 +1,5 @@
 "use client";
-import type { FormState } from "~/types";
+import type { ResponseState } from "~/types";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { SubmitButton } from "~/components";
@@ -18,7 +18,7 @@ export default function ForgotPasswordForm() {
 
   const handleSubmit = useCallback(
     async (formData: FormData) => {
-      let res: FormState;
+      let res: ResponseState;
 
       switch (state.disableEmail) {
         case true:

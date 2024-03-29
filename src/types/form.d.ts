@@ -1,4 +1,4 @@
-export type FormState =
+export type ResponseState =
   | {
       success: false;
       error: string;

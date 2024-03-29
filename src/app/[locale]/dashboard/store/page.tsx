@@ -1,8 +1,7 @@
-import { getLocale } from 'next-intl/server'
-import { redirect } from 'next/navigation'
+import React from 'react'
 
-export default async function SellerId() {
-  const locale = await getLocale()
-  redirect(`/${locale}`)
-  return null
+export default function Profile() {
+  return (
+    <div>Profile</div>
+  )
 }

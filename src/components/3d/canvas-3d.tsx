@@ -81,7 +81,7 @@ const Canvas3D: FC<Props> = ({ model, ar = false }) => {
         </Canvas>
       </Suspense>
     </div>
-  ) : null;
+  ) : <></>;
 };
 
 Canvas3D.propTypes = {

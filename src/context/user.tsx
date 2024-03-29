@@ -1,6 +1,6 @@
 "use client";
 import type { ReactNode } from "react";
-import type { FormState, User } from "~/types";
+import type { ResponseState, User } from "~/types";
 import {
   createContext,
   useContext,
@@ -18,54 +18,52 @@ import {
   me as meAction,
 } from "~/action/auth";
 import {
+  fetchProfile as fetchProfileAction,
   update as updateAction,
   deleteProfile as deleteProfileAction,
   becomeSeller as becomeSellerAction,
 } from "~/action/user";
-import { KEYS } from "~/constant";
 import { useNotification } from "./notification";
-import { useStore } from "~/hooks";
+import { KEYS } from "~/constant";
+
+const { COOKIE } = KEYS;
 
 type TUserContext = {
   user: User | null;
-  signUp: (formData: FormData) => Promise<FormState>;
-  signIn: (formData: FormData) => Promise<FormState>;
+  signUp: (formData: FormData) => Promise<ResponseState>;
+  signIn: (formData: FormData) => Promise<ResponseState>;
   signOut: () => Promise<void>;
-  update: (formData: FormData) => Promise<FormState>;
+  update: (formData: FormData) => Promise<ResponseState>;
   remove: () => Promise<void>;
-  becomeSeller: (formData: FormData) => Promise<FormState>;
+  becomeSeller: (formData: FormData) => Promise<ResponseState>;
 };
 
 const UserContext = createContext<TUserContext | null>(null);
-
-const { COOKIE } = KEYS;
 
 export default function UserProvider({ children }: Props) {
   const locale = useLocale();
   const router = useRouter();
   const { toastify } = useNotification()!;
-  const store = useStore((state) => state);
   const [user, setUser] = useState<User | null>(null);
 
+  /**
+   * Me try the fetch profile with jwt, if user is already
+   * authenticated we use session.
+   */
   const me = useCallback(async () => {
-    const res = await meAction();
+    if (user !== null) return;
+
+    let res = await meAction();
+    if (!res.success) res = await fetchProfileAction();
+
     if (!res.success) return;
 
     // @ts-ignore
     setUser(res.data.user);
-
-    // @ts-ignore
-    if (res.data!.store !== null) {
-      // @ts-ignore
-      store.set(res.data.store);
-    }
-  }, [store]);
+  }, [user]);
 
   useEffect(() => {
     me();
-    return () => {
-      Cookies.remove(COOKIE.SESSION);
-    };
   }, [me]);
 
   const signUp = useCallback(
@@ -84,34 +82,27 @@ export default function UserProvider({ children }: Props) {
       const res = await signInAction(formData);
 
       if (res.success) {
-        
         // @ts-ignore
         setUser(res.data.user);
-
-        // @ts-ignore
-        if (res.data!.store !== null) {
-          // @ts-ignore
-          store.set(res.data.store);
-        }
-
         router.push(`/${locale}/profile`);
       }
       return res;
     },
-    [locale, router, store]
+    [locale, router]
   );
 
   const signOut = useCallback(async () => {
-    const res = await signOutAction();
-    if (res) {
+    const res = await toastify(signOutAction());
+    if (res.success) {
       setUser(null);
-      store.unset();
+      Cookies.remove(COOKIE.AUTHORIZATION);
+      Cookies.remove(COOKIE.SESSION);
       router.push(`/${locale}`);
     }
-  }, [locale, router, store]);
+  }, [locale, router, toastify]);
 
   const update = useCallback(
-    async (formData: FormData): Promise<FormState> => {
+    async (formData: FormData): Promise<ResponseState> => {
       const res = await updateAction(formData);
       if (res.success) {
         setUser((prev) => ({ ...prev, ...(res.data as User) }));
@@ -126,23 +117,20 @@ export default function UserProvider({ children }: Props) {
     const res = await toastify(deleteProfileAction());
     if (res.success) {
       setUser(null);
-      store.unset();
       router.push(`/${locale}`);
     }
-  }, [locale, router, store, toastify]);
+  }, [locale, router, toastify]);
 
   const becomeSeller = useCallback(
     async (formData: FormData) => {
       const res = await becomeSellerAction(formData);
 
       if (res.success) {
-        // @ts-ignore
-        store.set(res.data);
         router.push(`/${locale}/profile`);
       }
       return res;
     },
-    [locale, router, store]
+    [locale, router]
   );
 
   return (

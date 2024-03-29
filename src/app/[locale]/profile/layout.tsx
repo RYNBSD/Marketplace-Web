@@ -12,8 +12,6 @@ export default function ProfileLayout({ children }: Props) {
   const router = useRouter();
 
   useLayoutEffect(() => {
-    console.log(4);
-    
     const checkAuthentication = async () => {
       const status = await isAuthenticated();
       if (!status) router.push(`/${locale}/auth/sign-in`);

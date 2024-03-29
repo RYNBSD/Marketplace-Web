@@ -1,13 +1,13 @@
 "use client";
 import type { ReactNode } from "react";
-import type { FormState } from "~/types";
+import type { ResponseState } from "~/types";
 import { createContext, useContext, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSetting } from "./setting";
 
 type TNotificationContext = {
   notify: () => Promise<unknown>;
-  toastify: (promise: Promise<FormState>) => Promise<FormState>;
+  toastify: (promise: Promise<ResponseState>) => Promise<ResponseState>;
 };
 
 const NotificationContext = createContext<TNotificationContext | null>(null);
@@ -24,7 +24,7 @@ export default function NotificationProvider({ children }: Props) {
   }, []);
 
   const toastify = useCallback(
-    async (promise: Promise<FormState>) => {
+    async (promise: Promise<ResponseState>) => {
       const res = await toast.promise(
         promise,
         { pending: "Waiting", error: "Error", success: "Success" },
