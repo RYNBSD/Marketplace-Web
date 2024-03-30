@@ -2,13 +2,13 @@ import { getTranslations } from "next-intl/server";
 import { Name, Submit } from "./fields";
 
 export default async function UpdateForm() {
-  const tForm = await getTranslations("Profile.Update.Form");
+  const tForm = await getTranslations("Dashboard.Store.Update.Form");
 
   return (
     <form className="card-body">
       <div className="form-control">
         <label htmlFor="name" className="label">
-          <span className="label-text">{tForm("username")} *</span>
+          <span className="label-text">{tForm("name")} *</span>
         </label>
         <Name />
       </div>

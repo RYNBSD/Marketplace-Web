@@ -19,7 +19,7 @@ export default async function LocaleLayout({
           <UserProvider>
             <Navbar />
             <main className="w-full min-h-screen">
-              <Container bg="bg-base-200" className="w-full min-h-screen">
+              <Container bg="bg-base-200" className="w-full min-h-screen py-1">
                 {children}
               </Container>
             </main>

@@ -12,7 +12,7 @@ export default async function SignUpForm() {
   return (
     <form className="card-body">
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="username" className="label">
           <span className="label-text">{t("username")} *</span>
         </label>
         <input
@@ -24,13 +24,13 @@ export default async function SignUpForm() {
         />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="email" className="label">
           <span className="label-text">{t("email")} *</span>
         </label>
         <Email />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="password" className="label">
           <span className="label-text">{t("password")} *</span>
         </label>
         <input
@@ -43,7 +43,7 @@ export default async function SignUpForm() {
         />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="image" className="label">
           <span className="label-text">{t("pick-image")} *</span>
         </label>
         <input
@@ -55,7 +55,7 @@ export default async function SignUpForm() {
         />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="locale" className="label">
           <span className="label-text">{t("pick-locale")} *</span>
         </label>
         <div className="join">
@@ -63,7 +63,7 @@ export default async function SignUpForm() {
         </div>
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="theme" className="label">
           <span className="label-text">{t("pick-theme")} *</span>
         </label>
         <div className="join">

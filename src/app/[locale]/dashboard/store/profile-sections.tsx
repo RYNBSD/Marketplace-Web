@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { deleteStore } from "~/action/store";
 import { KEYS } from "~/constant";
@@ -23,19 +24,22 @@ export function Img() {
 }
 
 export function Name() {
+  const tProfile = useTranslations("Dashboard.Store.Profile")
   const store = useSeller((state) => state.store);
   return (
     <input
-      type="text"
-      value={store.name}
       disabled
+      type="text"
+      name="name"
       className="grow"
-      placeholder="username"
+      placeholder={tProfile("name")}
+      value={store.name}
     />
   );
 }
 
 export function DeleteBtn() {
+  const tProfile = useTranslations("Dashboard.Store.Profile")
   const { toastify } = useNotification()!;
   return (
     <button
@@ -43,7 +47,7 @@ export function DeleteBtn() {
       className="btn btn-error capitalize"
       onClick={() => toastify(deleteStore())}
     >
-      Delete
+      {tProfile("delete")}
     </button>
   );
 }

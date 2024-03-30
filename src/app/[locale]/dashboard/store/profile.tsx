@@ -4,7 +4,7 @@ import { Img, Name, DeleteBtn } from "./profile-sections";
 
 export default async function Profile() {
   const locale = await getLocale();
-  const tInfo = await getTranslations("Profile.Info");
+  const tProfile = await getTranslations("Dashboard.Store.Profile");
 
   return (
     <section
@@ -30,7 +30,7 @@ export default async function Profile() {
               className="btn btn-info capitalize"
               href={`/${locale}/dashboard/store/update`}
             >
-              {tInfo("update")}
+              {tProfile("update")}
             </Link>
             <DeleteBtn />
           </div>
@@ -42,14 +42,14 @@ export default async function Profile() {
           className="btn"
           href={`/${locale}/dashboard/store/categories`}
         >
-          Categories
+          {tProfile("categories")}
         </Link>
         <Link
           type="button"
           className="btn"
           href={`/${locale}/dashboard/store/products`}
         >
-          Products
+          {tProfile("products")}
         </Link>
       </div>
     </section>

@@ -12,6 +12,7 @@ export default {
   COOKIE: {
     SESSION: "session",
     AUTHORIZATION: "authorization",
+    THEME: "theme",
   },
   GLOBAL: {
     PUBLIC: "public",
@@ -25,6 +26,6 @@ export default {
   INPUT: {
     // CSRF: "csrf",
     ACCESS_TOKEN: "access-token",
-    IMAGE: "image"
-  }
+    IMAGE: "image",
+  },
 } as const;

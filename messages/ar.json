@@ -91,5 +91,29 @@
         "update": "تحديث"
       }
     }
+  },
+  "Dashboard": {
+    "Admin": {
+
+    },
+    "Store": {
+      "Profile": {
+        "name": "اسم",
+        "update": "تحديث",
+        "delete": "حذف",
+        "categories": "فئات",
+        "products": "منتجات"
+      },
+      "Update": {
+        "update-store": "تحديث المتجر",
+        "Form": {
+          "name": "اسم",
+          "pick-new-image": "اختر صورة جديدة",
+          "store-valid": "اسم المتجر صالح",
+          "store-not-valid": "اسم المتجر غير صالح",
+          "update": "تحديث"
+        }
+      }
+    }
   }
 }

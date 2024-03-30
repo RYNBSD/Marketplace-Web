@@ -2,25 +2,29 @@
 
 import type { ChangeEvent } from "react";
 import type { Theme } from "~/types";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState, useTransition } from "react";
 import { THEMES } from "~/constant";
 import { useSetting } from "~/context";
 import { validateStoreName } from "~/action/validate";
-import { useTranslations } from "next-intl";
+import { SubmitButton } from "~/components";
+import { useUser } from "~/context";
 
 export function Name() {
   const t = useTranslations();
-  const tValidating = useTranslations("Profile.Become-Seller.Form");
-  const [isNameValid, setIsNameValid] = useState(false);
+  const tForm = useTranslations("Profile.Become-Seller.Form");
+  const [isValid, setIsValid] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  const onNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    startTransition(() => {
-      validateStoreName(e.target.value)
-        .then(({ success }) => setIsNameValid(success))
-        .catch(() => setIsNameValid(false));
-    });
-  }, []);
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) =>
+      startTransition(() => {
+        validateStoreName(e.target.value)
+          .then(({ success }) => setIsValid(success))
+          .catch(() => setIsValid(false));
+      }),
+    []
+  );
 
   return (
     <>
@@ -28,19 +32,19 @@ export function Name() {
         required
         type="text"
         name="name"
-        placeholder="Store name"
+        placeholder={tForm("name")}
         className={`input input-bordered ${
-          isNameValid ? "input-success" : "input-error"
+          isValid ? "input-success" : "input-error"
         }`}
-        onChange={onNameChange}
+        onChange={onChange}
       />
       <div className="label">
         <span className="label-text-alt">
           {isPending
             ? t("validating")
-            : isNameValid
-            ? tValidating("store-valid")
-            : tValidating("store-not-valid")}
+            : isValid
+            ? tForm("store-valid")
+            : tForm("store-not-valid")}
         </span>
       </div>
     </>
@@ -71,5 +75,18 @@ export function Themes() {
         </option>
       ))}
     </select>
+  );
+}
+
+export function Submit() {
+  const tForm = useTranslations("Profile.Become-Seller.Form");
+  const { becomeSeller } = useUser()!;
+
+  return (
+    <SubmitButton
+      className="btn btn-primary"
+      content={tForm("become-seller")}
+      action={becomeSeller}
+    />
   );
 }

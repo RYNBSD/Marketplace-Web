@@ -5,13 +5,14 @@ import { SubmitButton } from "~/components";
 import { useUser } from "~/context";
 
 export function Username() {
+  const tForm = useTranslations("Profile.Update.Form")
   const { user } = useUser()!;
   return (
     <input
       defaultValue={user?.username ?? ""}
       type="text"
       name="username"
-      placeholder="Username"
+      placeholder={tForm("username")}
       className="input input-bordered"
       required
     />
@@ -19,13 +20,13 @@ export function Username() {
 }
 
 export function Submit() {
-  const tSubmit = useTranslations("Profile.Update.Form");
+  const tForm = useTranslations("Profile.Update.Form");
   const { update } = useUser()!;
 
   return (
     <SubmitButton
       className="btn btn-primary"
-      content={tSubmit("update")}
+      content={tForm("update")}
       action={update!}
     />
   );

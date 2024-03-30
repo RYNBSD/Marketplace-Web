@@ -13,7 +13,7 @@ export const useSeller = create<State & Actions>((set) => ({
     categories: 0,
     products: 0,
   },
-  setState: (state: State) => set(() => state),
+  setState: (state: State) => set(state),
 }));
 
 type State = {

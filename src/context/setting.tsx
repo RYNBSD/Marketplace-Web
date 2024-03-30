@@ -13,7 +13,7 @@ import { KEYS } from "~/constant";
 import { patchSetting } from "~/action/user";
 
 const SettingContext = createContext<TSettingContext | null>(null);
-const { SETTING } = KEYS.BROWSER.LOCALE_STORAGE;
+const { BROWSER } = KEYS;
 
 export default function SittingProvider({ children }: Props) {
   const router = useRouter();
@@ -26,7 +26,8 @@ export default function SittingProvider({ children }: Props) {
   });
 
   useEffect(() => {
-    const localSetting = localStorage.getItem(SETTING) ?? "";
+    const localSetting =
+      localStorage.getItem(BROWSER.LOCALE_STORAGE.SETTING) ?? "";
     if (localSetting.length === 0) return;
 
     const setting = JSON.parse(localSetting) as LocalSetting;
@@ -54,10 +55,13 @@ export default function SittingProvider({ children }: Props) {
       value: LocalSetting[K]
     ) => {
       const newSetting = { ...setting, [key]: value };
-      setSetting(newSetting);
-      patchSetting(newSetting);
-      const stringify = JSON.stringify(newSetting);
-      localStorage.setItem(SETTING, stringify);
+
+      patchSetting(newSetting).then(() => {
+        setSetting(newSetting);
+
+        const stringify = JSON.stringify(newSetting);
+        localStorage.setItem(BROWSER.LOCALE_STORAGE.SETTING, stringify);
+      });
     },
     [setSetting, setting]
   );

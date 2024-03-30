@@ -1,6 +1,5 @@
-import { Name, Themes } from "./fields";
+import { Name, Themes, Submit } from "./fields";
 import { getTranslations } from "next-intl/server";
-import Submit from "./submit";
 
 export default async function BecomeSellerForm() {
   const tForm = await getTranslations("Profile.Become-Seller.Form");
@@ -8,13 +7,13 @@ export default async function BecomeSellerForm() {
   return (
     <form className="card-body">
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="name" className="label">
           <span className="label-text">{tForm("name")}</span>
         </label>
         <Name />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="image" className="label">
           <span className="label-text">{tForm("pick-image")}</span>
         </label>
         <input
@@ -26,7 +25,7 @@ export default async function BecomeSellerForm() {
         />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="theme" className="label">
           <span className="label-text">{tForm("pick-theme")}</span>
         </label>
         <Themes />

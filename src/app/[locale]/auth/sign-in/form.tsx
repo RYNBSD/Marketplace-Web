@@ -11,7 +11,7 @@ export default async function SignInForm() {
   return (
     <form className="card-body">
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="email" className="label">
           <span className="label-text">{t("email")} *</span>
         </label>
         <input
@@ -23,7 +23,7 @@ export default async function SignInForm() {
         />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="password" className="label">
           <span className="label-text">{t("password")} *</span>
         </label>
         <input

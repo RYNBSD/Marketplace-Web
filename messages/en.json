@@ -1,5 +1,5 @@
 {
-  "validating": "validating",
+  "validating": "Validating",
   "Navbar": {
     "sign-in": "Sign in",
     "Profile": {
@@ -89,6 +89,30 @@
         "username": "Username",
         "pick-new-image": "Pick new image",
         "update": "Update"
+      }
+    }
+  },
+  "Dashboard": {
+    "Admin": {
+
+    },
+    "Store": {
+      "Profile": {
+        "name": "Name",
+        "update": "Update",
+        "delete": "Delete",
+        "categories": "Categories",
+        "products": "Products"
+      },
+      "Update": {
+        "update-store": "Update store",
+        "Form": {
+          "name": "Name",
+          "pick-new-image": "Pick new image",
+          "store-valid": "Store name valid",
+          "store-not-valid": "Store name not valid",
+          "update": "Update"
+        }
       }
     }
   }

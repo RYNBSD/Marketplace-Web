@@ -48,7 +48,7 @@ export default function ForgotPasswordForm() {
         name={INPUT.ACCESS_TOKEN}
       />
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="email" className="label">
           <span className="label-text">{tForm("email")}</span>
         </label>
         <input
@@ -61,7 +61,7 @@ export default function ForgotPasswordForm() {
         />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="code" className="label">
           <span className="label-text">{tForm("code")}</span>
         </label>
         <input
@@ -74,7 +74,7 @@ export default function ForgotPasswordForm() {
         />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="password" className="label">
           <span className="label-text">{tForm("password")}</span>
         </label>
         <input
@@ -87,7 +87,7 @@ export default function ForgotPasswordForm() {
         />
       </div>
       <div className="form-control">
-        <label className="label">
+        <label htmlFor="confirmPassword" className="label">
           <span className="label-text">{tForm("confirm-password")}</span>
         </label>
         <input
