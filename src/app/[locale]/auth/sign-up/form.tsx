@@ -2,8 +2,7 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { Email, Locale, Theme } from "./fields";
-import Submit from "./submit";
+import { Email, Locale, Theme, Submit } from "./fields";
 
 export default async function SignUpForm() {
   const locale = await getLocale();

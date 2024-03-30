@@ -5,12 +5,13 @@ import { useTranslations } from "next-intl";
 import { useCallback, useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { LOCALE, THEMES } from "~/constant";
-import { useSetting } from "~/context";
+import { useSetting,useUser } from "~/context";
 import { validateUserEmail } from "~/action/validate";
+import { SubmitButton } from "~/components";
 
 export function Email() {
-  const rootT = useTranslations();
-  const t = useTranslations("Auth.Sign-Up.Form");
+  const t = useTranslations();
+  const tForm = useTranslations("Auth.Sign-Up.Form");
   const [isPending, startTransition] = useTransition();
   const [isEmailValid, setIsEmailValid] = useState(false);
 
@@ -18,7 +19,6 @@ export function Email() {
     startTransition(() => {
       validateUserEmail(e.target.value)
         .then(({ success }) => setIsEmailValid(success))
-        .catch(() => setIsEmailValid(false));
     });
   }, []);
 
@@ -37,10 +37,10 @@ export function Email() {
       <div className="label">
         <span className="label-text-alt">
           {isPending
-            ? rootT("validating")
+            ? t("validating")
             : isEmailValid
-            ? t("email-valid")
-            : t("email-not-valid")}
+            ? tForm("email-valid")
+            : tForm("email-not-valid")}
         </span>
       </div>
     </>
@@ -103,5 +103,18 @@ export function Theme() {
         onChange={() => changeSetting("theme", "dark")}
       />
     </>
+  );
+}
+
+export function Submit() {
+  const tForm = useTranslations("Auth.Sign-Up.Form")
+  const { signUp } = useUser()!;
+
+  return (
+    <SubmitButton
+      className="btn btn-primary"
+      content={tForm("sign-up")}
+      action={signUp!}
+    />
   );
 }

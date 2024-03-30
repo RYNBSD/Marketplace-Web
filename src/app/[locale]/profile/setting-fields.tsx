@@ -18,7 +18,7 @@ export function Locale() {
       onChange={(e) =>
         startTransition(() => {
           changeSetting("locale", e.target.value as TLocale);
-          router.push(`/${locale}/profile`);
+          router.push(`/${e.target.value}/profile`);
         })
       }
       value={setting.locale}
