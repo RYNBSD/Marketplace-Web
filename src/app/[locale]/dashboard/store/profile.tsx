@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { DeleteBtn, Img, StoreBtn, Username } from "./sections";
+import { Img, Name, DeleteBtn } from "./profile-sections";
 
 export default async function Profile() {
   const locale = await getLocale();
@@ -23,12 +23,12 @@ export default async function Profile() {
             >
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
             </svg>
-            <Username />
+            <Name />
           </label>
           <div className="flex gap-2">
             <Link
               className="btn btn-info capitalize"
-              href={`/${locale}/profile/update`}
+              href={`/${locale}/dashboard/store/update`}
             >
               {tInfo("update")}
             </Link>
@@ -36,7 +36,22 @@ export default async function Profile() {
           </div>
         </div>
       </div>
-      <StoreBtn />
+      <div className="flex items-center justify-center gap-5">
+        <Link
+          type="button"
+          className="btn"
+          href={`/${locale}/dashboard/store/categories`}
+        >
+          Categories
+        </Link>
+        <Link
+          type="button"
+          className="btn"
+          href={`/${locale}/dashboard/store/products`}
+        >
+          Products
+        </Link>
+      </div>
     </section>
   );
 }

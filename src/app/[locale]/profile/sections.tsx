@@ -11,6 +11,7 @@ const { BASE_URL } = KEYS;
 
 export function Img() {
   const { user } = useUser()!;
+
   return (
     <Image
       src={`${BASE_URL}${user?.image ?? "/upload"}`}
@@ -40,7 +41,7 @@ export function DeleteBtn() {
   const tInfo = useTranslations("Profile.Info");
   const { remove } = useUser()!;
   return (
-    <button className="btn btn-error" type="button" onClick={remove}>
+    <button className="btn btn-error capitalize" type="button" onClick={remove}>
       {tInfo("delete")}
     </button>
   );
@@ -52,9 +53,7 @@ export function StoreBtn() {
   const [isSeller, setIsSeller] = useState(false);
 
   useEffect(() => {
-    sellerProfile().then((res) =>
-      setIsSeller(res.success)
-    );
+    sellerProfile().then((res) => setIsSeller(res.success));
   }, []);
 
   return (

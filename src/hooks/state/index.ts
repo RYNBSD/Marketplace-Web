@@ -1,1 +1,1 @@
-
+export { useSeller } from "./useSeller";

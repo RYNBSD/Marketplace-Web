@@ -1,5 +1,5 @@
-import { Submit, Username } from "./fields";
 import { getTranslations } from "next-intl/server";
+import { Name, Submit } from "./fields";
 
 export default async function UpdateForm() {
   const tForm = await getTranslations("Profile.Update.Form");
@@ -7,10 +7,10 @@ export default async function UpdateForm() {
   return (
     <form className="card-body">
       <div className="form-control">
-        <label htmlFor="username" className="label">
+        <label htmlFor="name" className="label">
           <span className="label-text">{tForm("username")} *</span>
         </label>
-        <Username />
+        <Name />
       </div>
       <div className="form-control">
         <label htmlFor="image" className="label">

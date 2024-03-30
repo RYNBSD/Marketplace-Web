@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Footer, Navbar } from "~/components";
+import { Container, Footer, Navbar } from "~/components";
 import {
   SettingProvider,
   UserProvider,
   CartProvider,
-  NotificationPromise,
+  NotificationProvider,
 } from "~/context";
 
 export default async function LocaleLayout({
@@ -15,13 +15,17 @@ export default async function LocaleLayout({
   return (
     <SettingProvider>
       <CartProvider>
-        <NotificationPromise>
+        <NotificationProvider>
           <UserProvider>
             <Navbar />
-            <main className="w-full min-h-screen">{children}</main>
+            <main className="w-full min-h-screen">
+              <Container bg="bg-base-200" className="w-full min-h-screen">
+                {children}
+              </Container>
+            </main>
             <Footer />
           </UserProvider>
-        </NotificationPromise>
+        </NotificationProvider>
       </CartProvider>
     </SettingProvider>
   );

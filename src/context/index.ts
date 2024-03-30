@@ -8,4 +8,4 @@ export { useNotification } from "./notification";
 export const UserProvider = dynamic(() => import("./user"));
 export const SettingProvider = dynamic(() => import("./setting"));
 export const CartProvider = dynamic(() => import("./cart"));
-export const NotificationPromise = dynamic(() => import("./notification"));
+export const NotificationProvider = dynamic(() => import("./notification"));

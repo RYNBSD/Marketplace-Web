@@ -1,7 +1,9 @@
-import React from 'react'
+import Profile from './profile'
 
-export default function Profile() {
+export default function Seller() {
   return (
-    <div>Profile</div>
+    <div>
+      <Profile />
+    </div>
   )
 }
