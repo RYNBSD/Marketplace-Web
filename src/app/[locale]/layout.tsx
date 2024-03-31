@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Container, Footer, Navbar } from "~/components";
 import {
   SettingProvider,
@@ -6,28 +7,27 @@ import {
   CartProvider,
   NotificationProvider,
 } from "~/context";
+import { QueryClientProvider } from "~/provider";
 
-export default async function LocaleLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function LocaleLayout({ children }: Props) {
   return (
-    <SettingProvider>
-      <CartProvider>
-        <NotificationProvider>
-          <UserProvider>
-            <Navbar />
-            <main className="w-full min-h-screen">
-              <Container bg="bg-base-200" className="w-full min-h-screen py-1">
-                {children}
-              </Container>
-            </main>
-            <Footer />
-          </UserProvider>
-        </NotificationProvider>
-      </CartProvider>
-    </SettingProvider>
+    <QueryClientProvider>
+      <SettingProvider>
+        <CartProvider>
+          <NotificationProvider>
+            <UserProvider>
+              <Navbar />
+              <main className="w-full min-h-screen">
+                <Container bg="bg-base-200" className="w-full min-h-screen p-1">
+                  {children}
+                </Container>
+              </main>
+              <Footer />
+            </UserProvider>
+          </NotificationProvider>
+        </CartProvider>
+      </SettingProvider>
+    </QueryClientProvider>
   );
 }
 
@@ -52,3 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
   };
 }
+
+type Props = {
+  children: ReactNode;
+};

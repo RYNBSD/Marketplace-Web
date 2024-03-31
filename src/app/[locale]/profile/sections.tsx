@@ -53,7 +53,7 @@ export function StoreBtn() {
   const [isSeller, setIsSeller] = useState(false);
 
   useEffect(() => {
-    sellerProfile().then((res) => setIsSeller(res.success));
+    sellerProfile().then(({ success }) => setIsSeller(success));
   }, []);
 
   return (

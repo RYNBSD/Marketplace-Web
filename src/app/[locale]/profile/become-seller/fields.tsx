@@ -5,10 +5,9 @@ import type { Theme } from "~/types";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState, useTransition } from "react";
 import { THEMES } from "~/constant";
-import { useSetting } from "~/context";
+import { useSetting, useUser } from "~/context";
 import { validateStoreName } from "~/action/validate";
 import { SubmitButton } from "~/components";
-import { useUser } from "~/context";
 
 export function Name() {
   const t = useTranslations();

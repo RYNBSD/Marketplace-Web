@@ -28,7 +28,7 @@ export function Email() {
         required
         type="email"
         name="email"
-        placeholder={t("email")}
+        placeholder={tForm("email")}
         className={`input input-bordered ${
           isEmailValid ? "input-success" : "input-error"
         }`}

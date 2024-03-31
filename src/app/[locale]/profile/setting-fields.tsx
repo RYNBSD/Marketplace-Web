@@ -1,7 +1,6 @@
 "use client";
 
 import type { Locale as TLocale, Theme as TTheme } from "~/types";
-import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useSetting } from "~/context";
@@ -9,7 +8,6 @@ import { LOCALE, THEMES } from "~/constant";
 
 export function Locale() {
   const router = useRouter();
-  const locale = useLocale();
   const [_, startTransition] = useTransition();
   const { setting, changeSetting } = useSetting()!;
 
