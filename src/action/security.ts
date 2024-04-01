@@ -87,3 +87,17 @@ export async function validateProductTitle(title: string, titleAr: string) {
 
   return res.ok;
 }
+
+export async function validateUserEmail(email: string) {
+  const formData = new FormData();
+  formData.append("email", email);
+
+  const res = await request(`/${SECURITY}/${VALIDATE}/${STORE}/email`, {
+    method: "POST",
+    body: formData,
+  });
+
+  return {
+    success: res.ok,
+  };
+}

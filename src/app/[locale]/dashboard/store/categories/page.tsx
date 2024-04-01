@@ -1,7 +1,8 @@
 import { getLocale } from "next-intl/server";
 import Link from "next/link";
+import Categories from "./categories";
 
-export default async function Categories() {
+export default async function Page() {
   const locale = await getLocale();
 
   return (
@@ -16,6 +17,7 @@ export default async function Categories() {
             Create
           </Link>
         </div>
+      <Categories />
       </div>
     </div>
   );

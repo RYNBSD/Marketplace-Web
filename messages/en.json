@@ -93,9 +93,7 @@
     }
   },
   "Dashboard": {
-    "Admin": {
-
-    },
+    "Admin": {},
     "Store": {
       "Profile": {
         "name": "Name",
@@ -112,6 +110,19 @@
           "store-valid": "Store name valid",
           "store-not-valid": "Store name not valid",
           "update": "Update"
+        }
+      },
+      "Categories": {
+        "Create": {
+        "create-category": "Create category",
+          "Form": {
+            "name": "Name",
+            "arabic-name": "Arabic name",
+            "pick-new-image": "Pick new image",
+            "category-valid": "Category name valid",
+            "category-not-valid": "Category name not valid",
+            "create": "Create"
+          }
         }
       }
     }

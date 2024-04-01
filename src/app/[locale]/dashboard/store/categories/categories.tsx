@@ -1,69 +1,102 @@
 "use client";
 
-import { useCallback, useMemo, useRef } from "react";
-import { useInfiniteQuery } from "react-query";
-import Category from "./category";
+import { useLocale } from "next-intl";
+import Image from "next/image";
+import Link from "next/link";
+import { memo, useCallback, useEffect, useState } from "react";
+import { allCategories, deleteCategory } from "~/action/store";
+import { KEYS } from "~/constant";
+
+const { BASE_URL } = KEYS;
 
 export default function Categories() {
-  const observer = useRef<IntersectionObserver>();
+  const locale = useLocale();
+  const [categories, setCategories] = useState([]);
 
-  const {
-    data,
-    error,
-    isLoading,
-    isFetching,
-    isError,
-    hasNextPage,
-    fetchNextPage,
-  } = useInfiniteQuery({
-    queryKey: "categories",
-    queryFn: ({ pageParam = 1 }) => {},
-    getNextPageParam(lastPage, allPages) {
-      return lastPage.length ? allPages.length + 1 : undefined
-    },
-  });
+  useEffect(() => {
+    allCategories(1).then((res) => {
+      // @ts-ignore
+      if (res.success) setCategories(res.data.categories);
+    });
+  }, []);
 
-  const lastElementRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (isLoading) return;
-
-      if (observer.current) observer.current.disconnect();
-
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0]?.isIntersecting && hasNextPage && !isFetching) {
-          fetchNextPage();
-        }
-      });
-
-      if (node) observer.current.observe(node);
-    },
-    [fetchNextPage, hasNextPage, isFetching, isLoading]
-  );
-
-  const categories = useMemo(() => {
-    console.log(data);
-    return (
-      (data?.pages.reduce(
-        (prev: any, page: any) => [...prev, ...page],
-        []
-      ) as any[]) ?? []
-    );
-  }, [data]);
-
-  if (isLoading) return <span className="loading loading-spinner loading-lg" />;
-
-  if (isError) return <h1>Error</h1>;
+  const remove = useCallback((id: string) => {
+    deleteCategory(`${id}`).then(({ success }) => {
+      if (success)
+        // @ts-ignore
+        setCategories((prev) => prev.filter((category) => category.id !== id));
+    });
+  }, []);
 
   return (
-    <div>
-      {categories?.map((category: any, i: number) =>
-        categories.length === i + 1 ? (
-          <Category key={category.id} ref={lastElementRef} />
-        ) : (
-          <Category key={category.id} />
-        )
-      )}
-      {isFetching && <span className="loading loading-spinner loading-lg" />}
+    <div className="flex justify-center flex-wrap gap-5">
+      {categories.map((category: any) => (
+        <Category
+          key={category.id}
+          {...category}
+          locale={locale}
+          remove={remove}
+        />
+      ))}
     </div>
   );
 }
+
+const Category = memo(function Category({
+  id,
+  image,
+  name,
+  nameAr,
+  locale,
+  remove,
+}: categoryProps) {
+  const lang = locale === "en" ? name : nameAr;
+
+  return (
+    <div className="card w-96 bg-base-100 shadow-xl">
+      <figure>
+        <Image
+          src={`${BASE_URL}${image}`}
+          alt={lang}
+          width={384}
+          height={100}
+          loading="lazy"
+          className="object-cover aspect-square"
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">{lang}</h2>
+        <div className="flex gap-1">
+          <Link
+            className="btn flex-1"
+            href={`/${locale}/dashboard/store/categories/${id}`}
+          >
+            View
+          </Link>
+          <Link
+            href={`/${locale}/dashboard/store/categories/update?id=${id}`}
+            className="btn btn-info flex-1"
+          >
+            Update
+          </Link>
+          <button
+            type="button"
+            className="btn btn-error flex-1"
+            onClick={() => remove(id)}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+type categoryProps = {
+  id: string;
+  image: string;
+  name: string;
+  nameAr: string;
+  locale: string;
+  remove: (id: string) => void;
+};

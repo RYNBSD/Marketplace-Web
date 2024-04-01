@@ -7,27 +7,24 @@ import {
   CartProvider,
   NotificationProvider,
 } from "~/context";
-import { QueryClientProvider } from "~/provider";
 
 export default async function LocaleLayout({ children }: Props) {
   return (
-    <QueryClientProvider>
-      <SettingProvider>
-        <CartProvider>
-          <NotificationProvider>
-            <UserProvider>
-              <Navbar />
-              <main className="w-full min-h-screen">
-                <Container bg="bg-base-200" className="w-full min-h-screen p-1">
-                  {children}
-                </Container>
-              </main>
-              <Footer />
-            </UserProvider>
-          </NotificationProvider>
-        </CartProvider>
-      </SettingProvider>
-    </QueryClientProvider>
+    <SettingProvider>
+      <CartProvider>
+        <NotificationProvider>
+          <UserProvider>
+            <Navbar />
+            <main className="w-full min-h-screen">
+              <Container bg="bg-base-200" className="w-full min-h-screen p-1">
+                {children}
+              </Container>
+            </main>
+            <Footer />
+          </UserProvider>
+        </NotificationProvider>
+      </CartProvider>
+    </SettingProvider>
   );
 }
 

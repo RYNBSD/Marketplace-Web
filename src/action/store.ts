@@ -54,7 +54,21 @@ export async function deleteStore(): Promise<ResponseState> {
   };
 }
 
-export async function allCategories() {}
+export async function allCategories(page: number): Promise<ResponseState> {
+  const res = await request(`/api/dashboard/store/categories?page=${page}`);
+  const json = await res.json();
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: json.data,
+  };
+}
 
 export async function fetchCategory() {}
 
@@ -81,4 +95,20 @@ export async function createCategory(
 
 export async function updateCategory() {}
 
-export async function deleteCategory() {}
+export async function deleteCategory(id: string): Promise<ResponseState> {
+  const res = await request(`/api/dashboard/store/categories/${id}`, {
+    method: "DELETE",
+  });
+  const json = await res.json();
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: null,
+  };
+}
