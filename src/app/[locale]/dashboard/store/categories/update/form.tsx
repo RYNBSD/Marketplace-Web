@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { Submit } from "./form-client";
 
 export default async function UpdateForm({ name, nameAr }: Props) {
-  const tForm = await getTranslations("Dashboard.Store.Categories.Create.Form");
+  const tForm = await getTranslations("Dashboard.Store.Categories.Update.Form");
 
   return (
     <form className="card-body">
@@ -14,7 +14,7 @@ export default async function UpdateForm({ name, nameAr }: Props) {
           type="text"
           name="name"
           defaultValue={name}
-          placeholder="Name"
+          placeholder={tForm("name")}
           className="input input-bordered"
           required
         />
@@ -27,7 +27,7 @@ export default async function UpdateForm({ name, nameAr }: Props) {
           type="text"
           name="nameAr"
           defaultValue={nameAr}
-          placeholder="Arabic name"
+          placeholder={tForm("arabic-name")}
           className="input input-bordered"
           required
         />

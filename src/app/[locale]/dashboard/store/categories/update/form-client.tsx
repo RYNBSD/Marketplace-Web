@@ -8,7 +8,7 @@ import { SubmitButton } from "~/components";
 
 export function Name() {
   const t = useTranslations();
-  const tForm = useTranslations("Dashboard.Store.Categories.Create.Form");
+  const tForm = useTranslations("Dashboard.Store.Categories.Update.Form");
   const [isValid, setIsValid] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -47,7 +47,7 @@ export function Name() {
 
 export function NameAr() {
   const t = useTranslations();
-  const tForm = useTranslations("Dashboard.Store.Categories.Create.Form");
+  const tForm = useTranslations("Dashboard.Store.Categories.Update.Form");
   const [isValid, setIsValid] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -86,7 +86,7 @@ export function NameAr() {
 
 export function Submit() {
   const searchParams = useSearchParams()
-  const tForm = useTranslations("Dashboard.Store.Categories.Create.Form");
+  const tForm = useTranslations("Dashboard.Store.Categories.Update.Form");
   const router = useRouter();
 
   const create = useCallback(
@@ -102,7 +102,7 @@ export function Submit() {
   return (
     <SubmitButton
       className="btn btn-primary"
-      content={tForm("create")}
+      content={tForm("update")}
       action={create}
     />
   );

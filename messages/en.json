@@ -113,8 +113,15 @@
         }
       },
       "Categories": {
+        "categories": "Categories",
+        "create": "Create",
+        "Category": {
+          "view": "View",
+          "update": "Update",
+          "delete": "Delete"
+        },
         "Create": {
-        "create-category": "Create category",
+          "create-category": "Create category",
           "Form": {
             "name": "Name",
             "arabic-name": "Arabic name",
@@ -122,6 +129,17 @@
             "category-valid": "Category name valid",
             "category-not-valid": "Category name not valid",
             "create": "Create"
+          }
+        },
+        "Update": {
+          "update-category": "Update category",
+          "Form": {
+            "name": "Name",
+            "arabic-name": "Arabic name",
+            "pick-new-image": "Pick new image",
+            "category-valid": "Category name valid",
+            "category-not-valid": "Category name not valid",
+            "update": "Update"
           }
         }
       }

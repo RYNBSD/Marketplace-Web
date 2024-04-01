@@ -13,7 +13,7 @@ export default async function CreateFrom() {
         <input
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder={tForm("name")}
           className="input input-bordered"
           required
         />
@@ -25,7 +25,7 @@ export default async function CreateFrom() {
         <input
           type="text"
           name="nameAr"
-          placeholder="Arabic name"
+          placeholder={tForm("arabic-name")}
           className="input input-bordered"
           required
         />

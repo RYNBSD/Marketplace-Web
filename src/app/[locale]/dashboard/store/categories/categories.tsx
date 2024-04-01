@@ -1,9 +1,9 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { allCategories, deleteCategory } from "~/action/store";
 import { KEYS } from "~/constant";
 
@@ -48,7 +48,11 @@ const Category = memo(function Category({
   locale,
   remove,
 }: categoryProps) {
-  const lang = locale === "en" ? name : nameAr;
+  const tCategory = useTranslations("Dashboard.Store.Categories.Category")
+  const lang = useMemo(
+    () => (locale === "en" ? name : nameAr),
+    [locale, name, nameAr]
+  );
 
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
@@ -69,7 +73,7 @@ const Category = memo(function Category({
             className="btn flex-1"
             href={`/${locale}/dashboard/store/categories/${id}`}
           >
-            View
+            {tCategory("view")}
           </Link>
           <Link
             href={`/${locale}/dashboard/store/categories/update?id=${encodeURIComponent(
@@ -79,14 +83,14 @@ const Category = memo(function Category({
             )}`}
             className="btn btn-info flex-1"
           >
-            Update
+            {tCategory("update")}
           </Link>
           <button
             type="button"
             className="btn btn-error flex-1"
             onClick={() => remove(id)}
           >
-            Delete
+            {tCategory("delete")}
           </button>
         </div>
       </div>

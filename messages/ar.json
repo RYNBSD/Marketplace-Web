@@ -93,9 +93,7 @@
     }
   },
   "Dashboard": {
-    "Admin": {
-
-    },
+    "Admin": {},
     "Store": {
       "Profile": {
         "name": "اسم",
@@ -113,18 +111,36 @@
           "store-not-valid": "اسم المتجر غير صالح",
           "update": "تحديث"
         }
-      }
-    },
-    "Categories": {
-      "Create": {
-      "create-category": "فئات",
-        "Form": {
-          "name": "اسم",
-          "arabic-name": "الاسم العربي",
-          "pick-new-image": "اختر صورة جديدة",
-          "category-valid": "اسم الفئة صالح",
-          "category-not-valid": "اسم الفئة غير صالح",
-          "create": "إنشاء"
+      },
+      "Categories": {
+        "categories": "فئات",
+        "create": "إنشاء",
+        "Category": {
+          "view": "عرض",
+          "update": "تحديث",
+          "delete": "يمسح"
+        },
+        "Create": {
+          "create-category": "فئات",
+          "Form": {
+            "name": "اسم",
+            "arabic-name": "الاسم العربي",
+            "pick-new-image": "اختر صورة جديدة",
+            "category-valid": "اسم الفئة صالح",
+            "category-not-valid": "اسم الفئة غير صالح",
+            "create": "إنشاء"
+          }
+        },
+        "Update": {
+          "update-category": "تحديث الفئة",
+          "Form": {
+            "name": "اسم",
+            "arabic-name": "الاسم العربي",
+            "pick-new-image": "اختر صورة جديدة",
+            "category-valid": "اسم الفئة صالح",
+            "category-not-valid": "اسم الفئة غير صالح",
+            "update": "تحديث"
+          }
         }
       }
     }
