@@ -3,4 +3,4 @@ export type ResponseState =
       success: false;
       error: string;
     }
-  | { success: true; data: unknown };
+  | { success: true; data: any };

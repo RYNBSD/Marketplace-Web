@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { Submit } from "./form-client";
 
-export default async function CreateFrom() {
-  const tForm = await getTranslations("Dashboard.Store.Categories.Create.Form")
+export default async function UpdateForm({ name, nameAr }: Props) {
+  const tForm = await getTranslations("Dashboard.Store.Categories.Create.Form");
 
   return (
     <form className="card-body">
@@ -13,6 +13,7 @@ export default async function CreateFrom() {
         <input
           type="text"
           name="name"
+          defaultValue={name}
           placeholder="Name"
           className="input input-bordered"
           required
@@ -25,6 +26,7 @@ export default async function CreateFrom() {
         <input
           type="text"
           name="nameAr"
+          defaultValue={nameAr}
           placeholder="Arabic name"
           className="input input-bordered"
           required
@@ -32,14 +34,13 @@ export default async function CreateFrom() {
       </div>
       <div className="form-control">
         <label htmlFor="image" className="label">
-          <span className="label-text">{tForm("pick-new-image")} *</span>
+          <span className="label-text">{tForm("pick-new-image")}</span>
         </label>
         <input
           type="file"
           name="image"
           className="file-input w-full max-w-xs"
           accept="image/*"
-          required
         />
       </div>
       <div className="form-control mt-6">
@@ -48,3 +49,8 @@ export default async function CreateFrom() {
     </form>
   );
 }
+
+type Props = {
+  name: string;
+  nameAr: string;
+};

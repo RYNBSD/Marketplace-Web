@@ -11,11 +11,10 @@ const { BASE_URL } = KEYS;
 
 export default function Categories() {
   const locale = useLocale();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     allCategories(1).then((res) => {
-      // @ts-ignore
       if (res.success) setCategories(res.data.categories);
     });
   }, []);
@@ -23,7 +22,6 @@ export default function Categories() {
   const remove = useCallback((id: string) => {
     deleteCategory(`${id}`).then(({ success }) => {
       if (success)
-        // @ts-ignore
         setCategories((prev) => prev.filter((category) => category.id !== id));
     });
   }, []);
@@ -74,7 +72,11 @@ const Category = memo(function Category({
             View
           </Link>
           <Link
-            href={`/${locale}/dashboard/store/categories/update?id=${id}`}
+            href={`/${locale}/dashboard/store/categories/update?id=${encodeURIComponent(
+              id
+            )}&name=${encodeURIComponent(name)}&nameAr=${encodeURIComponent(
+              nameAr
+            )}`}
             className="btn btn-info flex-1"
           >
             Update

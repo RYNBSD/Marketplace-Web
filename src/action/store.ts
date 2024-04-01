@@ -93,7 +93,27 @@ export async function createCategory(
   };
 }
 
-export async function updateCategory() {}
+export async function updateCategory(
+  id: string,
+  formData: FormData,
+): Promise<ResponseState> {
+  const res = await request(`/api/dashboard/store/categories/${id}`, {
+    method: "PUT",
+    body: formData,
+  });
+  const json = await res.json();
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: json.data,
+  };
+}
 
 export async function deleteCategory(id: string): Promise<ResponseState> {
   const res = await request(`/api/dashboard/store/categories/${id}`, {
