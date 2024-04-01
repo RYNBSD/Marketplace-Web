@@ -1,6 +1,8 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 import { deleteStore } from "~/action/store";
 import { KEYS } from "~/constant";
 import { useNotification } from "~/context";
@@ -39,13 +41,21 @@ export function Name() {
 }
 
 export function DeleteBtn() {
+  const router = useRouter()
+  const locale = useLocale()
   const tProfile = useTranslations("Dashboard.Store.Profile")
   const { toastify } = useNotification()!;
+
+  const remove = useCallback(async () => {
+    const res = await toastify(deleteStore())
+    if (res.success) router.push(`/${locale}/profile`)
+  }, [locale, router, toastify])
+
   return (
     <button
       type="button"
       className="btn btn-error capitalize"
-      onClick={() => toastify(deleteStore())}
+      onClick={remove}
     >
       {tProfile("delete")}
     </button>
