@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.5",
+    "@rc-component/color-picker": "^1.5.3",
     "@react-three/drei": "^9.99.7",
     "@react-three/fiber": "^8.15.19",
     "@react-three/xr": "^5.7.1",
@@ -41,6 +42,7 @@
     "@types/node": "^20",
     "@types/prop-types": "^15.7.11",
     "@types/react": "^18",
+    "@types/react-color": "^3.0.12",
     "@types/react-dom": "^18",
     "@types/set-cookie-parser": "^2.4.7",
     "@types/three": "^0.162.0",

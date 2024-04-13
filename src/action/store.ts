@@ -95,7 +95,7 @@ export async function createCategory(
 
 export async function updateCategory(
   id: string,
-  formData: FormData,
+  formData: FormData
 ): Promise<ResponseState> {
   const res = await request(`/api/dashboard/store/categories/${id}`, {
     method: "PUT",
@@ -130,5 +130,28 @@ export async function deleteCategory(id: string): Promise<ResponseState> {
   return {
     success: true,
     data: null,
+  };
+}
+
+export async function allProducts() {}
+
+export async function createProduct(
+  formData: FormData
+): Promise<ResponseState> {
+  const res = await request("/api/dashboard/store/products", {
+    method: "POST",
+    body: formData,
+  });
+  const json = await res.json();
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: json.data,
   };
 }
