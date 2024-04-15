@@ -1,18 +1,21 @@
 import React from "react";
 import { Categories, Colors, Infos, Sizes, Submit, Tags } from "./form-client";
+import { getTranslations } from "next-intl/server";
 
 export default async function CreateForm() {
+  const tForm = await getTranslations("Dashboard.Store.Products.Create.Form");
+
   return (
     <form className="grid grid-cols-1 gap-5 md:grid-cols-2">
       <div>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Title *</span>
+            <span className="label-text">{tForm("title")} *</span>
           </div>
           <input
             type="text"
             name="title"
-            placeholder="Title"
+            placeholder={tForm("title")}
             maxLength={50}
             className="input input-bordered w-full max-w-xs"
             required
@@ -20,11 +23,11 @@ export default async function CreateForm() {
         </label>
         <label className="form-control">
           <div className="label">
-            <span className="label-text">Description *</span>
+            <span className="label-text">{tForm("description")} *</span>
           </div>
           <textarea
             name="description"
-            placeholder="Description"
+            placeholder={tForm("description")}
             maxLength={1000}
             className="textarea textarea-bordered h-24"
             required
@@ -32,7 +35,7 @@ export default async function CreateForm() {
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">3D model (.glb)</span>
+            <span className="label-text">{tForm("3d-model")} (.glb)</span>
           </div>
           <input
             name="models"
@@ -45,12 +48,12 @@ export default async function CreateForm() {
       <div>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Arabic title *</span>
+            <span className="label-text">{tForm("arabic-title")} *</span>
           </div>
           <input
             name="titleAr"
             type="text"
-            placeholder="Arabic title"
+            placeholder={tForm("arabic-title")}
             maxLength={50}
             className="input input-bordered w-full max-w-xs"
             required
@@ -58,11 +61,11 @@ export default async function CreateForm() {
         </label>
         <label className="form-control">
           <div className="label">
-            <span className="label-text">Arabic description *</span>
+            <span className="label-text">{tForm("arabic-description")} *</span>
           </div>
           <textarea
             name="descriptionAr"
-            placeholder="Arabic description"
+            placeholder={tForm("arabic-description")}
             maxLength={1000}
             className="textarea textarea-bordered h-24"
             required
@@ -70,7 +73,7 @@ export default async function CreateForm() {
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Images *</span>
+            <span className="label-text">{tForm("images")} *</span>
           </div>
           <input
             type="file"
@@ -85,35 +88,35 @@ export default async function CreateForm() {
       <div>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Stock *</span>
+            <span className="label-text">{tForm("stock")} *</span>
           </div>
           <input
             type="number"
             min={1}
             defaultValue={1}
             name="stock"
-            placeholder="stock"
+            placeholder={tForm("stock")}
             className="input input-bordered w-full max-w-xs"
             required
           />
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Price *</span>
+            <span className="label-text">{tForm("price")} *</span>
           </div>
           <input
             type="number"
-            min={0}
-            defaultValue={0}
+            min={1}
+            defaultValue={1}
             name="price"
-            placeholder="Price"
+            placeholder={tForm("price")}
             className="input input-bordered w-full max-w-xs"
             required
           />
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Discount</span>
+            <span className="label-text">{tForm("discount")}</span>
           </div>
           <input
             type="number"
@@ -121,7 +124,7 @@ export default async function CreateForm() {
             max={100}
             defaultValue={0}
             name="discount"
-            placeholder="discount"
+            placeholder={tForm("discount")}
             className="input input-bordered w-full max-w-xs"
           />
         </label>
@@ -129,7 +132,7 @@ export default async function CreateForm() {
       <div>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Category *</span>
+            <span className="label-text">{tForm("category")} *</span>
           </div>
           <select className="select select-bordered" name="categoryId">
             <Categories />
@@ -137,22 +140,35 @@ export default async function CreateForm() {
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Quality</span>
+            <span className="label-text">{tForm("Quality.quality")} *</span>
           </div>
-          <select className="select select-bordered" name="quality">
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+          <select className="select select-bordered" name="quality" required>
+            <option value="low">{tForm("Quality.low")}</option>
+            <option value="medium">{tForm("Quality.medium")}</option>
+            <option value="high">{tForm("Quality.high")}</option>
           </select>
         </label>
+        <div>
+          <label htmlFor="colors" className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">{tForm("add-colors")}</span>
+            </div>
+            <Colors />
+          </label>
+        </div>
+      </div>
+      <label htmlFor="sizes" className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">{tForm("add-sizes")}</span>
+        </div>
         <Sizes />
-      </div>
-      <div>
-        <Colors />
-      </div>
-      <div>
+      </label>
+      <label htmlFor="tags" className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">{tForm("add-tags")}</span>
+        </div>
         <Tags />
-      </div>
+      </label>
       <Infos />
       <Submit />
     </form>

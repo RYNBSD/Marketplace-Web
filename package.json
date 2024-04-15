@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.5",
-    "@rc-component/color-picker": "^1.5.3",
     "@react-three/drei": "^9.99.7",
     "@react-three/fiber": "^8.15.19",
     "@react-three/xr": "^5.7.1",

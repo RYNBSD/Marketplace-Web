@@ -47,8 +47,8 @@ const Category = memo(function Category({
   nameAr,
   locale,
   remove,
-}: categoryProps) {
-  const tCategory = useTranslations("Dashboard.Store.Categories.Category")
+}: CategoryProps) {
+  const tOptions = useTranslations("Dashboard.Store.Categories.Options")
   const lang = useMemo(
     () => (locale === "en" ? name : nameAr),
     [locale, name, nameAr]
@@ -73,7 +73,7 @@ const Category = memo(function Category({
             className="btn flex-1"
             href={`/${locale}/dashboard/store/categories/${id}`}
           >
-            {tCategory("view")}
+            {tOptions("view")}
           </Link>
           <Link
             href={`/${locale}/dashboard/store/categories/update?id=${encodeURIComponent(
@@ -83,14 +83,14 @@ const Category = memo(function Category({
             )}`}
             className="btn btn-info flex-1"
           >
-            {tCategory("update")}
+            {tOptions("update")}
           </Link>
           <button
             type="button"
             className="btn btn-error flex-1"
             onClick={() => remove(id)}
           >
-            {tCategory("delete")}
+            {tOptions("delete")}
           </button>
         </div>
       </div>
@@ -98,7 +98,7 @@ const Category = memo(function Category({
   );
 });
 
-type categoryProps = {
+type CategoryProps = {
   id: string;
   image: string;
   name: string;

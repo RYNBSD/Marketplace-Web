@@ -142,6 +142,49 @@
             "update": "Update"
           }
         }
+      },
+      "Products": {
+        "products": "Products",
+        "create":"Create",
+        "Options": {
+          "view": "View",
+          "update": "Update",
+          "delete": "Delete"
+        },
+        "Create": {
+          "create-product": "Create product",
+          "Form": {
+            "title": "title",
+            "description": "Description",
+            "3d-model": "3D model",
+            "arabic-title": "Arabic title",
+            "arabic-description": "Arabic description",
+            "images": "Images",
+            "stock": "Stock",
+            "price": "Price",
+            "discount": "Discount",
+            "category": "Category",
+            "Quality": {
+              "quality": "Quality",
+              "low": "Low",
+              "medium": "Medium",
+              "high": "High"
+            }
+          },
+          "enter-colors": "Enter colors",
+          "enter-sizes": "Enter sizes",
+          "enter-tags": "Enter tags",
+          "Info": {
+            "add": "Add",
+            "arabic": "Arabic info",
+            "english": "English info"
+          },
+          "create": "Create"
+        },
+        "Update": {
+          "update-product": "Update product",
+          "Form": {}
+        }
       }
     }
   }

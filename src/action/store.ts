@@ -133,7 +133,21 @@ export async function deleteCategory(id: string): Promise<ResponseState> {
   };
 }
 
-export async function allProducts() {}
+export async function allProducts() {
+  const res = await request(`/api/dashboard/store/products`);
+  const json = await res.json();
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: json.data,
+  };
+}
 
 export async function createProduct(
   formData: FormData
@@ -153,5 +167,23 @@ export async function createProduct(
   return {
     success: true,
     data: json.data,
+  };
+}
+
+export async function deleteProduct(id: string): Promise<ResponseState> {
+  const res = await request(`/api/dashboard/store/products/${id}`, {
+    method: "DELETE",
+  });
+  const json = await res.json();
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: null,
   };
 }

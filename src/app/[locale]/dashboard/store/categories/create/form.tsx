@@ -32,7 +32,7 @@ export default async function CreateFrom() {
       </div>
       <div className="form-control">
         <label htmlFor="image" className="label">
-          <span className="label-text">{tForm("pick-new-image")} *</span>
+          <span className="label-text">{tForm("pick-image")} *</span>
         </label>
         <input
           type="file"

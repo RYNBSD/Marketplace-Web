@@ -115,17 +115,17 @@
       "Categories": {
         "categories": "فئات",
         "create": "إنشاء",
-        "Category": {
+        "Options": {
           "view": "عرض",
           "update": "تحديث",
           "delete": "يمسح"
         },
         "Create": {
-          "create-category": "فئات",
+          "create-category": "إنشاء فئة",
           "Form": {
             "name": "اسم",
             "arabic-name": "الاسم العربي",
-            "pick-new-image": "اختر صورة جديدة",
+            "pick-image": "اختر صورة",
             "category-valid": "اسم الفئة صالح",
             "category-not-valid": "اسم الفئة غير صالح",
             "create": "إنشاء"
@@ -141,6 +141,52 @@
             "category-not-valid": "اسم الفئة غير صالح",
             "update": "تحديث"
           }
+        }
+      },
+      "Products": {
+        "products": "منتجات",
+        "create":"إنشاء",
+        "Options": {
+          "view": "عرض",
+          "update": "تحديث",
+          "delete": "يمسح"
+        },
+        "Create": {
+          "create-product": "إنشاء منتج",
+          "Form": {
+            "title": "عنوان",
+            "description": "وصف",
+            "3d-model": "نموذج 3D",
+            "arabic-title": "عنوان عربي",
+            "arabic-description": "وصف عربي",
+            "images": "الصور",
+            "stock": "مخزون",
+            "price": "سعر",
+            "discount": "تخفيض",
+            "category": "فئة",
+            "Quality": {
+              "quality": "جودة",
+              "low": "منخفض",
+              "medium": "متوسط",
+              "high": "مرتفع"
+            },
+            "add-colors": "إضافة الألوان",
+            "enter-color": "أدخل اللون",
+            "add-sizes": "إضافة الأحجام",
+            "enter-size": "أدخل الحجم",
+            "add-tags": "اضف اشارة",
+            "enter-tag": "أدخل العلامة",
+            "Info": {
+              "add": "أضف",
+              "arabic": "معلومات بالعربية",
+              "english": "معلومات بالإنجليزية"
+            },
+            "create": "إنشاء"
+          }
+        },
+        "Update": {
+          "update-product": "تحديث المنتج",
+          "Form": {}
         }
       }
     }

@@ -3,7 +3,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { ToastContainer } from "react-toastify";
 
-import "@rc-component/color-picker/assets/index.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 

@@ -1,32 +1,42 @@
 "use client";
-import type {
-  ChangeEvent,
-  ElementRef,
-  KeyboardEvent,
-  MouseEventHandler,
+import type { ChangeEvent, ElementRef, KeyboardEvent } from "react";
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
 } from "react";
-import { memo, useCallback, useEffect, useRef, useState } from "react";
-import ColorPicker, {
-  type Color as ColorPickerEvent,
-} from "@rc-component/color-picker";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
 import { SubmitButton } from "~/components";
 import { allCategories, createProduct } from "~/action/store";
+import { useLocale, useTranslations } from "next-intl";
 
 const Category = memo(function Category({
   id,
-  name,
-  nameAr,
+  locale,
+  ...props
 }: {
   id: string;
   name: string;
   nameAr: string;
+  locale: string;
 }) {
-  return <option value={id} className="capitalize">{name}</option>;
+  const name = useMemo(
+    () => (locale === "en" ? props.name : props.nameAr),
+    [locale, props.name, props.nameAr]
+  );
+  return (
+    <option value={id} className="capitalize">
+      {name}
+    </option>
+  );
 });
 
 export function Categories() {
+  const locale = useLocale();
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
@@ -36,25 +46,26 @@ export function Categories() {
   }, []);
 
   return categories.map((category) => (
-    <Category key={category.id} {...category} />
+    <Category key={category.id} {...category} locale={locale} />
   ));
 }
 
 const Size = memo(function Size({
   size,
-  onClick,
+  onDelete,
 }: {
   size: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onDelete: (size: string) => void;
 }) {
   return (
-    <button type="button" className="badge" onClick={onClick}>
+    <button type="button" className="badge" onClick={() => onDelete(size)}>
       {size}
     </button>
   );
 });
 
 export function Sizes() {
+  const tForm = useTranslations("Dashboard.Store.Products.Create.Form")
   const inputRef = useRef<ElementRef<"input">>(null);
   const [sizes, setSizes] = useState<string[]>([]);
 
@@ -77,34 +88,40 @@ export function Sizes() {
   }, []);
 
   return (
-    <div>
-      <div>
-        {sizes.map((size) => (
-          <Size key={size} size={size} onClick={() => onDelete(size)} />
-        ))}
-      </div>
-      <input className="none" type="hidden" name="sizes" value={sizes.join(",")} />
+    <>
+      <input
+        className="none"
+        type="hidden"
+        name="sizes"
+        value={sizes.join(",")}
+      />
       <input
         ref={inputRef}
         type="text"
-        placeholder="Add Size"
+        placeholder={tForm("enter-size")}
+        className="input input-bordered w-full max-w-xs mb-2"
         onKeyDown={onKeyDown}
       />
-    </div>
+      <div>
+        {sizes.map((size) => (
+          <Size key={size} size={size} onDelete={onDelete} />
+        ))}
+      </div>
+    </>
   );
 }
 
 const Color = memo(function Color({
   color,
-  onClick,
+  onDelete,
 }: {
   color: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onDelete: (color: string) => void;
 }) {
   return (
     <button
       key={color}
-      onClick={onClick}
+      onClick={() => onDelete(color)}
       className="flex items-center justify-center gap-1"
     >
       <div className="w-[10px] h-[10px]" style={{ backgroundColor: color }} />
@@ -114,14 +131,34 @@ const Color = memo(function Color({
 });
 
 export function Colors() {
+  const tForm = useTranslations("Dashboard.Store.Products.Create.Form")
+  const [_, startTransition] = useTransition();
+  const [index, setIndex] = useState(0);
   const [colors, setColors] = useState<string[]>([]);
 
-  const onChangeComplete = useCallback((value: ColorPickerEvent) => {
-    const hex = value.toHexString();
-    setColors((prev) => {
-      const set = new Set([...prev, hex]);
-      return Array.from(set);
-    });
+  const formValue = useMemo(() => {
+    const set = new Set(colors);
+    const arr = Array.from(set);
+    return arr.join(",");
+  }, [colors]);
+
+  const onChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      if (value.length !== 7) return;
+
+      startTransition(() => {
+        setColors((prev) => {
+          prev[index] = value;
+          return [...prev];
+        });
+      });
+    },
+    [index]
+  );
+
+  const onBlur = useCallback(() => {
+    setIndex((prev) => prev + 1);
   }, []);
 
   const onDelete = useCallback((color: string) => {
@@ -129,42 +166,40 @@ export function Colors() {
   }, []);
 
   return (
-    <label className="flex gap-5">
+    <>
+      <input className="none" type="hidden" name="colors" value={formValue} />
       <input
-        className="none"
-        type="hidden"
-        name="colors"
-        value={colors.join(",")}
+        type="color"
+        placeholder={tForm("enter-color")}
+        className="input input-bordered w-full max-w-xs mb-2"
+        onChange={onChange}
+        onBlur={onBlur}
       />
-      <ColorPicker
-        className="flex-1"
-        onChangeComplete={onChangeComplete}
-        disabledAlpha
-      />
-      <div className="flex flex-wrap flex-1 gap-1 overflow-x-scroll w-full h-full no-scrollbar">
+      <div className="flex flex-wrap flex-1 gap-2">
         {colors.map((color) => (
-          <Color key={color} color={color} onClick={() => onDelete(color)} />
+          <Color key={color} color={color} onDelete={onDelete} />
         ))}
       </div>
-    </label>
+    </>
   );
 }
 
 const Tag = memo(function Tag({
   tag,
-  onClick,
+  onDelete,
 }: {
   tag: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onDelete: (tag: string) => void;
 }) {
   return (
-    <button type="button" className="badge" onClick={onClick}>
+    <button type="button" className="badge" onClick={() => onDelete(tag)}>
       {tag}
     </button>
   );
 });
 
 export function Tags() {
+  const tForm = useTranslations("Dashboard.Store.Products.Create.Form")
   const inputRef = useRef<ElementRef<"input">>(null);
   const [tags, setTags] = useState<string[]>([]);
 
@@ -187,12 +222,7 @@ export function Tags() {
   }, []);
 
   return (
-    <div>
-      <div>
-        {tags.map((tag) => (
-          <Tag key={tag} tag={tag} onClick={() => onDelete(tag)} />
-        ))}
-      </div>
+    <>
       <input
         className="none"
         type="hidden"
@@ -202,10 +232,16 @@ export function Tags() {
       <input
         ref={inputRef}
         type="text"
-        placeholder="Add tag"
+        placeholder={tForm("enter-tag")}
+        className="input input-bordered w-full max-w-xs mb-2"
         onKeyDown={onKeyDown}
       />
-    </div>
+      <div>
+        {tags.map((tag) => (
+          <Tag key={tag} tag={tag} onDelete={onDelete} />
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -222,20 +258,24 @@ const Info = memo(function Info({
   onEnChange: (e: ChangeEvent<HTMLInputElement>, i: number) => void;
   onArChange: (e: ChangeEvent<HTMLInputElement>, i: number) => void;
 }) {
+  const tInfo = useTranslations("Dashboard.Store.Products.Create.Form.Info")
+
   return (
     <>
       <input
         type="text"
         value={en}
         required
-        placeholder="English info"
+        placeholder={tInfo("english")}
+        className="input input-bordered w-full max-w-xs"
         onChange={(e) => onEnChange(e, i)}
       />
       <input
         type="text"
         value={ar}
         required
-        placeholder="Arabic info"
+        placeholder={tInfo("arabic")}
+        className="input input-bordered w-full max-w-xs"
         onChange={(e) => onArChange(e, i)}
       />
     </>
@@ -243,6 +283,7 @@ const Info = memo(function Info({
 });
 
 export function Infos() {
+  const tInfo = useTranslations("Dashboard.Store.Products.Create.Form.Info")
   const [infos, setInfos] = useState<{ en: string; ar: string }[]>([]);
 
   const onEnChange = useCallback(
@@ -302,29 +343,28 @@ export function Infos() {
         />
       ))}
       <input className="none" type="hidden" name="infos" value={join()} />
-      <button type="button" className="btn" onClick={onAdd}>
-        Add
+      <button type="button" className="btn btn-info col-span-2" onClick={onAdd}>
+        {tInfo("add")}
       </button>
     </>
   );
 }
 
 export function Submit() {
-  const locale = useLocale();
   const router = useRouter();
 
   const create = useCallback(
     async (formData: FormData) => {
       const res = await createProduct(formData);
-      if (res.success) router.push(`/${locale}/dashboard/store/products`);
+      if (res.success) router.back();
       return res;
     },
-    [locale, router]
+    [router]
   );
 
   return (
     <SubmitButton
-      className="btn btn-primary"
+      className="btn btn-primary col-span-2"
       content="Create"
       action={create}
     />
