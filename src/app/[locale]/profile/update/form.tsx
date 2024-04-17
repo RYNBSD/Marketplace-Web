@@ -1,8 +1,12 @@
 import { Submit, Username } from "./form-client";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function UpdateForm() {
-  const tForm = await getTranslations("Profile.Update.Form");
+  const locale = await getLocale();
+  const tForm = await getTranslations({
+    locale,
+    namespace: "Profile.Update.Form",
+  });
 
   return (
     <form className="card-body">

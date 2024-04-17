@@ -28,10 +28,10 @@ export default function CartProvider({ children }: Props) {
     }
   }, []);
 
-  const saveCart = useCallback(() => {
-    const stringify = JSON.stringify(cart);
-    localStorage.setItem(CART, stringify);
-  }, [cart]);
+  // const saveCart = useCallback(() => {
+  //   const stringify = JSON.stringify(cart);
+  //   localStorage.setItem(CART, stringify);
+  // }, [cart]);
 
   const addToCart = useCallback((option: CartOption) => {
     setCart((prev) => [...prev, option]);

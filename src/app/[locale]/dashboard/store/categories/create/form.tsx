@@ -1,8 +1,12 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Submit } from "./form-client";
 
 export default async function CreateFrom() {
-  const tForm = await getTranslations("Dashboard.Store.Categories.Create.Form")
+  const locale = await getLocale();
+  const tForm = await getTranslations({
+    locale,
+    namespace: "Dashboard.Store.Categories.Create.Form",
+  });
 
   return (
     <form className="card-body">

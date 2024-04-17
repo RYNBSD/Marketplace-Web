@@ -1,9 +1,10 @@
+import type { LocalParam } from "~/types";
 import Profile from "./profile";
 import Setting from "./setting";
 import { getTranslations } from "next-intl/server";
 
-export default async function User() {
-  const tProfile = await getTranslations("Profile");
+export default async function User({ params: { locale } }: Props) {
+  const tProfile = await getTranslations({ locale, namespace: "Profile" });
 
   return (
     <div>
@@ -15,3 +16,7 @@ export default async function User() {
     </div>
   );
 }
+
+type Props = {
+  params: LocalParam;
+};

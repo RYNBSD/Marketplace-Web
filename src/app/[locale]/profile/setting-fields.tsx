@@ -3,7 +3,7 @@
 import type { Locale as TLocale, Theme as TTheme } from "~/types";
 import type { ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
-import { memo, useCallback, useTransition } from "react";
+import { memo, useCallback } from "react";
 import { useSetting } from "~/context";
 import { LOCALE, THEMES } from "~/constant";
 

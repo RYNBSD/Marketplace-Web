@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import type { Locale } from "~/types";
+import { NextIntlClientProvider } from "next-intl";
+import { ToastContainer } from "react-toastify";
+import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { Container, Footer, Navbar } from "~/components";
 import {
   SettingProvider,
@@ -7,24 +11,43 @@ import {
   CartProvider,
   NotificationProvider,
 } from "~/context";
+import { LOCALE } from "~/constant";
 
-export default async function LocaleLayout({ children }: Props) {
+export function generateStaticParams() {
+  return LOCALE.map((locale) => ({ locale }));
+}
+
+export default async function LocaleLayout({
+  children,
+  params: { locale },
+}: Props) {
+  const messages = await getMessages();
+  unstable_setRequestLocale(locale)
+
   return (
-    <SettingProvider>
-      <CartProvider>
-        <NotificationProvider>
-          <UserProvider>
-            <Navbar />
-            <main className="w-full min-h-screen">
-              <Container bg="bg-base-200" className="w-full min-h-screen p-1">
-                {children}
-              </Container>
-            </main>
-            <Footer />
-          </UserProvider>
-        </NotificationProvider>
-      </CartProvider>
-    </SettingProvider>
+    <>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <SettingProvider>
+          <CartProvider>
+            <NotificationProvider>
+              <UserProvider>
+                <Navbar />
+                <main className="w-full min-h-screen">
+                  <Container
+                    bg="bg-base-200"
+                    className="w-full min-h-screen p-1"
+                  >
+                    {children}
+                  </Container>
+                </main>
+                <Footer />
+              </UserProvider>
+            </NotificationProvider>
+          </CartProvider>
+        </SettingProvider>
+      </NextIntlClientProvider>
+      <ToastContainer />
+    </>
   );
 }
 
@@ -52,4 +75,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 type Props = {
   children: ReactNode;
+  params: {
+    locale: Locale;
+  };
 };

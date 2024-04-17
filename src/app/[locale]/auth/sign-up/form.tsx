@@ -6,7 +6,10 @@ import { Email, Locale, Theme, Submit } from "./fields";
 
 export default async function SignUpForm() {
   const locale = await getLocale();
-  const t = await getTranslations("Auth.Sign-Up.Form");
+  const t = await getTranslations({
+    locale,
+    namespace: "Auth.Sign-Up.Form",
+  });
 
   return (
     <form className="card-body">

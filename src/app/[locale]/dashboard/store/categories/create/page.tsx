@@ -1,8 +1,12 @@
+import type { LocalParam } from "~/types";
 import { getTranslations } from "next-intl/server";
 import CreateFrom from "./form";
 
-export default async function Create() {
-  const tCreate = await getTranslations("Dashboard.Store.Categories.Create")
+export default async function Create({ params: { locale } }: Props) {
+  const tCreate = await getTranslations({
+    locale,
+    namespace: "Dashboard.Store.Categories.Create",
+  });
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -22,3 +26,7 @@ export default async function Create() {
     </div>
   );
 }
+
+type Props = {
+  params: LocalParam;
+};

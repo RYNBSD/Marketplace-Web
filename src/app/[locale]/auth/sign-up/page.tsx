@@ -1,8 +1,12 @@
+import type { LocalParam } from "~/types";
 import SignUpForm from "./form";
 import { getTranslations } from "next-intl/server";
 
-export default async function SignUp() {
-  const tSignUp = await getTranslations("Auth.Sign-Up");
+export default async function SignUp({ params: { locale } }: Props) {
+  const tSignUp = await getTranslations({
+    locale,
+    namespace: "Auth.Sign-Up",
+  });
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -18,3 +22,7 @@ export default async function SignUp() {
     </div>
   );
 }
+
+type Props = {
+  params: LocalParam;
+};

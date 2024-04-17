@@ -1,8 +1,12 @@
+import type { LocalParam } from "~/types";
 import ForgotPasswordForm from "./form";
 import { getTranslations } from "next-intl/server";
 
-export default async function ForgotPassword() {
-  const t = await getTranslations("Auth.Forgot-Password");
+export default async function ForgotPassword({ params: { locale } }: Props) {
+  const t = await getTranslations({
+    locale,
+    namespace: "Auth.Forgot-Password",
+  });
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -18,3 +22,7 @@ export default async function ForgotPassword() {
     </div>
   );
 }
+
+type Props = {
+  params: LocalParam;
+};

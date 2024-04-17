@@ -1,8 +1,12 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { DisableAnimations, ForceTheme, Locale, Theme } from "./setting-fields";
 
 export default async function Setting() {
-  const tSetting = await getTranslations("Profile.Setting")
+  const locale = await getLocale();
+  const tSetting = await getTranslations({
+    locale,
+    namespace: "Profile.Setting",
+  });
 
   return (
     <section className="flex items-center justify-center" id="setting">

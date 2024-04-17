@@ -5,7 +5,10 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function NavbarCart() {
   const locale = await getLocale();
-  const tCart = await getTranslations("Navbar.Cart");
+  const tCart = await getTranslations({
+    locale,
+    namespace: "Navbar.Cart",
+  });
 
   return (
     <div className="dropdown dropdown-end">

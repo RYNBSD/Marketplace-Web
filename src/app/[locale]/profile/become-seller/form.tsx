@@ -1,8 +1,12 @@
 import { Name, Submit } from "./fields";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function BecomeSellerForm() {
-  const tForm = await getTranslations("Profile.Become-Seller.Form");
+  const locale = await getLocale();
+  const tForm = await getTranslations({
+    locale,
+    namespace: "Profile.Become-Seller.Form",
+  });
 
   return (
     <form className="card-body">

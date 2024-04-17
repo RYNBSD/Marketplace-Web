@@ -1,12 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
-import { ToastContainer } from "react-toastify";
+import type{ Locale } from "~/types";
+import { cookies } from "next/headers";
+import { getLocale } from "next-intl/server";
+import { KEYS, THEMES } from "~/constant";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import { cookies } from "next/headers";
-import { KEYS, THEMES } from "~/constant";
 
 export const viewport: Viewport = {
   minimumScale: 1,
@@ -20,16 +19,14 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
-const { COOKIE } = KEYS
+const { COOKIE } = KEYS;
 
 export default async function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
-  const messages = await getMessages();
-  const locale = await getLocale();
-  const theme = cookies().get(COOKIE.THEME)?.value ?? THEMES[0]
+  params
+}: Props) {
+  const theme = cookies().get(COOKIE.THEME)?.value ?? THEMES[0];
+  const locale = params?.locale ?? await getLocale()
 
   return (
     <html
@@ -37,12 +34,14 @@ export default async function RootLayout({
       dir={locale === "en" ? "ltr" : "rtl"}
       data-theme={theme}
     >
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-        <ToastContainer />
-      </body>
+      <body>{children}</body>
     </html>
   );
+}
+
+type Props = {
+  children: React.ReactNode;
+  params: {
+    locale?: Locale
+  }
 }

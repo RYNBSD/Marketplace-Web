@@ -1,9 +1,16 @@
+import type { Locale } from "~/types";
 import { getTranslations } from "next-intl/server";
 import UpdateForm from "./form";
 
-export default async function Page({ searchParams }: Props) {
-  const tUpdate = await getTranslations("Dashboard.Store.Categories.Update")
-  
+export default async function Page({
+  searchParams,
+  params: { locale },
+}: Props) {
+  const tUpdate = await getTranslations({
+    locale,
+    namespace: "Dashboard.Store.Categories.Update",
+  });
+
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -28,5 +35,8 @@ type Props = {
     id: string;
     name: string;
     nameAr: string;
+  };
+  params: {
+    locale: Locale;
   };
 };

@@ -1,8 +1,12 @@
+import type { LocalParam } from "~/types";
 import { getTranslations } from "next-intl/server";
 import UpdateForm from "./form";
 
-export default async function page() {
-  const tUpdate = await getTranslations("Dashboard.Store.Update")
+export default async function page({ params: { locale } }: Props) {
+  const tUpdate = await getTranslations({
+    locale,
+    namespace: "Dashboard.Store.Update",
+  });
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -22,3 +26,6 @@ export default async function page() {
     </div>
   );
 }
+type Props = {
+  params: LocalParam;
+};

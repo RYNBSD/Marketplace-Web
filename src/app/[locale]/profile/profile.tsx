@@ -4,7 +4,7 @@ import { DeleteBtn, Img, StoreBtn, Username } from "./profile-client";
 
 export default async function Profile() {
   const locale = await getLocale();
-  const tInfo = await getTranslations("Profile.Info");
+  const tInfo = await getTranslations({ locale, namespace: "Profile.Info" });
 
   return (
     <section

@@ -6,7 +6,9 @@ import Submit from "./submit";
 
 export default async function SignInForm() {
   const locale = await getLocale();
-  const t = await getTranslations("Auth.Sign-In.Form");
+  const t = await getTranslations({
+    locale,
+    namespace: "Auth.Sign-In.Form"});
 
   return (
     <form className="card-body">

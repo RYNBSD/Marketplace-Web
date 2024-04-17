@@ -1,9 +1,13 @@
 import React from "react";
 import { Categories, Colors, Infos, Sizes, Submit, Tags } from "./form-client";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function CreateForm() {
-  const tForm = await getTranslations("Dashboard.Store.Products.Create.Form");
+  const locale = await getLocale();
+  const tForm = await getTranslations({
+    locale,
+    namespace: "Dashboard.Store.Products.Create.Form",
+  });
 
   return (
     <form className="grid grid-cols-1 gap-5 sm:grid-cols-2">

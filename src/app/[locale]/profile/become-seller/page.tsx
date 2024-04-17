@@ -1,8 +1,12 @@
+import type { LocalParam } from "~/types";
 import BecomeSellerForm from "./form";
 import { getTranslations } from "next-intl/server";
 
-export default async function BecomeSeller() {
-  const tBecomeSeller = await getTranslations("Profile.Become-Seller");
+export default async function BecomeSeller({ params: { locale } }: Props) {
+  const tBecomeSeller = await getTranslations({
+    locale,
+    namespace: "Profile.Become-Seller",
+  });
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -24,3 +28,6 @@ export default async function BecomeSeller() {
     </div>
   );
 }
+type Props = {
+  params: LocalParam;
+};

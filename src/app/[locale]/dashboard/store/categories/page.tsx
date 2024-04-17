@@ -1,10 +1,13 @@
-import { getLocale, getTranslations } from "next-intl/server";
+import type { LocalParam } from "~/types";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Categories from "./categories";
 
-export default async function Page() {
-  const locale = await getLocale();
-  const tCategories = await getTranslations("Dashboard.Store.Categories")
+export default async function Page({ params: { locale } }: Props) {
+  const tCategories = await getTranslations({
+    locale,
+    namespace: "Dashboard.Store.Categories",
+  });
 
   return (
     <div className="w-full flex items-center justify-center">
@@ -18,8 +21,12 @@ export default async function Page() {
             {tCategories("create")}
           </Link>
         </div>
-      <Categories />
+        <Categories />
       </div>
     </div>
   );
 }
+
+type Props = {
+  params: LocalParam;
+};

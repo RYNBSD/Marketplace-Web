@@ -1,19 +1,18 @@
-import { getLocale } from "next-intl/server";
+import type { LocalParam } from "~/types";
 import { Header } from "~/components";
-import { request } from "~/action/fn";
+// import { request } from "~/action/fn";
 
-async function fetchStores() {
-  const stores = await request("/api/store/stores");
-  return stores.ok ? stores.json() : [];
-}
+// async function fetchStores() {
+//   const stores = await request("/api/store/stores");
+//   return stores.ok ? stores.json() : [];
+// }
 
-async function fetchProducts() {
-  const products = await request("");
-  return products.ok ? products.json() : [];
-}
+// async function fetchProducts() {
+//   const products = await request("");
+//   return products.ok ? products.json() : [];
+// }
 
-export default async function Home() {
-  const locale = await getLocale();
+export default async function Home({ params: { locale } }: Props) {
   // const stores = await fetchStores();
   // const products = await fetchProducts();
 
@@ -34,4 +33,8 @@ export default async function Home() {
       </section>
     </>
   );
+}
+
+type Props = {
+  params: LocalParam
 }

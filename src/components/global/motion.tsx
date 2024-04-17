@@ -3,34 +3,34 @@ import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useSetting } from "~/context";
 
-const fadeOpacity = () => {
-  return {
-    in: {},
-    out: {},
-  };
-};
+// const fadeOpacity = () => {
+//   return {
+//     in: {},
+//     out: {},
+//   };
+// };
 
-/**
- * in: ➡️ out: ➡️
- */
-const fadeX = () => {};
+// /**
+//  * in: ➡️ out: ➡️
+//  */
+// const fadeX = () => {};
 
-/**
- * in: ⬅️ out: ⬅️
- */
-const fadeXReverse = () => {};
+// /**
+//  * in: ⬅️ out: ⬅️
+//  */
+// const fadeXReverse = () => {};
 
-/**
- * in: ⬆️ out: ⬆️
- */
-const fadeY = () => {};
+// /**
+//  * in: ⬆️ out: ⬆️
+//  */
+// const fadeY = () => {};
 
-/**
- * in: ⬇️ out: ⬇️
- */
-const fadeYReverse = () => {};
+// /**
+//  * in: ⬇️ out: ⬇️
+//  */
+// const fadeYReverse = () => {};
 
-export default function Motion({ children, fade }: Props) {
+export default function Motion({ children }: Props) {
   const { setting } = useSetting()!;
   return setting.disableAnimations ? (
     children
