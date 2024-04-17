@@ -21,7 +21,9 @@ export default async function Page({ params: { locale } }: Props) {
             {tCategories("create")}
           </Link>
         </div>
-        <Categories />
+        <div className="flex justify-center flex-wrap gap-5">
+          <Categories />
+        </div>
       </div>
     </div>
   );

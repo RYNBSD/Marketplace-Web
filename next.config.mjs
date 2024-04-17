@@ -51,6 +51,11 @@ const nextConfig = {
       }
     ]
   },
+  logging: {
+    fetches: {
+      fullUrl: process.env.NODE_ENV === "development"
+    }
+  },
   typescript: {
     tsconfigPath: "./tsconfig.json",
   },

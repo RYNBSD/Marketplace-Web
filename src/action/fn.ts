@@ -27,10 +27,7 @@ export async function setCookie(headers: Headers) {
   );
 }
 
-export async function request(
-  path: string,
-  init: RequestInit = {},
-) {
+export async function request(path: string, init: RequestInit = {}) {
   /*
     We perform 3 request to try if any
     of theme succeed we consume it else
@@ -39,17 +36,22 @@ export async function request(
   const tries = 3;
   let res: Response;
 
+  const GET = "GET";
+  const method = init?.method?.toUpperCase() ?? GET;
+
   for (let i = 0; i < tries; i++) {
     res = await fetch(`${BASE_URL}${API_VERSION}${path}`, {
       ...init,
       credentials: "include",
+      cache: "force-cache",
       headers: {
         cookie: cookies().toString(),
         ...init?.headers,
       },
     });
 
-    await setCookie(res.headers);
+    // skip storing keys in get methods
+    if (method !== "GET") await setCookie(res.headers);
     if (res.ok) break;
   }
 

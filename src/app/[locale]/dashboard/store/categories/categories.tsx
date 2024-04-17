@@ -26,18 +26,9 @@ export default function Categories() {
     });
   }, []);
 
-  return (
-    <div className="flex justify-center flex-wrap gap-5">
-      {categories.map((category: any) => (
-        <Category
-          key={category.id}
-          {...category}
-          locale={locale}
-          remove={remove}
-        />
-      ))}
-    </div>
-  );
+  return categories.map((category: any) => (
+    <Category key={category.id} {...category} locale={locale} remove={remove} />
+  ));
 }
 
 const Category = memo(function Category({
@@ -48,7 +39,7 @@ const Category = memo(function Category({
   locale,
   remove,
 }: CategoryProps) {
-  const tOptions = useTranslations("Dashboard.Store.Categories.Options")
+  const tOptions = useTranslations("Dashboard.Store.Categories.Options");
   const lang = useMemo(
     () => (locale === "en" ? name : nameAr),
     [locale, name, nameAr]

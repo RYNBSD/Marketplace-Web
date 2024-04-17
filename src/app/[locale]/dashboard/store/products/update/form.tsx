@@ -21,8 +21,6 @@ export default function CreateForm() {
 
   useEffect(() => {
     fetchProduct(searchParams.get("id") ?? "").then((res) => {
-      console.log(res);
-      
       if (res.success) setProduct(res.data);
     });
   }, [searchParams]);

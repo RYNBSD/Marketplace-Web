@@ -5,7 +5,7 @@ import { useLayoutEffect, type ReactNode } from "react";
 import { isAuthenticated } from "~/action/auth";
 
 /**
- * Use must be authenticated
+ * User must be authenticated
  */
 export default function ProfileLayout({ children }: Props) {
   const locale = useLocale();

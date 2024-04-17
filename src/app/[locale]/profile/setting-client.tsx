@@ -1,17 +1,12 @@
 "use client";
 
 import type { Locale as TLocale, Theme as TTheme } from "~/types";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 import { useSetting } from "~/context";
-import { LOCALE, THEMES } from "~/constant";
 
-const Option = memo(function Option({ value }: { value: string }) {
-  return <option value={value}>{value}</option>;
-});
-
-export function Locale() {
+export function Locale({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { setting, changeSetting } = useSetting()!;
 
@@ -30,14 +25,12 @@ export function Locale() {
       value={setting.locale}
       className="select select-bordered w-full max-w-xs"
     >
-      {LOCALE.map((locale) => (
-        <Option key={locale} value={locale} />
-      ))}
+      {children}
     </select>
   );
 }
 
-export function Theme() {
+export function Theme({ children }: { children: ReactNode }) {
   const { setting, changeSetting } = useSetting()!;
 
   const onChange = useCallback(
@@ -54,9 +47,7 @@ export function Theme() {
       value={setting.theme}
       className="select select-bordered w-full max-w-xs"
     >
-      {THEMES.map((theme) => (
-        <Option key={theme} value={theme} />
-      ))}
+      {children}
     </select>
   );
 }

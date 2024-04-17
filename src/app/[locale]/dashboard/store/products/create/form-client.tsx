@@ -3,52 +3,50 @@ import type { ChangeEvent, ElementRef } from "react";
 import {
   memo,
   useCallback,
-  useEffect,
-  useMemo,
   useRef,
   useState,
   useTransition,
 } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "~/components";
-import { allCategories, createProduct } from "~/action/store";
-import { useLocale, useTranslations } from "next-intl";
+import { createProduct } from "~/action/store";
+import { useTranslations } from "next-intl";
 
-const Category = memo(function Category({
-  id,
-  locale,
-  ...props
-}: {
-  id: string;
-  name: string;
-  nameAr: string;
-  locale: string;
-}) {
-  const name = useMemo(
-    () => (locale === "en" ? props.name : props.nameAr),
-    [locale, props.name, props.nameAr]
-  );
-  return (
-    <option value={id} className="capitalize">
-      {name}
-    </option>
-  );
-});
+// const Category = memo(function Category({
+//   id,
+//   locale,
+//   ...props
+// }: {
+//   id: string;
+//   name: string;
+//   nameAr: string;
+//   locale: string;
+// }) {
+//   const name = useMemo(
+//     () => (locale === "en" ? props.name : props.nameAr),
+//     [locale, props.name, props.nameAr]
+//   );
+//   return (
+//     <option value={id}>
+//       {name}
+//     </option>
+//   );
+// });
 
-export function Categories() {
-  const locale = useLocale();
-  const [categories, setCategories] = useState<any[]>([]);
+// export function Categories() {
+//   const locale = useLocale();
+//   const [categories, setCategories] = useState<any[]>([]);
 
-  useEffect(() => {
-    allCategories(1).then((res) => {
-      if (res.success) setCategories(res.data.categories);
-    });
-  }, []);
+//   useEffect(() => {
+//     allCategories(1).then((res) => {
+//       if (res.success) setCategories(res.data.categories);
+//     });
+//   }, []);
 
-  return categories.map((category) => (
-    <Category key={category.id} {...category} locale={locale} />
-  ));
-}
+//   return categories.map((category) => (
+//     <Category key={category.id} {...category} locale={locale} />
+//   ));
+// }
 
 const Size = memo(function Size({
   size,

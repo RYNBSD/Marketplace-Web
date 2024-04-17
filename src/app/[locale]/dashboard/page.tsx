@@ -1,8 +1,11 @@
-import { getLocale } from 'next-intl/server'
-import { redirect } from 'next/navigation'
+import type { LocalParam } from "~/types";
+import { redirect } from "next/navigation";
 
-export default async function SellerId() {
-  const locale = await getLocale()
-  redirect(`/${locale}/profile`)
-  return null
+export default async function SellerId({ params: { locale } }: Props) {
+  redirect(`/${locale}/profile`);
+  return null;
 }
+
+type Props = {
+  params: LocalParam;
+};

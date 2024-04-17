@@ -1,8 +1,14 @@
 import React from "react";
-import { Categories, Colors, Infos, Sizes, Submit, Tags } from "./form-client";
+import { Colors, Infos, Sizes, Submit, Tags } from "./form-client";
 import { getLocale, getTranslations } from "next-intl/server";
+import { allCategories } from "~/action/store";
+import { LOCALE } from "~/constant";
 
 export default async function CreateForm() {
+  const res = await allCategories(1);
+  if (!res.success) return "Error";
+  const { categories } = res.data;
+
   const locale = await getLocale();
   const tForm = await getTranslations({
     locale,
@@ -139,7 +145,11 @@ export default async function CreateForm() {
             <span className="label-text">{tForm("category")} *</span>
           </div>
           <select className="select select-bordered" name="categoryId">
-            <Categories />
+            {categories.map((category: any) => (
+              <option key={category.id} value={category.id}>
+                {locale === LOCALE[0] ? category.nameAr : category.name}
+              </option>
+            ))}
           </select>
         </label>
         <label className="form-control w-full max-w-xs">
