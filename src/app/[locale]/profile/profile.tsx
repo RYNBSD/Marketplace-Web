@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { DeleteBtn, Img, StoreBtn, Username } from "./sections";
+import { DeleteBtn, Img, StoreBtn, Username } from "./profile-client";
 
 export default async function Profile() {
   const locale = await getLocale();

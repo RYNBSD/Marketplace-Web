@@ -1,4 +1,4 @@
-import { Name, Themes, Submit } from "./fields";
+import { Name, Submit } from "./fields";
 import { getTranslations } from "next-intl/server";
 
 export default async function BecomeSellerForm() {
@@ -24,12 +24,12 @@ export default async function BecomeSellerForm() {
           className="file-input w-full max-w-xs"
         />
       </div>
-      <div className="form-control">
+      {/* <div className="form-control">
         <label htmlFor="theme" className="label">
           <span className="label-text">{tForm("pick-theme")}</span>
         </label>
-        <Themes />
-      </div>
+        <Themes /> 
+      </div> */}
       <div className="form-control mt-6">
         <Submit />
       </div>

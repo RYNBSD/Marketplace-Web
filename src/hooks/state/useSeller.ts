@@ -1,4 +1,3 @@
-import type { Theme } from "~/types";
 import { create } from "zustand";
 
 export const useSeller = create<State & Actions>((set) => ({
@@ -6,9 +5,7 @@ export const useSeller = create<State & Actions>((set) => ({
     name: "",
     image: "",
   },
-  setting: {
-    theme: "light",
-  },
+  setting: {},
   count: {
     categories: 0,
     products: 0,
@@ -21,9 +18,7 @@ type State = {
     name: string;
     image: string;
   };
-  setting: {
-    theme: Theme;
-  };
+  setting: {};
   count: {
     categories: number;
     products: number;

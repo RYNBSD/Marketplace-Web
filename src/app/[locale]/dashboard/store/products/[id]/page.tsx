@@ -32,7 +32,7 @@ export default function Product() {
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 p-1">
       <div className="flex flex-col gap-1">
         <h1 className="text-3xl font-bold">
-          {locale === LOCALE[0]
+          {locale === LOCALE[1]
             ? product?.product?.title
             : product?.product?.title}
         </h1>
@@ -49,7 +49,7 @@ export default function Product() {
               {product?.product?.images.map((image: string) => (
                 <div key={image} className="carousel-item">
                   <Image
-                    className="rounded-box"
+                    className="rounded-box aspect-square object-cover"
                     src={`${BASE_URL}${image}`}
                     alt={`${
                       product?.product?.title - product?.product?.titleAr
