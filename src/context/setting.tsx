@@ -10,11 +10,12 @@ import {
   useTransition,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 import { KEYS } from "~/constant";
 import { patchSetting } from "~/action/user";
 
 const SettingContext = createContext<TSettingContext | null>(null);
-const { BROWSER } = KEYS;
+const { BROWSER, COOKIE } = KEYS;
 
 export default function SittingProvider({ children }: Props) {
   const [_, startTransition] = useTransition();
@@ -34,6 +35,7 @@ export default function SittingProvider({ children }: Props) {
 
     const setting = JSON.parse(localSetting) as LocalSetting;
     setSetting(setting);
+    Cookies.set(COOKIE.THEME, setting.theme);
 
     // Compare locale storage setting(locale) with the current pathname and redirect if there are not the same
     if (pathname.startsWith("/en") && setting.locale === "ar") {
@@ -48,7 +50,7 @@ export default function SittingProvider({ children }: Props) {
   useEffect(() => {
     const html = document.querySelector("html")!;
     const DATA_THEME = "data-theme";
-    html.setAttribute(DATA_THEME, setting.theme);
+    html.setAttribute(DATA_THEME, Cookies.get(COOKIE.THEME) ?? setting.theme);
   }, [setting.theme]);
 
   const changeSetting = useCallback(
@@ -60,6 +62,9 @@ export default function SittingProvider({ children }: Props) {
         const newSetting = { ...setting, [key]: value };
         patchSetting(newSetting).then(() => {
           setSetting(newSetting);
+
+          if (key === "theme") Cookies.set(COOKIE.THEME, `${value}`);
+
           const stringify = JSON.stringify(newSetting);
           localStorage.setItem(BROWSER.LOCALE_STORAGE.SETTING, stringify);
         });
@@ -72,6 +77,7 @@ export default function SittingProvider({ children }: Props) {
     const stringify = JSON.stringify(setting);
     localStorage.setItem(BROWSER.LOCALE_STORAGE.SETTING, stringify);
     setSetting(setting);
+    Cookies.set(COOKIE.THEME, setting.theme);
   }, []);
 
   return (
