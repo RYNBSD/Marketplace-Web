@@ -1,12 +1,34 @@
-import React from "react";
-import { Categories, Colors, Infos, Sizes, Submit, Tags } from "./form-client";
-import { getTranslations } from "next-intl/server";
+"use client";
 
-export default async function CreateForm() {
-  const tForm = await getTranslations("Dashboard.Store.Products.Create.Form");
+import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import {
+  Categories,
+  Colors,
+  Images,
+  Infos,
+  Sizes,
+  Submit,
+  Tags,
+} from "./form-client";
+import { fetchProduct } from "~/action/store";
+
+export default function CreateForm() {
+  const tForm = useTranslations("Dashboard.Store.Products.Create.Form");
+  const searchParams = useSearchParams();
+  const [product, setProduct] = useState<any>({});
+
+  useEffect(() => {
+    fetchProduct(searchParams.get("id") ?? "").then((res) => {
+      console.log(res);
+      
+      if (res.success) setProduct(res.data);
+    });
+  }, [searchParams]);
 
   return (
-    <form className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <form className="grid grid-cols-1 gap-5 md:grid-cols-2">
       <div>
         <label className="form-control w-full max-w-xs">
           <div className="label">
@@ -16,6 +38,7 @@ export default async function CreateForm() {
             type="text"
             name="title"
             placeholder={tForm("title")}
+            defaultValue={product?.product?.title ?? ""}
             maxLength={50}
             className="input input-bordered w-full max-w-xs"
             required
@@ -28,6 +51,7 @@ export default async function CreateForm() {
           <textarea
             name="description"
             placeholder={tForm("description")}
+            defaultValue={product?.product?.description ?? ""}
             maxLength={1000}
             className="textarea textarea-bordered h-24"
             required
@@ -54,9 +78,9 @@ export default async function CreateForm() {
             name="titleAr"
             type="text"
             placeholder={tForm("arabic-title")}
+            defaultValue={product?.product?.titleAr ?? ""}
             maxLength={50}
             className="input input-bordered w-full max-w-xs"
-            required
           />
         </label>
         <label className="form-control">
@@ -66,6 +90,7 @@ export default async function CreateForm() {
           <textarea
             name="descriptionAr"
             placeholder={tForm("arabic-description")}
+            defaultValue={product?.product?.descriptionAr ?? ""}
             maxLength={1000}
             className="textarea textarea-bordered h-24"
             required
@@ -73,7 +98,7 @@ export default async function CreateForm() {
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">{tForm("images")} *</span>
+            <span className="label-text">{tForm("images")}</span>
           </div>
           <input
             type="file"
@@ -81,9 +106,15 @@ export default async function CreateForm() {
             name="images"
             className="file-input file-input-bordered w-full max-w-xs"
             multiple
-            required
           />
         </label>
+      </div>
+      <div className="flex flex-wrap gap-2 col-span-2">
+        <Images
+          images={product?.product?.images ?? []}
+          title={product?.product?.description ?? ""}
+          titleAr={product?.product?.titleAr ?? ""}
+        />
       </div>
       <div>
         <label className="form-control w-full max-w-xs">
@@ -107,7 +138,7 @@ export default async function CreateForm() {
           <input
             type="number"
             min={1}
-            defaultValue={1}
+            defaultValue={product?.product?.price ?? ""}
             name="price"
             placeholder={tForm("price")}
             className="input input-bordered w-full max-w-xs"
@@ -122,7 +153,7 @@ export default async function CreateForm() {
             type="number"
             min={0}
             max={100}
-            defaultValue={0}
+            defaultValue={product?.product?.discount ?? ""}
             name="discount"
             placeholder={tForm("discount")}
             className="input input-bordered w-full max-w-xs"
@@ -134,7 +165,11 @@ export default async function CreateForm() {
           <div className="label">
             <span className="label-text">{tForm("category")} *</span>
           </div>
-          <select className="select select-bordered" name="categoryId">
+          <select
+            className="select select-bordered"
+            defaultValue={product?.product?.category ?? ""}
+            name="categoryId"
+          >
             <Categories />
           </select>
         </label>
@@ -142,7 +177,12 @@ export default async function CreateForm() {
           <div className="label">
             <span className="label-text">{tForm("Quality.quality")} *</span>
           </div>
-          <select className="select select-bordered" name="quality" required>
+          <select
+            className="select select-bordered"
+            defaultValue={product?.product?.quality ?? ""}
+            name="quality"
+            required
+          >
             <option value="low">{tForm("Quality.low")}</option>
             <option value="medium">{tForm("Quality.medium")}</option>
             <option value="high">{tForm("Quality.high")}</option>
@@ -153,7 +193,7 @@ export default async function CreateForm() {
             <div className="label">
               <span className="label-text">{tForm("add-colors")}</span>
             </div>
-            <Colors />
+            <Colors colors={product?.product?.colors ?? []} />
           </label>
         </div>
       </div>
@@ -161,15 +201,18 @@ export default async function CreateForm() {
         <div className="label">
           <span className="label-text">{tForm("add-sizes")}</span>
         </div>
-        <Sizes />
+        <Sizes sizes={product?.product?.sizes ?? []} />
       </label>
       <label htmlFor="tags" className="form-control w-full max-w-xs">
         <div className="label">
           <span className="label-text">{tForm("add-tags")}</span>
         </div>
-        <Tags />
+        <Tags tags={product?.product?.tags ?? []} />
       </label>
-      <Infos />
+      <Infos
+        infos={product?.product?.infos ?? []}
+        infosAr={product?.product?.infosAr ?? []}
+      />
       <Submit />
     </form>
   );

@@ -115,7 +115,7 @@
       "Categories": {
         "categories": "Categories",
         "create": "Create",
-        "Category": {
+        "Options": {
           "view": "View",
           "update": "Update",
           "delete": "Delete"
@@ -125,7 +125,7 @@
           "Form": {
             "name": "Name",
             "arabic-name": "Arabic name",
-            "pick-new-image": "Pick new image",
+            "pick-image": "Pick image",
             "category-valid": "Category name valid",
             "category-not-valid": "Category name not valid",
             "create": "Create"
@@ -145,7 +145,7 @@
       },
       "Products": {
         "products": "Products",
-        "create":"Create",
+        "create": "Create",
         "Options": {
           "view": "View",
           "update": "Update",
@@ -169,17 +169,20 @@
               "low": "Low",
               "medium": "Medium",
               "high": "High"
-            }
-          },
-          "enter-colors": "Enter colors",
-          "enter-sizes": "Enter sizes",
-          "enter-tags": "Enter tags",
-          "Info": {
-            "add": "Add",
-            "arabic": "Arabic info",
-            "english": "English info"
-          },
-          "create": "Create"
+            },
+            "add-colors": "Add colors",
+            "enter-color": "Enter colors",
+            "add-sizes": "Add sizes",
+            "enter-size": "Enter sizes",
+            "add-tags": "Add tags",
+            "enter-tag": "Enter tags",
+            "Info": {
+              "add": "Add",
+              "arabic": "Arabic info",
+              "english": "English info"
+            },
+            "create": "Create"
+          }
         },
         "Update": {
           "update-product": "Update product",

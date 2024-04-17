@@ -149,11 +149,49 @@ export async function allProducts() {
   };
 }
 
+export async function fetchProduct(id: string): Promise<ResponseState> {
+  const res = await request(`/api/dashboard/store/products/${id}`);
+  const json = await res.json();
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: json.data,
+  };
+}
+
 export async function createProduct(
   formData: FormData
 ): Promise<ResponseState> {
   const res = await request("/api/dashboard/store/products", {
     method: "POST",
+    body: formData,
+  });
+  const json = await res.json();
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: json.data,
+  };
+}
+
+export async function updateProduct(
+  id: string,
+  formData: FormData
+): Promise<ResponseState> {
+  const res = await request(`/api/dashboard/store/products/${id}`, {
+    method: "PUT",
     body: formData,
   });
   const json = await res.json();

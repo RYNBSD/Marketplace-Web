@@ -20,10 +20,11 @@ export default function Products() {
   }, []);
 
   const remove = useCallback(async (id: string) => {
-    const res = await deleteProduct(id)
-    // @ts-ignore
-    if (res.success) setProducts(prev => prev.filter(product => product.id !== id))
-    return res
+    const res = await deleteProduct(id);
+    if (res.success)
+      // @ts-ignore
+      setProducts((prev) => prev.filter((product) => product.id !== id));
+    return res;
   }, []);
 
   return (
@@ -47,7 +48,7 @@ const Product = memo(function Product({
   remove,
   ...props
 }: ProductProps) {
-  const tOptions = useTranslations("Dashboard.Store.Products.Options")
+  const tOptions = useTranslations("Dashboard.Store.Products.Options");
   const title = useMemo(
     () => (locale === "en" ? props.title : props.titleAr),
     [locale, props.title, props.titleAr]
@@ -81,7 +82,9 @@ const Product = memo(function Product({
             {tOptions("view")}
           </Link>
           <Link
-            href={`/${locale}/dashboard/store/products/update`}
+            href={`/${locale}/dashboard/store/products/update?id=${encodeURIComponent(
+              id
+            )}`}
             className="btn btn-info flex-1"
           >
             {tOptions("update")}

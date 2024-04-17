@@ -9,10 +9,55 @@ import {
   useState,
   useTransition,
 } from "react";
-import { useRouter } from "next/navigation";
-import { SubmitButton } from "~/components";
-import { allCategories, createProduct } from "~/action/store";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import Image from "next/image";
+import { SubmitButton } from "~/components";
+import { allCategories, updateProduct } from "~/action/store";
+import { KEYS } from "~/constant";
+
+const { BASE_URL } = KEYS;
+
+export const Images = memo(function Images(props: {
+  images: string[];
+  title: string;
+  titleAr: string;
+}) {
+  const [images, setImages] = useState<string[]>([]);
+  const [deletedImages, setDeletedImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    setImages(props.images);
+  }, [props.images]);
+
+  const onDelete = useCallback((image: string) => {
+    setImages((prev) => prev.filter((img) => img !== image));
+    setDeletedImages((prev) => [...prev, image]);
+  }, []);
+
+  return (
+    <>
+      <input
+        className="none"
+        type="hidden"
+        name="deletedImages"
+        value={deletedImages.join(",")}
+      />
+      {images.map((image: string) => (
+        <Image
+          key={image}
+          src={`${BASE_URL}${image}`}
+          alt={`${props.title} - ${props.titleAr}`}
+          className="hover:cursor-pointer"
+          onClick={() => onDelete(image)}
+          loading="lazy"
+          width={150}
+          height={150}
+        />
+      ))}
+    </>
+  );
+});
 
 const Category = memo(function Category({
   id,
@@ -68,10 +113,14 @@ const Size = memo(function Size({
   );
 });
 
-export function Sizes() {
+export const Sizes = memo(function Sizes(props: { sizes: string[] }) {
   const tForm = useTranslations("Dashboard.Store.Products.Create.Form");
   const inputRef = useRef<ElementRef<"input">>(null);
-  const [sizes, setSizes] = useState<string[]>([]);
+  const [sizes, setSizes] = useState<string[]>(props.sizes);
+
+  useEffect(() => {
+    setSizes(props.sizes);
+  }, [props.sizes]);
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -115,7 +164,7 @@ export function Sizes() {
       </div>
     </>
   );
-}
+});
 
 const Color = memo(function Color({
   color,
@@ -128,7 +177,7 @@ const Color = memo(function Color({
     <button
       key={color}
       onClick={() => onDelete(color)}
-      className="badge gap-2 hover:badge-error"
+      className="badge gap-1 hover:badge-error"
     >
       <div className="w-[10px] h-[10px]" style={{ backgroundColor: color }} />
       {color}
@@ -136,12 +185,16 @@ const Color = memo(function Color({
   );
 });
 
-export function Colors() {
+export const Colors = memo(function Colors(props: { colors: string[] }) {
   const tForm = useTranslations("Dashboard.Store.Products.Create.Form");
   const [_, startTransition] = useTransition();
   const [index, setIndex] = useState(0);
-  const [colors, setColors] = useState<string[]>([]);
+  const [colors, setColors] = useState(props.colors);
   const [formColors, setFormColors] = useState("");
+
+  useEffect(() => {
+    setColors(props.colors);
+  }, [props.colors]);
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -150,8 +203,6 @@ export function Colors() {
 
       startTransition(() => {
         setColors((prev) => {
-          if (prev.includes(value)) return prev;
-
           prev[index] = value;
 
           const set = new Set(colors);
@@ -190,7 +241,7 @@ export function Colors() {
       </div>
     </>
   );
-}
+});
 
 const Tag = memo(function Tag({
   tag,
@@ -210,10 +261,14 @@ const Tag = memo(function Tag({
   );
 });
 
-export function Tags() {
+export const Tags = memo(function Tags(props: { tags: string[] }) {
   const tForm = useTranslations("Dashboard.Store.Products.Create.Form");
   const inputRef = useRef<ElementRef<"input">>(null);
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(props.tags);
+
+  useEffect(() => {
+    setTags(props.tags);
+  }, [props.tags]);
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -257,7 +312,7 @@ export function Tags() {
       </div>
     </>
   );
-}
+});
 
 const Info = memo(function Info({
   en,
@@ -296,9 +351,24 @@ const Info = memo(function Info({
   );
 });
 
-export function Infos() {
+export const Infos = memo(function Infos(props: {
+  infos: string[];
+  infosAr: string[];
+}) {
   const tInfo = useTranslations("Dashboard.Store.Products.Create.Form.Info");
   const [infos, setInfos] = useState<{ en: string; ar: string }[]>([]);
+
+  useEffect(() => {
+    const { infos, infosAr } = props;
+    const result = [];
+    for (let i = 0; i < infos.length; i++) {
+      result.push({
+        en: infos[i] ?? "",
+        ar: infosAr[i] ?? "",
+      });
+    }
+    setInfos(result);
+  }, [props]);
 
   const onEnChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>, i: number) => {
@@ -362,19 +432,24 @@ export function Infos() {
       </button>
     </>
   );
-}
+});
 
 export function Submit() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const create = useCallback(
     async (formData: FormData) => {
-      console.log(formData.get("colors"));
-      const res = await createProduct(formData);
+      const id = searchParams.get("id") ?? ""
+
+      console.log(formData);
+      
+
+      const res = await updateProduct(id, formData);
       if (res.success) router.back();
       return res;
     },
-    [router]
+    [router, searchParams]
   );
 
   return (

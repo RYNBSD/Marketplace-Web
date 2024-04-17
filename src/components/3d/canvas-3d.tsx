@@ -39,25 +39,14 @@ const Canvas3D: FC<Props> = ({ model, ar = false }) => {
 
   const scene = useMemo(
     () => (
-      <>
-        <OrbitControls
-          autoRotate={!setting.disableAnimations && !ar} // Auto-rotate the model
-          enableZoom={true} // Enable zoom
-          maxPolarAngle={Math.PI / 2} // Limit the angle to prevent flipping
-          minPolarAngle={0} // Limit the angle to prevent flipping
-          minDistance={1} // Limit the minimum distance of zoom
-          maxDistance={10} // Limit the maximum distance of zoom
-        />
-        <PerspectiveCamera makeDefault position={[0, 1, 2.5]} />
-        <Stage preset="rembrandt" intensity={1} adjustCamera shadows>
-          <Resize width>
-            <Model model={model} />
-            <Preload all />
-          </Resize>
-        </Stage>
-      </>
+      <Stage preset="rembrandt" intensity={1} adjustCamera shadows>
+        <Resize width>
+          <Model model={model} />
+          <Preload all />
+        </Resize>
+      </Stage>
     ),
-    [ar, model, setting.disableAnimations]
+    [model]
   );
 
   const arButton = useMemo(
@@ -70,18 +59,27 @@ const Canvas3D: FC<Props> = ({ model, ar = false }) => {
   );
 
   return isClient ? (
-    <div className="w-full h-screen">
-      <Suspense fallback={null}>
-        <Stats />
-        {arButton}
-        <Canvas shadows frameloop="demand">
-          <Center>
-            <Suspense fallback={<Loader />}>{ar ? arScene : scene}</Suspense>
-          </Center>
-        </Canvas>
-      </Suspense>
-    </div>
-  ) : <></>;
+    <Suspense fallback={null}>
+      <Stats />
+      {arButton}
+      <Canvas shadows frameloop="demand">
+        <OrbitControls
+          autoRotate={!setting.disableAnimations && !ar} // Auto-rotate the model
+          enableZoom={true} // Enable zoom
+          maxPolarAngle={Math.PI / 2} // Limit the angle to prevent flipping
+          minPolarAngle={0} // Limit the angle to prevent flipping
+          minDistance={1} // Limit the minimum distance of zoom
+          maxDistance={10} // Limit the maximum distance of zoom
+        />
+        <PerspectiveCamera makeDefault position={[0, 1, 2.5]} />
+        <Center>
+          <Suspense fallback={<Loader />}>{ar ? arScene : scene}</Suspense>
+        </Center>
+      </Canvas>
+    </Suspense>
+  ) : (
+    <></>
+  );
 };
 
 Canvas3D.propTypes = {

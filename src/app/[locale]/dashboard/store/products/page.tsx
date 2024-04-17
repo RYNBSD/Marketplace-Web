@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from 'next-intl/server'
-import React from 'react'
+
 import Products from './products'
 import Link from 'next/link'
 
