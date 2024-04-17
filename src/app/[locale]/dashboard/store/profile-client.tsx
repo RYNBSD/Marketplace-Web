@@ -14,19 +14,21 @@ export function Img() {
   const store = useSeller((state) => state.store);
 
   return (
-    <Image
-      src={`${BASE_URL}${store.image || "/upload"}`}
-      alt={store.name}
-      width={128}
-      height={128}
-      priority
-      className="w-32 h-32 object-cover rounded-full"
-    />
+    store?.image && (
+      <Image
+        src={`${BASE_URL}${store.image}`}
+        alt={store.name}
+        width={128}
+        height={128}
+        priority
+        className="w-32 h-32 object-cover rounded-full"
+      />
+    )
   );
 }
 
 export function Name() {
-  const tProfile = useTranslations("Dashboard.Store.Profile")
+  const tProfile = useTranslations("Dashboard.Store.Profile");
   const store = useSeller((state) => state.store);
   return (
     <input
@@ -41,22 +43,18 @@ export function Name() {
 }
 
 export function DeleteBtn() {
-  const router = useRouter()
-  const locale = useLocale()
-  const tProfile = useTranslations("Dashboard.Store.Profile")
+  const router = useRouter();
+  const locale = useLocale();
+  const tProfile = useTranslations("Dashboard.Store.Profile");
   const { toastify } = useNotification()!;
 
   const remove = useCallback(async () => {
-    const res = await toastify(deleteStore())
-    if (res.success) router.push(`/${locale}/profile`)
-  }, [locale, router, toastify])
+    const res = await toastify(deleteStore());
+    if (res.success) router.push(`/${locale}/profile`);
+  }, [locale, router, toastify]);
 
   return (
-    <button
-      type="button"
-      className="btn btn-error capitalize"
-      onClick={remove}
-    >
+    <button type="button" className="btn btn-error capitalize" onClick={remove}>
       {tProfile("delete")}
     </button>
   );

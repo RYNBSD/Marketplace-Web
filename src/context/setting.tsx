@@ -7,6 +7,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useTransition,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { KEYS } from "~/constant";
@@ -16,6 +17,7 @@ const SettingContext = createContext<TSettingContext | null>(null);
 const { BROWSER } = KEYS;
 
 export default function SittingProvider({ children }: Props) {
+  const [_, startTransition] = useTransition();
   const router = useRouter();
   const pathname = usePathname();
   const [setting, setSetting] = useState<LocalSetting>({
@@ -54,23 +56,30 @@ export default function SittingProvider({ children }: Props) {
       key: K,
       value: LocalSetting[K]
     ) => {
-      const newSetting = { ...setting, [key]: value };
-
-      patchSetting(newSetting).then(() => {
-        setSetting(newSetting);
-
-        const stringify = JSON.stringify(newSetting);
-        localStorage.setItem(BROWSER.LOCALE_STORAGE.SETTING, stringify);
+      startTransition(() => {
+        const newSetting = { ...setting, [key]: value };
+        patchSetting(newSetting).then(() => {
+          setSetting(newSetting);
+          const stringify = JSON.stringify(newSetting);
+          localStorage.setItem(BROWSER.LOCALE_STORAGE.SETTING, stringify);
+        });
       });
     },
     [setSetting, setting]
   );
+
+  const refresh = useCallback((setting: LocalSetting) => {
+    const stringify = JSON.stringify(setting);
+    localStorage.setItem(BROWSER.LOCALE_STORAGE.SETTING, stringify);
+    setSetting(setting);
+  }, []);
 
   return (
     <SettingContext.Provider
       value={{
         setting,
         changeSetting,
+        refresh,
       }}
     >
       {children}
@@ -87,6 +96,7 @@ type TSettingContext = {
     key: K,
     value: LocalSetting[K]
   ) => void;
+  refresh: (setting: LocalSetting) => void;
 };
 
 type Props = {

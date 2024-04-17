@@ -11,16 +11,17 @@ const { BASE_URL } = KEYS;
 
 export function Img() {
   const { user } = useUser()!;
-
   return (
-    <Image
-      src={`${BASE_URL}${user?.image ?? "/upload"}`}
-      alt={user?.username ?? ""}
-      width={128}
-      height={128}
-      priority
-      className="w-32 h-32 object-cover rounded-full"
-    />
+    user?.image && (
+      <Image
+        src={`${BASE_URL}${user.image}`}
+        alt={user?.username ?? ""}
+        width={128}
+        height={128}
+        priority
+        className="w-32 h-32 object-cover rounded-full"
+      />
+    )
   );
 }
 

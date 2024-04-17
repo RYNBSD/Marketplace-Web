@@ -1,6 +1,6 @@
 "use server";
 
-import { Img, Menu } from "./profile-sections";
+import { Img, Menu } from "./profile-client";
 
 export default async function NavbarProfile() {
   return (

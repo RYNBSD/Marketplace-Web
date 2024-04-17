@@ -23,7 +23,6 @@ export default function Product() {
 
   useEffect(() => {
     fetchProduct(`${params.id}`).then((res) => {
-      console.log(res);
       if (res.success) setProduct(res.data);
     });
   }, [params.id]);

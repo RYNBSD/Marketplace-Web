@@ -1,4 +1,4 @@
-import { Submit, Username } from "./fields";
+import { Submit, Username } from "./form-client";
 import { getTranslations } from "next-intl/server";
 
 export default async function UpdateForm() {

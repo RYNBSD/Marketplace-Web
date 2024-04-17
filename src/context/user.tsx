@@ -25,6 +25,7 @@ import {
 } from "~/action/user";
 import { useNotification } from "./notification";
 import { KEYS } from "~/constant";
+import { useSetting } from "./setting";
 
 const { COOKIE } = KEYS;
 
@@ -43,6 +44,7 @@ const UserContext = createContext<TUserContext | null>(null);
 export default function UserProvider({ children }: Props) {
   const locale = useLocale();
   const router = useRouter();
+  const { refresh } = useSetting()!;
   const { toastify } = useNotification()!;
   const [user, setUser] = useState<User | null>(null);
 
@@ -59,8 +61,11 @@ export default function UserProvider({ children }: Props) {
     if (!res.success) return;
 
     // @ts-ignore
+    refresh(res.data.setting);
+    // @ts-ignore
     setUser(res.data.user);
-  }, [user]);
+
+  }, [refresh, user]);
 
   useEffect(() => {
     me();
@@ -83,12 +88,15 @@ export default function UserProvider({ children }: Props) {
 
       if (res.success) {
         // @ts-ignore
+        refresh(res.data.setting);
+        // @ts-ignore
         setUser(res.data.user);
+
         router.push(`/${locale}/profile`);
       }
       return res;
     },
-    [locale, router]
+    [locale, refresh, router]
   );
 
   const signOut = useCallback(async () => {
