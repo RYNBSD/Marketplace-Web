@@ -69,12 +69,16 @@ export default async function Product({ params: { locale, id } }: Props) {
           />
           <h2>{category.name}</h2>
         </div>
+        <div className="divider">Price</div>
+        <div>{product.price}</div>
+        <div className="divider">Discount</div>
+        <div>{product.discount}</div>
         {product?.tags && (
           <>
             <div className="divider">Tags</div>
             <div className="flex gap-2">
               {product.tags.map((tag: string) => (
-                <span key={tag}>{tag}</span>
+                <span key={tag} className="badge">{tag}</span>
               ))}
             </div>
           </>
@@ -84,7 +88,7 @@ export default async function Product({ params: { locale, id } }: Props) {
             <div className="divider">Sizes</div>
             <div className="flex gap-2">
               {product.sizes.map((size: string) => (
-                <span key={size}>{size}</span>
+                <span key={size} className="badge">{size}</span>
               ))}
             </div>
           </>

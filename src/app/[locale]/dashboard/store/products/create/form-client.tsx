@@ -367,7 +367,6 @@ export function Submit() {
 
   const create = useCallback(
     async (formData: FormData) => {
-      console.log(formData.get("colors"));
       const res = await createProduct(formData);
       if (res.success) router.back();
       return res;

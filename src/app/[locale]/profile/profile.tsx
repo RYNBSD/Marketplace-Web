@@ -3,8 +3,10 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { DeleteBtn, Img, StoreBtn, Username } from "./profile-client";
 
 export default async function Profile() {
-  const locale = await getLocale();
-  const tInfo = await getTranslations({ locale, namespace: "Profile.Info" });
+  const [tInfo, locale] = await Promise.all([
+    getTranslations("Profile.Info"),
+    getLocale(),
+  ]);
 
   return (
     <section

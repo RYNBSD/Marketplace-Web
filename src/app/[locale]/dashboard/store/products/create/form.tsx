@@ -16,7 +16,7 @@ export default async function CreateForm() {
   });
 
   return (
-    <form className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <form className="flex flex-col gap-5 md:grid md:grid-cols-2">
       <div>
         <label className="form-control w-full max-w-xs">
           <div className="label">
