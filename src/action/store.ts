@@ -70,7 +70,21 @@ export async function allCategories(page: number): Promise<ResponseState> {
   };
 }
 
-export async function fetchCategory() {}
+export async function fetchCategory(id: string): Promise<ResponseState> {
+  const res = await request(`/api/dashboard/store/categories/${id}`);
+  const json = await res.json();
+
+  if (!res.ok)
+    return {
+      success: false,
+      error: json.message,
+    };
+
+  return {
+    success: true,
+    data: json.data,
+  };
+}
 
 export async function createCategory(
   formData: FormData
