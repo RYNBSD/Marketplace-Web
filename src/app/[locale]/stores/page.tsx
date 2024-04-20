@@ -24,7 +24,7 @@ export default async function Sellers({ params: { locale } }: Props) {
         {stores.map((store: any) => (
           <Link
             key={store.id}
-            href={`/${locale}/sellers/${store.id}`}
+            href={`/${locale}/stores/${store.id}`}
             className="flex flex-col items-center justify-center gap-1"
           >
             <div className="avatar">
@@ -34,6 +34,7 @@ export default async function Sellers({ params: { locale } }: Props) {
                   alt={store.name}
                   width={96}
                   height={96}
+                  loading="lazy"
                   className="rounded-full"
                 />
               </div>
