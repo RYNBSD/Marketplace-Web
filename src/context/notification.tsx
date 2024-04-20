@@ -1,9 +1,11 @@
 "use client";
 import type { ReactNode } from "react";
+import type { TypeOptions, Theme } from "react-toastify";
 import type { ResponseState } from "~/types";
 import { createContext, useContext, useCallback, useEffect } from "react";
+import Cookies from "js-cookie";
 import { toast } from "react-toastify";
-import { useSetting } from "./setting";
+import { KEYS } from "~/constant";
 
 type TNotificationContext = {
   notify: () => Promise<unknown>;
@@ -12,9 +14,9 @@ type TNotificationContext = {
 
 const NotificationContext = createContext<TNotificationContext | null>(null);
 
-export default function NotificationProvider({ children }: Props) {
-  const { setting } = useSetting()!;
+const { COOKIE } = KEYS;
 
+export default function NotificationProvider({ children }: Props) {
   useEffect(() => {
     if ("Notification" in window) Notification.requestPermission();
   }, []);
@@ -23,26 +25,55 @@ export default function NotificationProvider({ children }: Props) {
     // const notification = new Notification("")
   }, []);
 
-  const toastify = useCallback(
-    async (promise: Promise<ResponseState>) => {
-      const res = await toast.promise(
-        promise,
-        { pending: "Waiting", error: "Error", success: "Success" },
-        { theme: setting.theme }
-      );
+  const toastify = useCallback(async (promise: Promise<ResponseState>) => {
+    const toastId = toast.loading("Loading...");
+    let type: TypeOptions = "default";
+    const cookieTheme = Cookies.get(COOKIE.THEME);
+    const theme: Theme =
+      cookieTheme === "light" || cookieTheme === "dark"
+        ? cookieTheme
+        : "colored";
 
-      if (!res.success)
-        toast.error(res.error, {
-          theme:
-            setting.theme !== "light" && setting.theme !== "dark"
-              ? "colored"
-              : setting.theme,
-        });
+    const res = await promise;
 
-      return res;
-    },
-    [setting.theme]
-  );
+    if (!res.success) {
+      type = "error";
+      toast.update(toastId, {
+        render: res?.error ?? "Error",
+        type,
+        theme,
+        autoClose: 5000,
+        closeButton: true,
+        isLoading: false,
+      });
+    } else {
+      type = "success";
+      toast.update(toastId, {
+        render: "Success",
+        type,
+        theme,
+        autoClose: 5000,
+        closeButton: true,
+        isLoading: false,
+      });
+    }
+
+    // const res = await toast.promise(
+    //   promise,
+    //   { pending: "Waiting", error: "Error", success: "Success" },
+    //   { theme: setting.theme }
+    // );
+
+    // if (!res.success)
+    //   toast.error(res.error, {
+    //     theme:
+    //       setting.theme !== "light" && setting.theme !== "dark"
+    //         ? "colored"
+    //         : setting.theme,
+    //   });
+
+    return res;
+  }, []);
 
   return (
     <NotificationContext.Provider value={{ notify, toastify }}>

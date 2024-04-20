@@ -51,7 +51,7 @@ export async function signOut(): Promise<ResponseState> {
   const res = await request("/api/auth/sign-out", { method: "POST" });
   const json = await res.json();
 
-  if (res.ok)
+  if (!res.ok)
     return {
       success: false,
       error: json.message,
