@@ -23,7 +23,7 @@ export default async function Home({ params: { locale } }: Props) {
       <Header
         title="Hello there"
         description="Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi."
-        exploreLink={`/${locale}/sellers`}
+        exploreLink={`/${locale}/stores`}
       />
       <section>
         <h1>Sellers</h1>
