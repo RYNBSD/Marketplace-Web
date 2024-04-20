@@ -12,7 +12,7 @@ import { useLocale, useTranslations } from "next-intl";
 const { BASE_URL } = KEYS;
 
 export function Input() {
-  const tSearch = useTranslations("Search")
+  const tSearch = useTranslations("Search");
   const [_, startTransition] = useTransition();
   const { search, setSearch, setState } = useSearch((state) => state);
 
@@ -92,17 +92,19 @@ const Category = memo(function Category({
   name,
   nameAr,
   image,
+  storeId,
   locale,
 }: {
   id: string;
   name: string;
   nameAr: string;
   image: string;
+  storeId: string;
   locale: string;
 }) {
   return (
     <Link
-      href={`/${locale}/categories/${id}`}
+      href={`/${locale}/stores/${storeId}/${id}`}
       className="card card-compact w-96 bg-base-100 shadow-xl"
     >
       <figure>
@@ -137,6 +139,8 @@ const Product = memo(function Product({
   description,
   descriptionAr,
   image,
+  categoryId,
+  storeId,
   locale,
 }: {
   id: string;
@@ -145,11 +149,13 @@ const Product = memo(function Product({
   description: string;
   descriptionAr: string;
   image: string;
+  categoryId: string;
+  storeId: string;
   locale: string;
 }) {
   return (
     <Link
-      href={`/${locale}/products/${id}`}
+      href={`/${locale}/stores/${storeId}/${categoryId}/${id}`}
       className="card card-compact w-96 bg-base-100 shadow-xl"
     >
       <figure>
