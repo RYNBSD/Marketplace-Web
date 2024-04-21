@@ -78,7 +78,9 @@ export default async function Product({ params: { locale, id } }: Props) {
             <div className="divider">Tags</div>
             <div className="flex gap-2">
               {product.tags.map((tag: string) => (
-                <span key={tag} className="badge">{tag}</span>
+                <span key={tag} className="badge">
+                  {tag}
+                </span>
               ))}
             </div>
           </>
@@ -88,7 +90,9 @@ export default async function Product({ params: { locale, id } }: Props) {
             <div className="divider">Sizes</div>
             <div className="flex gap-2">
               {product.sizes.map((size: string) => (
-                <span key={size} className="badge">{size}</span>
+                <span key={size} className="badge">
+                  {size}
+                </span>
               ))}
             </div>
           </>

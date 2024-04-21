@@ -2,7 +2,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { request } from "~/action/fn";
 import { KEYS, LOCALE } from "~/constant";
-import { LocalParam } from "~/types";
+import { CategoryIdParam, LocalParam, StoreIdParam } from "~/types";
 import { Products } from "./client";
 
 const { BASE_URL } = KEYS;
@@ -49,5 +49,5 @@ export default async function Category({
 }
 
 type Props = {
-  params: LocalParam & { storeId: string; categoryId: string };
+  params: LocalParam & StoreIdParam & CategoryIdParam;
 };

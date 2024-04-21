@@ -1,5 +1,5 @@
 import { request } from "~/action/fn";
-import { LocalParam } from "~/types";
+import { LocalParam, StoreIdParam } from "~/types";
 import { Categories, Products } from "./client";
 import Image from "next/image";
 import { KEYS } from "~/constant";
@@ -45,5 +45,5 @@ export default async function Store({ params: { locale, storeId } }: Props) {
 }
 
 type Props = {
-  params: { storeId: string } & LocalParam;
+  params: StoreIdParam & LocalParam;
 };
