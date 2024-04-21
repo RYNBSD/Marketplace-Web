@@ -1,7 +1,7 @@
 "use client";
 
 import type { ChangeEvent } from "react";
-import { memo, useCallback, useEffect, useTransition } from "react";
+import { memo, useCallback, useTransition } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearch } from "./state";
@@ -14,23 +14,21 @@ const { BASE_URL } = KEYS;
 export function Input() {
   const tSearch = useTranslations("Search");
   const [_, startTransition] = useTransition();
-  const { search, setSearch, setState } = useSearch((state) => state);
-
-  useEffect(() => {
-    searchAction(search).then((res) => {
-      if (!res.success) return;
-      setState(res.data);
-    });
-  }, [search, setState]);
+  const { setState } = useSearch((state) => state);
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       startTransition(() => {
-        const { value } = e.target;
-        setSearch(value.trim());
+        const value = e.target.value.trim();
+        if (value.length === 0) return;
+
+        searchAction(value).then((res) => {
+          if (!res.success) return;
+          setState(res.data);
+        });
       });
     },
-    [setSearch]
+    [setState]
   );
 
   return (
@@ -38,7 +36,6 @@ export function Input() {
       type="search"
       className="grow"
       placeholder={tSearch("search")}
-      value={search}
       onChange={onChange}
     />
   );

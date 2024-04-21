@@ -1,22 +1,18 @@
 import { create } from "zustand";
 
 export const useSearch = create<State & Actions>((set) => ({
-  search: "",
   stores: [],
   categories: [],
   products: [],
-  setState: (s: any) => set(state => ({ ...state, ...s })),
-  setSearch: (search: string) => set(() => ({ search })),
+  setState: (s: any) => set((state) => ({ ...state, ...s })),
 }));
 
 type State = {
-  search: string;
-  stores: any[]
-  categories: any[]
-  products: any[]
+  stores: any[];
+  categories: any[];
+  products: any[];
 };
 
 type Actions = {
-  setState: (s: any) => void
-  setSearch: (search: string) => void;
+  setState: (s: any) => void;
 };
