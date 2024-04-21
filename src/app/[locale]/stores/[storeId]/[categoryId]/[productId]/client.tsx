@@ -16,7 +16,7 @@ export const ThreeD = memo(function ThreeD({ model }: { model: string }) {
   return (
     is3D && (
       <>
-        <div className="h-[250px] w-full">
+        <div className="h-[250px] w-full grid place-content-center">
           <Canvas3D ar={isAr} model={`${BASE_URL}${model}`} />
         </div>
         <div className="flex gap-2 items-center justify-center">
@@ -41,13 +41,24 @@ export const ThreeD = memo(function ThreeD({ model }: { model: string }) {
   );
 });
 
-export function Images({ children }: { children: ReactNode }) {
+export function Images({
+  children,
+  hasModel,
+}: {
+  children: ReactNode;
+  hasModel: boolean;
+}) {
   const { is3D, toggle3D } = useState((state) => state);
   return (
     !is3D && (
       <>
         {children}
-        <button type="button" className="btn btn-info" onClick={toggle3D}>
+        <button
+          type="button"
+          className="btn btn-info"
+          disabled={!hasModel}
+          onClick={toggle3D}
+        >
           3D
         </button>
       </>
@@ -68,15 +79,19 @@ export function OrderBtn(props: {
   const onClick = useCallback(() => {
     for (const c of cart) {
       if (c.id === props.id) {
-        changeQuantityOfProduct(c.id, 1)
-        return
+        changeQuantityOfProduct(c.id, 1);
+        return;
       }
     }
     addToCart({ ...props, quantity: 1 });
   }, [addToCart, cart, changeQuantityOfProduct, props]);
 
   return (
-    <button className="btn btn-primary w-full my-1" type="button" onClick={onClick}>
+    <button
+      className="btn btn-primary w-full my-1"
+      type="button"
+      onClick={onClick}
+    >
       Order
     </button>
   );

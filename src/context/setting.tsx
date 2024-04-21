@@ -9,6 +9,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import useUpdateEffect from "react-use/lib/useUpdateEffect";
 import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { KEYS } from "~/constant";
@@ -47,7 +48,7 @@ export default function SittingProvider({ children }: Props) {
     }
   }, [pathname, router]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     const html = document.querySelector("html")!;
     const DATA_THEME = "data-theme";
     html.setAttribute(DATA_THEME, Cookies.get(COOKIE.THEME) ?? setting.theme);

@@ -38,6 +38,8 @@ export default async function Product({
     locale
   );
 
+  const discountPrice = product.price - (product.discount * product.price) / 100
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 p-1">
       <div className="flex flex-col gap-1">
@@ -49,7 +51,7 @@ export default async function Product({
         </p>
       </div>
       <div className="flex flex-col gap-1 items-center justify-center">
-        <Images>
+        <Images hasModel={!!product.model}>
           <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
             {product.images.map((image: string) => (
               <div key={image} className="carousel-item">
@@ -64,7 +66,7 @@ export default async function Product({
             ))}
           </div>
         </Images>
-        <ThreeD model={product.model} />
+        {product.model && <ThreeD model={product.model} />}
       </div>
       <div>
         {LOCALE[1] === locale &&
@@ -97,7 +99,7 @@ export default async function Product({
         <div className="divider">Price</div>
         <div>{product.price}</div>
         <div className="divider">Discount</div>
-        <div>{product.discount}</div>
+        <div>{discountPrice}</div>
         {product.tags && (
           <>
             <div className="divider">Tags</div>
@@ -141,7 +143,7 @@ export default async function Product({
           title={product.title}
           titleAr={product.titleAr}
           image={product.images[0]}
-          price={product.price}
+          price={!!product.discount ? discountPrice : product.price}
         />
       </div>
     </div>

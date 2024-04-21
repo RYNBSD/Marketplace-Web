@@ -8,6 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import useUpdateEffect from "react-use/lib/useUpdateEffect"
 import { KEYS } from "~/constant";
 
 const CartContext = createContext<TCartContext | null>(null);
@@ -20,7 +21,6 @@ export default function CartProvider({ children }: Props) {
     try {
       const localCart = localStorage.getItem(CART) ?? "";
       if (localCart.length === 0) return;
-
       const cart = JSON.parse(localCart) as LocalCart;
       setCart(cart);
     } catch (error) {
@@ -28,10 +28,10 @@ export default function CartProvider({ children }: Props) {
     }
   }, []);
 
-  // const saveCart = useCallback(() => {
-  //   const stringify = JSON.stringify(cart);
-  //   localStorage.setItem(CART, stringify);
-  // }, [cart]);
+  useUpdateEffect(() => {
+    const stringify = JSON.stringify(cart);
+    localStorage.setItem(CART, stringify);
+  }, [cart])
 
   const addToCart = useCallback((option: CartOption) => {
     setCart((prev) => [...prev, option]);
