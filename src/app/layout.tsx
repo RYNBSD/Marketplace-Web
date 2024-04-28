@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import type{ Locale } from "~/types";
+import type { Locale } from "~/types";
 import { cookies } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { KEYS, THEMES } from "~/constant";
+import { QueryProvider } from "~/provider";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
@@ -21,12 +22,9 @@ export const metadata: Metadata = {
 
 const { COOKIE } = KEYS;
 
-export default async function RootLayout({
-  children,
-  params
-}: Props) {
+export default async function RootLayout({ children, params }: Props) {
   const theme = cookies().get(COOKIE.THEME)?.value ?? THEMES[0];
-  const locale = params?.locale ?? await getLocale()
+  const locale = params?.locale ?? (await getLocale());
 
   return (
     <html
@@ -34,7 +32,9 @@ export default async function RootLayout({
       dir={locale === "en" ? "ltr" : "rtl"}
       data-theme={theme}
     >
-      <body>{children}</body>
+      <body>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 }
@@ -42,6 +42,6 @@ export default async function RootLayout({
 type Props = {
   children: React.ReactNode;
   params: {
-    locale?: Locale
-  }
-}
+    locale?: Locale;
+  };
+};

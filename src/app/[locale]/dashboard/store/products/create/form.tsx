@@ -1,19 +1,18 @@
-import React from "react";
+import { cookies } from "next/headers";
 import { Colors, Infos, Sizes, Submit, Tags } from "./form-client";
 import { getLocale, getTranslations } from "next-intl/server";
-import { allCategories } from "~/action/store";
+import { allCategories } from "~/api/store";
 import { LOCALE } from "~/constant";
 
 export default async function CreateForm() {
-  const res = await allCategories(1);
-  if (!res.success) return "Error";
-  const { categories } = res.data;
-
-  const locale = await getLocale();
-  const tForm = await getTranslations({
-    locale,
-    namespace: "Dashboard.Store.Products.Create.Form",
-  });
+  const [res, tForm, locale] = await Promise.all([
+    allCategories({ headers: { cookie: cookies().toString() } }),
+    getTranslations("Dashboard.Store.Products.Create.Form"),
+    getLocale()
+  ]);
+  if (!res.ok) return "Error";
+  const json = await res.json();
+  const { categories } = json.data;
 
   return (
     <form className="flex flex-col gap-5 md:grid md:grid-cols-2">

@@ -5,7 +5,7 @@ import type {
   StoreIdParam,
 } from "~/types";
 import { redirect } from "next/navigation";
-import { request } from "~/action/fn";
+import { request } from "~/api/fn";
 import Image from "next/image";
 import { Fragment } from "react";
 import { KEYS, LOCALE } from "~/constant";

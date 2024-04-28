@@ -1,15 +1,17 @@
 "use client";
-import type { ResponseState } from "~/types";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
 import { SubmitButton } from "~/components";
-import { forgotPassword } from "./action";
-import { accessEmail } from "~/action/security";
+import { forgotPassword } from "~/api/auth";
+import { accessEmail } from "~/api/security";
 import { KEYS } from "~/constant";
 
-const { INPUT } = KEYS;
+const { INPUT, HTTP } = KEYS;
 
 export default function ForgotPasswordForm() {
+  const locale = useLocale();
+  const router = useRouter();
   const tForm = useTranslations("Auth.Forgot-Password.Form");
   const [state, setState] = useState({
     accessToken: "",
@@ -18,26 +20,26 @@ export default function ForgotPasswordForm() {
 
   const handleSubmit = useCallback(
     async (formData: FormData) => {
-      let res: ResponseState;
+      let res: Response;
 
       switch (state.disableEmail) {
         case true:
           res = await forgotPassword(formData);
+          router.push(`/${locale}/auth/sign-in`);
           break;
         case false:
           res = await accessEmail(formData);
-          if (res.success) {
+          if (res.ok) {
             setState(() => ({
               disableEmail: true,
-              // @ts-ignore
-              accessToken: res.data.token,
+              accessToken: res.headers.get(HTTP.HEADERS.ACCESS_TOKEN) ?? "",
             }));
           }
           break;
       }
       return res;
     },
-    [state.disableEmail]
+    [locale, router, state.disableEmail]
   );
 
   return (

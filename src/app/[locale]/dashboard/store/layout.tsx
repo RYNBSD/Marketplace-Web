@@ -2,23 +2,17 @@
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, type ReactNode } from "react";
-import { sellerProfile } from "~/action/store";
-import { useSeller } from "~/hooks";
+import { sellerProfile } from "~/api/store";
 
 export default function StoreLayout({ children }: Props) {
   const locale = useLocale();
   const router = useRouter();
-  const { setState } = useSeller((state) => state);
 
   useLayoutEffect(() => {
-    const fetchProfile = async () => {
-      const res = await sellerProfile();
-      if (!res.success) router.push(`/${locale}`);
-      else setState(res.data as any);
-    };
-
-    fetchProfile();
-  }, [locale, router, setState]);
+    sellerProfile().then((res) => {
+      if (!res.ok) router.push(`/${locale}/profile`);
+    });
+  }, [locale, router]);
 
   return children;
 }

@@ -1,6 +1,6 @@
 "use server";
 import type { ResponseState } from "~/types";
-import { request } from "./fn";
+import { request } from "../api/fn";
 import { KEYS } from "~/constant";
 import { cookies } from "next/headers";
 import { StatusCodes } from "http-status-codes";

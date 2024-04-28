@@ -4,11 +4,10 @@ import { NumberOfProducts, TotalPrice } from "./cart-sections";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function NavbarCart() {
-  const locale = await getLocale();
-  const tCart = await getTranslations({
-    locale,
-    namespace: "Navbar.Cart",
-  });
+  const [locale, tCart] = await Promise.all([
+    getLocale(),
+    getTranslations("Navbar.Cart"),
+  ]);
 
   return (
     <div className="dropdown dropdown-end">
@@ -43,7 +42,10 @@ export default async function NavbarCart() {
             {tCart("total-price")}: $<TotalPrice />
           </span>
           <div className="card-actions">
-            <Link href={`/${locale}`} className="btn btn-primary btn-block">
+            <Link
+              href={`/${locale}/cart`}
+              className="btn btn-primary btn-block"
+            >
               {tCart("view-cart")}
             </Link>
           </div>

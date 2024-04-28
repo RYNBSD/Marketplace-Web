@@ -7,11 +7,11 @@ import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { Container, Footer, Navbar } from "~/components";
 import {
   SettingProvider,
-  UserProvider,
   CartProvider,
   NotificationProvider,
 } from "~/context";
 import { LOCALE } from "~/constant";
+import InitProvider from "~/context/init";
 
 export function generateStaticParams() {
   return LOCALE.map((locale) => ({ locale }));
@@ -22,29 +22,31 @@ export default async function LocaleLayout({
   params: { locale },
 }: Props) {
   const messages = await getMessages();
-  unstable_setRequestLocale(locale)
+  unstable_setRequestLocale(locale);
 
   return (
     <>
       <NextIntlClientProvider locale={locale} messages={messages}>
-        <SettingProvider>
-          <CartProvider>
-            <NotificationProvider>
-              <UserProvider>
-                <Navbar />
-                <main className="w-full min-h-screen">
-                  <Container
-                    bg="bg-base-200"
-                    className="w-full min-h-screen p-1"
-                  >
-                    {children}
-                  </Container>
-                </main>
-                <Footer />
-              </UserProvider>
-            </NotificationProvider>
-          </CartProvider>
-        </SettingProvider>
+        <InitProvider>
+          <SettingProvider>
+            <CartProvider>
+              <NotificationProvider>
+                {/* <UserProvider> */}
+                  <Navbar />
+                  <main className="w-full min-h-screen">
+                    <Container
+                      bg="bg-base-200"
+                      className="w-full min-h-screen p-1"
+                    >
+                      {children}
+                    </Container>
+                  </main>
+                  <Footer />
+                {/* </UserProvider> */}
+              </NotificationProvider>
+            </CartProvider>
+          </SettingProvider>
+        </InitProvider>
       </NextIntlClientProvider>
       <ToastContainer />
     </>

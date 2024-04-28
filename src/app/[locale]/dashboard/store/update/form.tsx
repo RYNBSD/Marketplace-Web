@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { Name, Submit } from "./fields";
+import { Name, Submit } from "./form-client";
 
 export default async function UpdateForm() {
   const locale = await getLocale();

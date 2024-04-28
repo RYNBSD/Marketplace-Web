@@ -1,4 +1,4 @@
-import { request } from "~/action/fn";
+import { request } from "~/api/fn";
 import { LocalParam, StoreIdParam } from "~/types";
 import { Categories, Products } from "./client";
 import Image from "next/image";

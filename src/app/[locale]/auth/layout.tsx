@@ -2,7 +2,7 @@
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, type ReactNode } from "react";
-import { isAuthenticated } from "~/action/auth";
+import { useUser } from "~/hooks";
 
 /**
  * In auth section user must be not authentication
@@ -11,14 +11,12 @@ import { isAuthenticated } from "~/action/auth";
 export default function AuthLayout({ children }: Props) {
   const locale = useLocale();
   const router = useRouter();
+  const { user } = useUser()
 
   useLayoutEffect(() => {
-    const checkAuthentication = async () => {
-      const status = await isAuthenticated();
-      if (status) router.push(`/${locale}`);
-    };
-    checkAuthentication();
-  }, [locale, router]);
+    if (user.id.length > 0)
+      router.push(`/${locale}`)
+  }, [locale, router, user.id.length]);
 
   return children;
 }

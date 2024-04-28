@@ -6,7 +6,7 @@ export const useState = create<State & Actions>((set) => ({
   toggle3D: () =>
     set((state) => ({ ...state, is3D: !state.is3D, isAr: state.is3D })),
   toggleAr: () =>
-    set((state) => ({ ...state, isAr: !state.isAr, is3D: state.isAr })),
+    set((state) => ({ ...state, isAr: !state.isAr, is3D: !state.isAr })),
   setState: (newState) => set((state) => ({ ...state, ...newState })),
 }));
 

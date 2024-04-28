@@ -3,16 +3,14 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import { deleteStore } from "~/action/store";
+import { deleteStore } from "~/api/store";
 import { KEYS } from "~/constant";
-import { useNotification } from "~/context";
-import { useSeller } from "~/hooks";
+import { useUser } from "~/hooks";
 
 const { BASE_URL } = KEYS;
 
 export function Img() {
-  const store = useSeller((state) => state.store);
-
+  const { store } = useUser((state) => state);
   return (
     store?.image && (
       <Image
@@ -29,7 +27,7 @@ export function Img() {
 
 export function Name() {
   const tProfile = useTranslations("Dashboard.Store.Profile");
-  const store = useSeller((state) => state.store);
+  const { store } = useUser((state) => state);
   return (
     <input
       disabled
@@ -37,7 +35,7 @@ export function Name() {
       name="name"
       className="grow"
       placeholder={tProfile("name")}
-      value={store.name}
+      value={store?.name ?? ""}
     />
   );
 }
@@ -46,15 +44,22 @@ export function DeleteBtn() {
   const router = useRouter();
   const locale = useLocale();
   const tProfile = useTranslations("Dashboard.Store.Profile");
-  const { toastify } = useNotification()!;
+  const { setState, user, setting } = useUser((state) => state);
 
-  const remove = useCallback(async () => {
-    const res = await toastify(deleteStore());
-    if (res.success) router.push(`/${locale}/profile`);
-  }, [locale, router, toastify]);
+  const onClick = useCallback(async () => {
+    const res = await deleteStore();
+    if (!res.ok) return;
+
+    setState({ user, setting, store: null });
+    router.push(`/${locale}/profile`);
+  }, [locale, router, setState, setting, user]);
 
   return (
-    <button type="button" className="btn btn-error capitalize" onClick={remove}>
+    <button
+      type="button"
+      className="btn btn-error capitalize"
+      onClick={onClick}
+    >
       {tProfile("delete")}
     </button>
   );

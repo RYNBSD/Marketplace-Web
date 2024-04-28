@@ -1,28 +1,47 @@
-"use client"
+"use client";
 /**
  * This context is used for initialize user info, setting, cart... in client side
  */
 
-import { createContext, useCallback, useEffect, type ReactNode } from "react";
+import { createContext, useCallback, type ReactNode } from "react";
+import useEffectOnce from "react-use/lib/useEffectOnce";
+import Cookies from "js-cookie";
+import { me as meApi } from "~/api/auth";
+import { fetchProfile as fetchProfileApi } from "~/api/user";
+import { KEYS } from "~/constant";
+import { useUser } from "~/hooks";
+
+const { COOKIE } = KEYS;
 
 const InitContext = createContext(null);
 
 export default function InitProvider({ children }: Props) {
+  const { user, setState } = useUser(state => state)
 
   /** fetch use profile using jwt or session */
-  const me = useCallback(async () => {}, [])
+  const me = useCallback(async () => {
+    if (user.id.length > 0) return;
+
+    const authorization = Cookies.get(COOKIE.AUTHORIZATION) ?? "";
+    let res = await meApi(authorization);
+    if (!res.ok) res = await fetchProfileApi();
+    if (!res.ok) return;
+
+    const json = await res.json()
+    setState(json.data)
+  }, [setState, user.id.length]);
 
   /** fetch setting from locale storage */
-  const setting = useCallback(async () => {}, [])
+  const setting = useCallback(async () => {}, []);
 
   /** fetch cart from locale storage */
-  const cart = useCallback(async () => {}, [])
+  const cart = useCallback(async () => {}, []);
 
-  useEffect(() => {
-    me()
-    setting()
-    cart()
-  }, [cart, me, setting])
+  useEffectOnce(() => {
+    me();
+    setting();
+    cart();
+  });
 
   return <InitContext.Provider value={null}>{children}</InitContext.Provider>;
 }

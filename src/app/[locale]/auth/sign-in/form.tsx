@@ -1,7 +1,6 @@
-"use server";
 import { getLocale, getTranslations } from "next-intl/server";
 import Link from "next/link";
-import Submit from "./submit";
+import Submit from "./form-client";
 
 
 export default async function SignInForm() {

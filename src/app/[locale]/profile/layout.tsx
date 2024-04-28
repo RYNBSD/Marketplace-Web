@@ -2,7 +2,7 @@
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, type ReactNode } from "react";
-import { isAuthenticated } from "~/action/auth";
+import { isAuthenticated } from "~/api/auth";
 
 /**
  * User must be authenticated
@@ -12,11 +12,9 @@ export default function ProfileLayout({ children }: Props) {
   const router = useRouter();
 
   useLayoutEffect(() => {
-    const checkAuthentication = async () => {
-      const status = await isAuthenticated();
-      if (!status) router.push(`/${locale}/auth/sign-in`);
-    };
-    checkAuthentication();
+    isAuthenticated().then((res) => {
+      if (!res.ok) router.push(`/${locale}/auth/sign-in`);
+    });
   }, [locale, router]);
 
   return children;

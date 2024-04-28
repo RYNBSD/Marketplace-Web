@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import { createCategory } from "~/action/store";
+import { createCategory } from "~/api/store";
 import { SubmitButton } from "~/components";
 
 // export function Name() {
@@ -90,7 +90,7 @@ export function Submit() {
   const create = useCallback(
     async (formData: FormData) => {
       const res = await createCategory(formData);
-      if (res.success) router.back();
+      if (res.ok) router.back();
       return res;
     },
     [router]

@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "~/components";
-import { createProduct } from "~/action/store";
+import { createProduct } from "~/api/store";
 import { useTranslations } from "next-intl";
 
 // const Category = memo(function Category({
@@ -368,7 +368,7 @@ export function Submit() {
   const create = useCallback(
     async (formData: FormData) => {
       const res = await createProduct(formData);
-      if (res.success) router.back();
+      if (res.ok) router.back();
       return res;
     },
     [router]

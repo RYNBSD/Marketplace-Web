@@ -7,7 +7,9 @@ export default async function Search({ params: { locale } }: Props) {
 
   return (
     <div>
-      <h1 className="text-5xl font-bold text-center mb-5">{tSearch("search")}</h1>
+      <h1 className="text-5xl font-bold text-center mb-5">
+        {tSearch("search")}
+      </h1>
       <label className="input input-bordered flex items-center gap-2">
         <Input />
         <svg
@@ -23,18 +25,9 @@ export default async function Search({ params: { locale } }: Props) {
           />
         </svg>
       </label>
-      <div className="divider">Stores</div>
-      <div className="flex flex-wrap gap-5 items-center justify-center">
-        <Stores />
-      </div>
-      <div className="divider">Categories</div>
-      <div className="flex flex-wrap gap-5 items-center justify-center">
-        <Categories />
-      </div>
-      <div className="divider">Products</div>
-      <div className="flex flex-wrap gap-5 items-center justify-center">
-        <Products />
-      </div>
+      <Stores />
+      <Categories />
+      <Products />
     </div>
   );
 }

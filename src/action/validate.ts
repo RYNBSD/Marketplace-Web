@@ -1,6 +1,6 @@
 "use server";
 
-import { request } from "./fn";
+import { request } from "../api/fn";
 
 export async function validateUserEmail(email: string) {
   const formData = new FormData();

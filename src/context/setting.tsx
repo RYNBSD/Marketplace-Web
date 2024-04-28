@@ -13,7 +13,7 @@ import useUpdateEffect from "react-use/lib/useUpdateEffect";
 import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { KEYS } from "~/constant";
-import { patchSetting } from "~/action/user";
+import { patchSetting } from "~/api/user";
 
 const SettingContext = createContext<TSettingContext | null>(null);
 const { BROWSER, COOKIE } = KEYS;

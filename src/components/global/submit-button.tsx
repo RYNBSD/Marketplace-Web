@@ -1,6 +1,5 @@
 "use client";
 import type { FC } from "react";
-import type { ResponseState } from "~/types";
 import { memo, useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import { useNotification } from "~/context";
@@ -44,7 +43,7 @@ SubmitButton.propTypes = {
 type Props = {
   className: string;
   content?: string;
-  action: (formaData: FormData) => Promise<ResponseState>;
+  action: (formaData: FormData) => Promise<Response>;
 };
 
 export default memo(SubmitButton);

@@ -1,7 +1,7 @@
 "use server";
 
 import type { ResponseState } from "~/types";
-import { request } from "./fn";
+import { request } from "../api/fn";
 
 export async function search(
   search: string,

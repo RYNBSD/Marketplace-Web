@@ -6,6 +6,7 @@ import NavbarProfile from "./profile";
 
 export default async function Navbar() {
   const locale = await getLocale();
+
   return (
     <Container bg="bg-base-100">
       <nav className="navbar bg-base-100">

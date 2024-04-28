@@ -2,22 +2,26 @@
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 import { KEYS } from "~/constant";
-import { useUser } from "~/context";
+import { signOut } from "~/api/auth";
+import { useUser } from "~/hooks";
 
-const { BASE_URL } = KEYS;
+const { BASE_URL, COOKIE } = KEYS;
 
 export function Img() {
-  const { user } = useUser()!;
+  const { user: { username, image } } = useUser((state) => state);
 
   return (
     <Image
       src={
-        user === null
+        image.length === 0
           ? "/assets/images/blank-profile.webp"
-          : `${BASE_URL}${user.image}`
+          : `${BASE_URL}${image}`
       }
-      alt={user?.username ?? "Blank picture"}
+      alt={username ?? "Blank picture"}
       height={40}
       width={40}
       priority
@@ -25,14 +29,25 @@ export function Img() {
     />
   );
 }
+
 export function Menu() {
+  const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("Navbar");
   const tProfile = useTranslations("Navbar.Profile");
+  const { user: { id }, reset } = useUser(state => state);
 
-  const { user, signOut } = useUser()!;
+  const onClick = useCallback(async () => {
+    const res = await signOut();
+    if (!res.ok) return;
 
-  return user === null ? (
+    Cookies.remove(COOKIE.AUTHORIZATION);
+    Cookies.remove(COOKIE.SESSION);
+    reset()
+    router.push(`/${locale}`);
+  }, [locale, reset, router]);
+
+  return id.length === 0 ? (
     <li>
       <Link href={`/${locale}/auth/sign-in`} className="justify-between">
         {t("sign-in")}
@@ -51,7 +66,7 @@ export function Menu() {
         </Link>
       </li>
       <li>
-        <button className="justify-between" type="button" onClick={signOut}>
+        <button className="justify-between" type="button" onClick={onClick}>
           {tProfile("sign-out")}
         </button>
       </li>

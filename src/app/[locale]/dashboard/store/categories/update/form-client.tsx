@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-import { updateCategory } from "~/action/store";
+import { updateCategory } from "~/api/store";
 import { SubmitButton } from "~/components";
 
 // export function Name() {
@@ -92,7 +92,7 @@ export function Submit() {
     async (formData: FormData) => {
       const id = searchParams.get("id") ?? "";
       const res = await updateCategory(id, formData);
-      if (res.success) router.back();
+      if (res.ok) router.back();
       return res;
     },
     [router, searchParams]

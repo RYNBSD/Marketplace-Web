@@ -1,7 +1,7 @@
 "use server";
 import type { ResponseState } from "~/types";
 import { KEYS } from "~/constant";
-import { request } from "./fn";
+import { request } from "../api/fn";
 
 const { HTTP } = KEYS;
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { request } from "~/action/fn";
+import { request } from "~/api/fn";
 import { KEYS, LOCALE } from "~/constant";
 import { CategoryIdParam, LocalParam, StoreIdParam } from "~/types";
 import { Products } from "./client";

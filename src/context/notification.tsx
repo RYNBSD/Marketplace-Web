@@ -9,7 +9,7 @@ import { KEYS } from "~/constant";
 
 type TNotificationContext = {
   notify: () => Promise<unknown>;
-  toastify: (promise: Promise<ResponseState>) => Promise<ResponseState>;
+  toastify: (promise: Promise<Response>) => Promise<Response>;
 };
 
 const NotificationContext = createContext<TNotificationContext | null>(null);
@@ -25,7 +25,7 @@ export default function NotificationProvider({ children }: Props) {
     // const notification = new Notification("")
   }, []);
 
-  const toastify = useCallback(async (promise: Promise<ResponseState>) => {
+  const toastify = useCallback(async (promise: Promise<Response>) => {
     const toastId = toast.loading("Loading...");
     let type: TypeOptions = "default";
     const cookieTheme = Cookies.get(COOKIE.THEME);
@@ -36,10 +36,10 @@ export default function NotificationProvider({ children }: Props) {
 
     const res = await promise;
 
-    if (!res.success) {
+    if (!res.ok) {
       type = "error";
       toast.update(toastId, {
-        render: res?.error ?? "Error",
+        render: "Error",
         type,
         theme,
         autoClose: 5000,

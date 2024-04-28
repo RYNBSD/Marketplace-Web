@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
-import { request } from "~/action/fn";
+import { request } from "~/api/fn";
 import { KEYS } from "~/constant";
 import { LocalParam } from "~/types";
 

@@ -1,84 +1,29 @@
 "use client";
-import type { FC } from "react";
-import { useMemo, Suspense, memo, useState, useEffect } from "react";
+
+import { Suspense, memo, type FC } from "react";
 import { Canvas } from "@react-three/fiber";
-import {
-  PerspectiveCamera,
-  OrbitControls,
-  useProgress,
-  Resize,
-  Center,
-  Stage,
-  Html,
-  Preload,
-  Stats,
-} from "@react-three/drei";
+import { Preload, Stats } from "@react-three/drei";
 import { ARButton, XR } from "@react-three/xr";
 import PropTypes from "prop-types";
-import Model from "./model";
 import { useIsMobile } from "~/hooks";
-import { useSetting } from "~/context";
-
-function Loader() {
-  const { progress } = useProgress();
-  return (
-    <Html center>
-      <progress className="progress w-56" value={progress} max="100" />
-    </Html>
-  );
-}
+import Camera from "./camera";
+import Scene from "./scene";
 
 const Canvas3D: FC<Props> = ({ model, ar = false }) => {
-  const [isClient, setIsClient] = useState(false);
-  const { setting } = useSetting()!;
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const scene = useMemo(
-    () => (
-      <Stage preset="rembrandt" intensity={1} adjustCamera shadows>
-        <Resize width>
-          <Model model={model} />
-          <Preload all />
-        </Resize>
-      </Stage>
-    ),
-    [model]
-  );
-
-  const arButton = useMemo(
-    () => (isMobile && ar ? <ARButton /> : null),
-    [ar, isMobile]
-  );
-  const arScene = useMemo(
-    () => (isMobile ? <XR>{scene}</XR> : scene),
-    [isMobile, scene]
-  );
-
-  return isClient ? (
-    <Suspense fallback={null}>
-      <Stats />
-      {arButton}
+  return (
+    <Suspense>
+      {!isMobile && <Stats />}
+      <ARButton>{(status) => `${status}`}</ARButton>
       <Canvas shadows frameloop="demand">
-        <OrbitControls
-          autoRotate={!setting.disableAnimations && !ar} // Auto-rotate the model
-          enableZoom={true} // Enable zoom
-          maxPolarAngle={Math.PI / 2} // Limit the angle to prevent flipping
-          minPolarAngle={0} // Limit the angle to prevent flipping
-          minDistance={1} // Limit the minimum distance of zoom
-          maxDistance={10} // Limit the maximum distance of zoom
-        />
-        <PerspectiveCamera makeDefault position={[0, 1, 2.5]} />
-        <Center>
-          <Suspense fallback={<Loader />}>{ar ? arScene : scene}</Suspense>
-        </Center>
+        <Camera xr={ar} />
+        <XR referenceSpace="local">
+          <Scene model={model} xr={ar} />
+        </XR>
+        <Preload all />
       </Canvas>
     </Suspense>
-  ) : (
-    <></>
   );
 };
 
@@ -87,9 +32,9 @@ Canvas3D.propTypes = {
   ar: PropTypes.bool,
 };
 
-export default memo(Canvas3D);
-
 type Props = {
   model: string;
   ar?: boolean;
 };
+
+export default memo(Canvas3D);

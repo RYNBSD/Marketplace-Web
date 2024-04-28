@@ -1,24 +1,26 @@
 "use client";
 
 import type { ChangeEvent } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { LOCALE, THEMES } from "~/constant";
-import { useSetting,useUser } from "~/context";
-import { validateUserEmail } from "~/action/validate";
+import { useSetting } from "~/context";
+import { validateUserEmail } from "~/api/security";
 import { SubmitButton } from "~/components";
+import { signUp } from "~/api/auth";
 
 export function Email() {
   const t = useTranslations();
   const tForm = useTranslations("Auth.Sign-Up.Form");
   const [isPending, startTransition] = useTransition();
-  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isValid, setIsValid] = useState(false);
 
-  const onEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     startTransition(() => {
-      validateUserEmail(e.target.value)
-        .then(({ success }) => setIsEmailValid(success))
+      validateUserEmail(e.target.value).then((res) => {
+        setIsValid(res.ok);
+      });
     });
   }, []);
 
@@ -30,15 +32,15 @@ export function Email() {
         name="email"
         placeholder={tForm("email")}
         className={`input input-bordered ${
-          isEmailValid ? "input-success" : "input-error"
+          isValid ? "input-success" : "input-error"
         }`}
-        onChange={onEmailChange}
+        onChange={onChange}
       />
       <div className="label">
         <span className="label-text-alt">
           {isPending
             ? t("validating")
-            : isEmailValid
+            : isValid
             ? tForm("email-valid")
             : tForm("email-not-valid")}
         </span>
@@ -107,14 +109,24 @@ export function Theme() {
 }
 
 export function Submit() {
-  const tForm = useTranslations("Auth.Sign-Up.Form")
-  const { signUp } = useUser()!;
+  const locale = useLocale();
+  const router = useRouter();
+  const tForm = useTranslations("Auth.Sign-Up.Form");
+
+  const action = useCallback(
+    async (formData: FormData) => {
+      const res = await signUp(formData);
+      if (res.ok) router.push(`/${locale}/auth/sign-in`);
+      return res;
+    },
+    [locale, router]
+  );
 
   return (
     <SubmitButton
       className="btn btn-primary"
       content={tForm("sign-up")}
-      action={signUp!}
+      action={action}
     />
   );
 }

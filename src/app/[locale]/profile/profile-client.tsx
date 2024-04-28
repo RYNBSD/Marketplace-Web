@@ -2,20 +2,22 @@
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
-import { useUser } from "~/context";
+import { useCallback } from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import { KEYS } from "~/constant";
-import { useEffect, useState } from "react";
-import { sellerProfile } from "~/action/store";
+import { useUser } from "~/hooks";
+import { deleteProfile } from "~/api/user";
 
-const { BASE_URL } = KEYS;
+const { BASE_URL, COOKIE } = KEYS;
 
 export function Img() {
-  const { user } = useUser()!;
+  const { user } = useUser();
   return (
-    user?.image && (
+    user.image.length > 0 && (
       <Image
         src={`${BASE_URL}${user.image}`}
-        alt={user?.username ?? ""}
+        alt={user.username}
         width={128}
         height={128}
         priority
@@ -26,11 +28,11 @@ export function Img() {
 }
 
 export function Username() {
-  const { user } = useUser()!;
+  const { user } = useUser();
   return (
     <input
       type="text"
-      value={user?.username ?? ""}
+      value={user.username}
       disabled
       className="grow"
       placeholder="username"
@@ -39,32 +41,41 @@ export function Username() {
 }
 
 export function DeleteBtn() {
+  const { reset } = useUser()
+  const locale = useLocale()
+  const router = useRouter()
   const tInfo = useTranslations("Profile.Info");
-  const { remove } = useUser()!;
+
+  const onClick = useCallback(async () => {
+    const res = await deleteProfile()
+    if (!res.ok) return res
+
+    reset()
+    Cookies.remove(COOKIE.AUTHORIZATION)
+    Cookies.remove(COOKIE.SESSION)
+    router.push(`/${locale}`)
+  }, [locale, reset, router])
+
   return (
-    <button className="btn btn-error capitalize" type="button" onClick={remove}>
+    <button className="btn btn-error capitalize" type="button" onClick={onClick}>
       {tInfo("delete")}
     </button>
   );
 }
 
 export function StoreBtn() {
+  const { store } = useUser(state => state)
   const locale = useLocale();
   const tInfo = useTranslations("Profile.Info");
-  const [isSeller, setIsSeller] = useState(false);
-
-  useEffect(() => {
-    sellerProfile().then(({ success }) => setIsSeller(success));
-  }, []);
 
   return (
     <Link
       href={`/${locale}/${
-        isSeller ? `dashboard/store` : "profile/become-seller"
+        store !== null ? `dashboard/store` : "profile/become-seller"
       }`}
       className="btn"
     >
-      {isSeller ? tInfo("go-to-dashboard") : tInfo("become-a-seller")}
+      {store !== null ? tInfo("go-to-dashboard") : tInfo("become-a-seller")}
     </Link>
   );
 }
