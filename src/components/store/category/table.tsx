@@ -19,6 +19,8 @@ const CategoryTable: FC<Props> = ({
   ...props
 }) => {
   const locale = useLocale();
+
+  const disableView = useMemo(() => products === "0", [products]);
   const name = useMemo(
     () => (locale === LOCALE[0] ? props.nameAr : props.name),
     [locale, props.name, props.nameAr]
@@ -38,14 +40,21 @@ const CategoryTable: FC<Props> = ({
           </div>
         </div>
       </td>
-      <td>{name}</td>
+      <td>
+        {name.substring(0, 20)}
+        {name.length >= 20 ? "..." : ""}
+      </td>
       <td>{views}</td>
       <td>{products}</td>
       <td>
         <div className="w-full flex items-center justify-center">
           <Link
             href={`/${locale}/dashboard/store/categories/${id}`}
-            className="btn btn-neutral flex-1"
+            aria-disabled={disableView}
+            className={`btn btn-neutral flex-1 ${
+              disableView ? "pointer-events-none btn-disabled" : ""
+            }`}
+            tabIndex={disableView ? -1 : undefined}
           >
             <FaEye />
           </Link>

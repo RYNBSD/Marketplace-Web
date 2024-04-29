@@ -38,7 +38,10 @@ const ProductTable: FC<Props> = ({
           </div>
         </div>
       </td>
-      <td>{title}</td>
+      <td>
+        {title.substring(0, 20)}
+        {title.length >= 20 ? "..." : ""}
+      </td>
       <td>{views}</td>
       <td>{orders}</td>
       <td>

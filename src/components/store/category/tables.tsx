@@ -14,9 +14,7 @@ const CategoriesTable: FC<Props> = ({ queryFn }) => {
       .then((res) => {
         if (res.ok) return res.json();
       })
-      .then((json) => {
-        setCategories(json.data.categories);
-      });
+      .then((json) => setCategories(json.data.categories));
   });
 
   const onDelete = useCallback(async (id: string) => {
@@ -25,7 +23,11 @@ const CategoriesTable: FC<Props> = ({ queryFn }) => {
       setCategories((prev) => prev.filter((category) => category.id !== id));
   }, []);
 
-  return (
+  return categories.length === 0 ? (
+    <div className="w-full h-screen grid place-content-center">
+      <h1 className="text-5xl font-bold">Empty</h1>
+    </div>
+  ) : (
     <div className="overflow-x-auto w-full mt-5">
       <table className="table">
         <thead>

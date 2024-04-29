@@ -1,7 +1,6 @@
 "use client";
 import { memo, useCallback, type ReactNode } from "react";
 import { useState } from "./state";
-import { useIsMobile } from "~/hooks";
 import { Canvas3D } from "~/components";
 import { KEYS } from "~/constant";
 import { useTranslations } from "next-intl";
@@ -10,30 +9,21 @@ import { useCart } from "~/context";
 const { BASE_URL } = KEYS;
 
 export const ThreeD = memo(function ThreeD({ model }: { model: string }) {
-  const isMobile = useIsMobile();
-  const { is3D, isAr, toggle3D, toggleAr } = useState((state) => state);
+  const { is3D, toggle3D } = useState((state) => state);
 
   return (
     is3D && (
       <>
         <div className="h-[250px] w-full grid place-content-center">
-          <Canvas3D ar={isAr} model={`${BASE_URL}${model}`} />
+          <Canvas3D model={`${BASE_URL}${model}`} />
         </div>
         <div className="flex gap-2 items-center justify-center">
           <button
             type="button"
-            className="btn btn-info flex-1"
+            className="btn btn-info flex-1 btn-wide"
             onClick={toggle3D}
           >
-            Images
-          </button>
-          <button
-            type="button"
-            className="btn btn-info flex-1"
-            disabled={!isMobile}
-            onClick={toggleAr}
-          >
-            AR
+            images
           </button>
         </div>
       </>
@@ -55,7 +45,7 @@ export function Images({
         {children}
         <button
           type="button"
-          className="btn btn-info"
+          className="btn btn-info btn-wide"
           disabled={!hasModel}
           onClick={toggle3D}
         >

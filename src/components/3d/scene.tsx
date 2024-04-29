@@ -2,7 +2,7 @@
 
 import type { FC } from "react";
 import { memo, Suspense } from "react";
-import { Center, Html, Resize, Stage, useProgress } from "@react-three/drei";
+import { Center, Html, Stage, useProgress } from "@react-three/drei";
 import PropTypes from "prop-types";
 import Model from "./model";
 
@@ -15,15 +15,19 @@ function Loader() {
   );
 }
 
-const Scene: FC<Props> = ({ model, xr }) => {
+const Scene: FC<Props> = ({ model }) => {
   return (
     <Center>
-      <Stage preset="rembrandt" intensity={1} adjustCamera shadows>
-        <Resize width height={xr}>
-          <Suspense fallback={<Loader />}>
-            <Model model={model} />
-          </Suspense>
-        </Resize>
+      <Stage
+        preset="rembrandt"
+        intensity={1}
+        adjustCamera
+        environment="apartment"
+        shadows
+      >
+        <Suspense fallback={<Loader />}>
+          <Model model={model} />
+        </Suspense>
       </Stage>
     </Center>
   );
@@ -31,12 +35,10 @@ const Scene: FC<Props> = ({ model, xr }) => {
 
 Scene.propTypes = {
   model: PropTypes.string.isRequired,
-  xr: PropTypes.bool.isRequired,
 };
 
 type Props = {
   model: string;
-  xr: boolean;
 };
 
 export default memo(Scene);

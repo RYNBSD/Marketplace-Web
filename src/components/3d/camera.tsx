@@ -1,17 +1,17 @@
 "use client";
 
-import { memo, type FC } from "react";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import PropTypes from "prop-types";
 import { useSetting } from "~/context";
+import { useXR } from "@react-three/xr";
 
-const Camera: FC<Props> = ({ xr }) => {
+export default function Camera() {
+  const { isPresenting } = useXR()
   const { setting } = useSetting()!;
 
   return (
     <>
       <OrbitControls
-        autoRotate={!setting.disableAnimations && !xr} // Auto-rotate the model
+        autoRotate={!setting.disableAnimations && !isPresenting} // Auto-rotate the model
         enableZoom={true} // Enable zoom
         maxPolarAngle={Math.PI / 2} // Limit the angle to prevent flipping
         minPolarAngle={0} // Limit the angle to prevent flipping
@@ -22,13 +22,3 @@ const Camera: FC<Props> = ({ xr }) => {
     </>
   );
 };
-
-Camera.propTypes = {
-  xr: PropTypes.bool.isRequired,
-};
-
-type Props = {
-  xr: boolean;
-};
-
-export default memo(Camera);

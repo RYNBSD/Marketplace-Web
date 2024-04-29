@@ -33,7 +33,10 @@ const CategoryCard: FC<Props> = ({ id, image, storeId, ...props }) => {
           />
         </div>
       </div>
-      <h2 className="text-lg font-semibold">{name}</h2>
+      <h2 className="text-lg font-semibold">
+        {name.substring(0, 20)}
+        {name.length >= 20 ? "..." : ""}
+      </h2>
     </Link>
   );
 };

@@ -25,7 +25,11 @@ const ProductsTable: FC<Props> = ({ queryFn }) => {
       setProducts((prev) => prev.filter((product) => product.id !== id));
   }, []);
 
-  return (
+  return products.length === 0 ? (
+    <div className="w-full h-screen grid place-content-center">
+      <h1 className="text-5xl font-bold">Empty</h1>
+    </div>
+  ) : (
     <div className="overflow-x-auto w-full mt-5">
       <table className="table">
         <thead>
