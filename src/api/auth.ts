@@ -1,7 +1,4 @@
 import { request } from "./fn";
-import { KEYS } from "~/constant";
-
-const { HTTP, INPUT } = KEYS;
 
 export async function signUp(formData: FormData) {
   return request("/api/auth/sign-up", {
@@ -20,10 +17,6 @@ export async function signIn(formData: FormData) {
 export async function forgotPassword(formData: FormData) {
   return request("/api/auth/forgot-password", {
     method: "PUT",
-    // @ts-ignore
-    headers: {
-      [HTTP.HEADERS.ACCESS_TOKEN]: formData.get(INPUT.ACCESS_TOKEN) ?? "",
-    },
     body: formData,
   });
 }

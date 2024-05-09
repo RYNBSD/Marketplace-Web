@@ -1,25 +1,28 @@
-import { KEYS } from "~/constant";
-import { request } from "../api/fn";
+import { request } from "./fn";
 
 const SECURITY = "security";
 const ACCESS = "access";
 const VALIDATE = "validate";
 const STORE = "store";
 
-const { INPUT, HTTP } = KEYS;
-
 export async function accessEmail(formData: FormData) {
-  const accessToken = formData.get(INPUT.ACCESS_TOKEN) ?? "";
   return request(`/${SECURITY}/${ACCESS}/email`, {
     method: "POST",
-    // @ts-ignore
-    headers: {
-      [HTTP.HEADERS.ACCESS_TOKEN]: accessToken,
-    },
     body: formData,
   });
 }
 
+export async function validateAccessToken(code: string) {
+  const formData = new FormData();
+  formData.append("code", code);
+
+  return request(`/${SECURITY}/${VALIDATE}/access/token`, {
+    method: "POST",
+    body: formData,
+  });
+}
+
+/** @deprecated */
 export async function validateEmail(email: string) {
   const formData = new FormData();
   formData.append("email", email);

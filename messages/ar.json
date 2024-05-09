@@ -50,6 +50,8 @@
       "Form": {
         "email": "بريد إلكتروني",
         "code": "رمز",
+        "code-valid": "الكود صالح",
+        "code-not-valid": "الرمز غير صالح",
         "password": "كلمة المرور",
         "confirm-password": "تأكيد كلمة المرور",
         "verify-email": "التحقق من البريد الإلكتروني",

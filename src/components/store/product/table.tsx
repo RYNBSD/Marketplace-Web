@@ -34,6 +34,7 @@ const ProductTable: FC<Props> = ({
               alt={title}
               width={48}
               height={48}
+              loading="lazy"
             />
           </div>
         </div>

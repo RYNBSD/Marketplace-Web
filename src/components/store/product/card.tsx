@@ -40,6 +40,7 @@ const ProductCard: FC<Props> = ({
           alt={title}
           width={384}
           height={384}
+          loading="lazy"
         />
       </figure>
       <div className="card-body">

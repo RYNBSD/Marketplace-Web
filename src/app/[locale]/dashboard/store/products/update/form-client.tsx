@@ -13,7 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { SubmitButton } from "~/components";
-import { allCategories, updateProduct } from "~/action/store";
+import { allCategories, updateProduct } from "~/api/store";
 import { KEYS } from "~/constant";
 
 const { BASE_URL } = KEYS;
@@ -85,9 +85,11 @@ export function Categories() {
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
-    allCategories(1).then((res) => {
-      if (res.success) setCategories(res.data.categories);
-    });
+    allCategories()
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then((json) => setCategories(json.data.categories));
   }, []);
 
   return categories.map((category) => (
@@ -440,13 +442,12 @@ export function Submit() {
 
   const create = useCallback(
     async (formData: FormData) => {
-      const id = searchParams.get("id") ?? ""
+      const id = searchParams.get("id") ?? "";
 
       console.log(formData);
-      
 
       const res = await updateProduct(id, formData);
-      if (res.success) router.back();
+      if (res.ok) router.back();
       return res;
     },
     [router, searchParams]

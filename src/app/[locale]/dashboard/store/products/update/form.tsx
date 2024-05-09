@@ -12,7 +12,7 @@ import {
   Submit,
   Tags,
 } from "./form-client";
-import { fetchProduct } from "~/action/store";
+import { fetchProduct } from "~/api/store";
 
 export default function CreateForm() {
   const tForm = useTranslations("Dashboard.Store.Products.Create.Form");
@@ -20,9 +20,14 @@ export default function CreateForm() {
   const [product, setProduct] = useState<any>({});
 
   useEffect(() => {
-    fetchProduct(searchParams.get("id") ?? "").then((res) => {
-      if (res.success) setProduct(res.data);
-    });
+    fetchProduct(searchParams.get("id") ?? "")
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then((json) => {
+        console.log(json);
+        setProduct(json.data)
+      });
   }, [searchParams]);
 
   return (
