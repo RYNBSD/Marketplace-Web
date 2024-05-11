@@ -3,14 +3,16 @@ import type { ChangeEvent, ElementRef } from "react";
 import {
   memo,
   useCallback,
+  useEffect,
   useRef,
   useState,
   useTransition,
 } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "~/components";
-import { createProduct } from "~/api/store";
-import { useTranslations } from "next-intl";
+import { allCategories, createProduct } from "~/api/store";
+import { useLocale, useTranslations } from "next-intl";
+import { LOCALE } from "~/constant";
 
 // const Category = memo(function Category({
 //   id,
@@ -113,6 +115,26 @@ export function Sizes() {
       </div>
     </>
   );
+}
+
+export function Categories() {
+  const locale = useLocale();
+  const router = useRouter();
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    allCategories()
+      .then((res) => {
+        if (res.ok) return res.json();
+        router.push(`/${locale}/dashboard/store/products`);
+      })
+      .then((json) => setCategories(json.data.categories));
+  }, [locale, router]);
+
+  return categories.map((category: any) => (
+    <option key={category.id} value={category.id}>
+      {locale === LOCALE[0] ? category.nameAr : category.name}
+    </option>
+  ));
 }
 
 const Color = memo(function Color({

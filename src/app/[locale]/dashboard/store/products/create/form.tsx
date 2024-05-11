@@ -1,18 +1,8 @@
-import { cookies } from "next/headers";
-import { Colors, Infos, Sizes, Submit, Tags } from "./form-client";
-import { getLocale, getTranslations } from "next-intl/server";
-import { allCategories } from "~/api/store";
-import { LOCALE } from "~/constant";
+import { Categories, Colors, Infos, Sizes, Submit, Tags } from "./form-client";
+import { getTranslations } from "next-intl/server";
 
 export default async function CreateForm() {
-  const [res, tForm, locale] = await Promise.all([
-    allCategories({ headers: { cookie: cookies().toString() } }),
-    getTranslations("Dashboard.Store.Products.Create.Form"),
-    getLocale()
-  ]);
-  if (!res.ok) return "Error";
-  const json = await res.json();
-  const { categories } = json.data;
+  const tForm = await getTranslations("Dashboard.Store.Products.Create.Form");
 
   return (
     <form className="flex flex-col gap-5 md:grid md:grid-cols-2">
@@ -144,11 +134,7 @@ export default async function CreateForm() {
             <span className="label-text">{tForm("category")} *</span>
           </div>
           <select className="select select-bordered" name="categoryId">
-            {categories.map((category: any) => (
-              <option key={category.id} value={category.id}>
-                {locale === LOCALE[0] ? category.nameAr : category.name}
-              </option>
-            ))}
+            <Categories />
           </select>
         </label>
         <label className="form-control w-full max-w-xs">
