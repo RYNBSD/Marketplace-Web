@@ -17,9 +17,7 @@ const Canvas3D: FC<Props> = ({ model }) => {
     <Suspense>
       {!isMobile && <Stats />}
       {isMobile && (
-        <ARButton sessionInit={{ requiredFeatures: ["hit-test"] }}>
-          {(status) => `${status}`}
-        </ARButton>
+        <ARButton sessionInit={{ requiredFeatures: ["hit-test"] }} />
       )}
       <Canvas shadows frameloop="demand">
         <XR>
