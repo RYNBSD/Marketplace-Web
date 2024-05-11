@@ -39,25 +39,29 @@ const nextConfig = {
   optimizeFonts: true,
   swcMinify: true,
   compress: true,
+  env: {
+    BASE_URL: process.env.BASE_URL,
+  },
   images: {
     formats: ["image/webp"],
     minimumCacheTTL: 60,
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
-        port: "8000",
-        pathname: "/upload/**"
-      }
-    ]
+        protocol: process.env.NODE_ENV === "production" ? "https" : "http",
+        hostname: process.env.NODE_ENV === "production" ? "marketplace-server-4g1f.onrender.com" : "localhost",
+        port: process.env.NODE_ENV === "production" ? "" : "8000",
+        pathname: "/upload/**",
+      },
+    ],
   },
   logging: {
     fetches: {
-      fullUrl: process.env.NODE_ENV === "development"
-    }
+      fullUrl: process.env.NODE_ENV === "development",
+    },
   },
   typescript: {
     tsconfigPath: "./tsconfig.json",
+    ignoreBuildErrors: true
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",

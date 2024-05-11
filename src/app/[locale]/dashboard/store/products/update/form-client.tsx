@@ -15,6 +15,7 @@ import Image from "next/image";
 import { SubmitButton } from "~/components";
 import { allCategories, updateProduct } from "~/api/store";
 import { KEYS } from "~/constant";
+import { updateAction } from "./action";
 
 const { BASE_URL } = KEYS;
 
@@ -116,7 +117,7 @@ const Size = memo(function Size({
 });
 
 export const Sizes = memo(function Sizes(props: { sizes: string[] }) {
-  const tForm = useTranslations("Dashboard.Store.Products.Create.Form");
+  const tForm = useTranslations("Dashboard.Store.Products.Update.Form");
   const inputRef = useRef<ElementRef<"input">>(null);
   const [sizes, setSizes] = useState<string[]>(props.sizes);
 
@@ -188,7 +189,7 @@ const Color = memo(function Color({
 });
 
 export const Colors = memo(function Colors(props: { colors: string[] }) {
-  const tForm = useTranslations("Dashboard.Store.Products.Create.Form");
+  const tForm = useTranslations("Dashboard.Store.Products.Update.Form");
   const [_, startTransition] = useTransition();
   const [index, setIndex] = useState(0);
   const [colors, setColors] = useState(props.colors);
@@ -264,7 +265,7 @@ const Tag = memo(function Tag({
 });
 
 export const Tags = memo(function Tags(props: { tags: string[] }) {
-  const tForm = useTranslations("Dashboard.Store.Products.Create.Form");
+  const tForm = useTranslations("Dashboard.Store.Products.Update.Form");
   const inputRef = useRef<ElementRef<"input">>(null);
   const [tags, setTags] = useState<string[]>(props.tags);
 
@@ -329,7 +330,7 @@ const Info = memo(function Info({
   onEnChange: (e: ChangeEvent<HTMLInputElement>, i: number) => void;
   onArChange: (e: ChangeEvent<HTMLInputElement>, i: number) => void;
 }) {
-  const tInfo = useTranslations("Dashboard.Store.Products.Create.Form.Info");
+  const tInfo = useTranslations("Dashboard.Store.Products.Update.Form.Info");
 
   return (
     <>
@@ -357,7 +358,7 @@ export const Infos = memo(function Infos(props: {
   infos: string[];
   infosAr: string[];
 }) {
-  const tInfo = useTranslations("Dashboard.Store.Products.Create.Form.Info");
+  const tInfo = useTranslations("Dashboard.Store.Products.Update.Form.Info");
   const [infos, setInfos] = useState<{ en: string; ar: string }[]>([]);
 
   useEffect(() => {
@@ -437,10 +438,11 @@ export const Infos = memo(function Infos(props: {
 });
 
 export function Submit() {
+  const tInfo = useTranslations("Dashboard.Store.Products.Update.Form");
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const create = useCallback(
+  const update = useCallback(
     async (formData: FormData) => {
       const id = searchParams.get("id") ?? "";
 
@@ -456,8 +458,8 @@ export function Submit() {
   return (
     <SubmitButton
       className="btn btn-primary col-span-2"
-      content="Create"
-      action={create}
+      content={tInfo("update")}
+      action={update}
     />
   );
 }

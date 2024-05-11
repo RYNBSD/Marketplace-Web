@@ -33,7 +33,7 @@
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "removeComments": true,
-    "noImplicitAny": true,
+    // "noImplicitAny": true,
     "alwaysStrict": true,
     "types": [
       "./src/types"

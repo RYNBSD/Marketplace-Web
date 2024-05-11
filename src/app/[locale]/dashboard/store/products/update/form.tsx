@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Categories,
   Colors,
@@ -14,8 +14,10 @@ import {
 } from "./form-client";
 import { fetchProduct } from "~/api/store";
 
-export default function CreateForm() {
-  const tForm = useTranslations("Dashboard.Store.Products.Create.Form");
+export default function UpdateForm() {
+  const router = useRouter();
+  const locale = useLocale();
+  const tForm = useTranslations("Dashboard.Store.Products.Update.Form");
   const searchParams = useSearchParams();
   const [product, setProduct] = useState<any>({});
 
@@ -23,15 +25,19 @@ export default function CreateForm() {
     fetchProduct(searchParams.get("id") ?? "")
       .then((res) => {
         if (res.ok) return res.json();
+        router.push(`/${locale}/dashboard/store/products`);
       })
-      .then((json) => {
-        console.log(json);
-        setProduct(json.data)
-      });
-  }, [searchParams]);
+      .then((json) => setProduct(json.data));
+  }, [locale, router, searchParams]);
 
   return (
     <form className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      <input
+        type="hidden"
+        className="none"
+        defaultValue={product?.product?.id}
+        name="productId"
+      />
       <div>
         <label className="form-control w-full max-w-xs">
           <div className="label">

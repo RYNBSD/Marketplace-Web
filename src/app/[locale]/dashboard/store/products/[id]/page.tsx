@@ -6,10 +6,12 @@ import { fetchProduct } from "~/api/store";
 import { KEYS, LOCALE } from "~/constant";
 import { Images, ThreeD } from "./client";
 import useEffectOnce from "react-use/lib/useEffectOnce";
+import { useTranslations } from "next-intl";
 
 const { BASE_URL } = KEYS;
 
 export default function Product({ params: { locale, id } }: Props) {
+  const tView = useTranslations("Dashboard.Store.Products.View");
   const [product, setProduct] = useState<any>({});
   const [category, setCategory] = useState<any>({});
 
@@ -75,7 +77,7 @@ export default function Product({ params: { locale, id } }: Props) {
           )}
       </div>
       <div>
-        <div className="divider">Category</div>
+        <div className="divider">{tView("category")}</div>
         <div className="flex gap-2 items-center">
           {category?.image && (
             <Image
@@ -88,13 +90,13 @@ export default function Product({ params: { locale, id } }: Props) {
           )}
           <h2>{category.name}</h2>
         </div>
-        <div className="divider">Price</div>
+        <div className="divider">{tView("price")}</div>
         <div>{product.price}</div>
-        <div className="divider">Discount</div>
+        <div className="divider">{tView("discount")}</div>
         <div>{product.discount}</div>
         {product?.tags && (
           <>
-            <div className="divider">Tags</div>
+            <div className="divider">{tView("tags")}</div>
             <div className="flex gap-2">
               {product.tags.map(
                 (tag: string) =>
@@ -109,7 +111,7 @@ export default function Product({ params: { locale, id } }: Props) {
         )}
         {product?.sizes && (
           <>
-            <div className="divider">Sizes</div>
+            <div className="divider">{tView("sizes")}</div>
             <div className="flex gap-2">
               {product.sizes.map(
                 (size: string) =>
@@ -124,7 +126,7 @@ export default function Product({ params: { locale, id } }: Props) {
         )}
         {product?.colors && (
           <>
-            <div className="divider">Colors</div>
+            <div className="divider">{tView("colors")}</div>
             <div className="flex gap-2">
               {product.colors.map(
                 (color: string) =>

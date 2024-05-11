@@ -25,7 +25,7 @@ const SubmitButton: FC<Props> = ({ action, className, content = "Submit" }) => {
     <button
       type="submit"
       formAction={formAction}
-      className={`${className}`}
+      className={`${className}${pending ? " btn-disabled " : ""}`}
       aria-disabled={pending}
       disabled={pending}
     >

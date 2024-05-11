@@ -1,5 +1,6 @@
 {
   "validating": "التحقق من صحة",
+  "empty": "فارغ",
   "Navbar": {
     "sign-in": "تسجيل الدخول",
     "Profile": {
@@ -27,8 +28,12 @@
         "pick-image": "اختر صورة الملف الشخصي",
         "pick-locale": "اختر لغة",
         "locale": "لغة",
+        "arabic": "عربي",
+        "english": "إنجليزي",
         "pick-theme": "اختر سمة",
         "theme": "سمة",
+        "light": "ضوء",
+        "dark": "مظلم",
         "have-account": "لدي حساب بالفعل",
         "sign-up": "أنشئ حساب"
       }
@@ -122,6 +127,14 @@
           "update": "تحديث",
           "delete": "يمسح"
         },
+        "Tables": {
+          "name": "اسم",
+          "views": "الآراء",
+          "products": "منتجات"
+        },
+        "View": {
+          "products": "منتجات"
+        },
         "Create": {
           "create-category": "إنشاء فئة",
           "Form": {
@@ -147,11 +160,25 @@
       },
       "Products": {
         "products": "منتجات",
-        "create":"إنشاء",
+        "create": "إنشاء",
         "Options": {
           "view": "عرض",
           "update": "تحديث",
           "delete": "يمسح"
+        },
+        "Tables": {
+          "title": "عنوان",
+          "views": "الآراء",
+          "orders": "طلبات"
+        },
+        "View": {
+          "images": "الصور",
+          "category": "فئة",
+          "price": "سعر",
+          "discount": "تخفيض",
+          "tags": "العلامات",
+          "sizes": "الأحجام",
+          "colors": "الألوان"
         },
         "Create": {
           "create-product": "إنشاء منتج",
@@ -188,7 +215,36 @@
         },
         "Update": {
           "update-product": "تحديث المنتج",
-          "Form": {}
+          "Form": {
+            "title": "عنوان",
+            "description": "وصف",
+            "3d-model": "نموذج 3D",
+            "arabic-title": "عنوان عربي",
+            "arabic-description": "وصف عربي",
+            "images": "الصور",
+            "stock": "مخزون",
+            "price": "سعر",
+            "discount": "تخفيض",
+            "category": "فئة",
+            "Quality": {
+              "quality": "جودة",
+              "low": "منخفض",
+              "medium": "متوسط",
+              "high": "مرتفع"
+            },
+            "add-colors": "إضافة الألوان",
+            "enter-color": "أدخل اللون",
+            "add-sizes": "إضافة الأحجام",
+            "enter-size": "أدخل الحجم",
+            "add-tags": "اضف اشارة",
+            "enter-tag": "أدخل العلامة",
+            "Info": {
+              "add": "أضف",
+              "arabic": "معلومات بالعربية",
+              "english": "معلومات بالإنجليزية"
+            },
+            "update": "تحديث"
+          }
         }
       }
     }

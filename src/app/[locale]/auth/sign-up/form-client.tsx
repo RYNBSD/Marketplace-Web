@@ -51,6 +51,7 @@ export function Email() {
 
 export function Locale() {
   const router = useRouter();
+  const tForm = useTranslations("Auth.Sign-Up.Form");
   const { changeSetting, setting } = useSetting()!;
 
   useEffect(() => {
@@ -63,7 +64,7 @@ export function Locale() {
         type="radio"
         value={LOCALE[0]}
         checked={setting.locale === "ar"}
-        aria-label="Arabic"
+        aria-label={tForm("arabic")}
         name="locale"
         className="btn join-item"
         onChange={() => changeSetting("locale", "ar")}
@@ -72,7 +73,7 @@ export function Locale() {
         type="radio"
         value={LOCALE[1]}
         checked={setting.locale === "en"}
-        aria-label="English"
+        aria-label={tForm("english")}
         name="locale"
         className="btn join-item"
         onChange={() => changeSetting("locale", "en")}
@@ -82,6 +83,7 @@ export function Locale() {
 }
 
 export function Theme() {
+  const tForm = useTranslations("Auth.Sign-Up.Form");
   const { changeSetting, setting } = useSetting()!;
 
   return (
@@ -90,7 +92,7 @@ export function Theme() {
         type="radio"
         value={THEMES[0]}
         checked={setting.theme === "light"}
-        aria-label="Light"
+        aria-label={tForm("light")}
         name="theme"
         className="btn join-item"
         onChange={() => changeSetting("theme", "light")}
@@ -99,7 +101,7 @@ export function Theme() {
         type="radio"
         value={THEMES[1]}
         checked={setting.theme === "dark"}
-        aria-label="Dark"
+        aria-label={tForm("dark")}
         name="theme"
         className="btn join-item"
         onChange={() => changeSetting("theme", "dark")}

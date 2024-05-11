@@ -1,5 +1,6 @@
 {
   "validating": "Validating",
+  "empty": "Empty",
   "Navbar": {
     "sign-in": "Sign in",
     "Profile": {
@@ -27,8 +28,12 @@
         "pick-image": "Pick a profile picture",
         "pick-locale": "Pick a language",
         "locale": "Locale",
+        "arabic": "Arabic",
+        "english": "English",
         "pick-theme": "Pick a theme",
         "theme": "Theme",
+        "light": "Light",
+        "dark": "Dark",
         "have-account": "Already have an account",
         "sign-up": "Sign up"
       }
@@ -122,6 +127,14 @@
           "update": "Update",
           "delete": "Delete"
         },
+        "Tables": {
+          "name": "name",
+          "views": "views",
+          "products": "products"
+        },
+        "View": {
+          "products": "products"
+        },
         "Create": {
           "create-category": "Create category",
           "Form": {
@@ -152,6 +165,20 @@
           "view": "View",
           "update": "Update",
           "delete": "Delete"
+        },
+        "Tables": {
+          "title": "title",
+          "views": "views",
+          "orders": "orders"
+        },
+        "View": {
+          "images": "images",
+          "category": "category",
+          "price": "price",
+          "discount": "discount",
+          "tags": "tags",
+          "sizes": "sizes",
+          "colors": "colors"
         },
         "Create": {
           "create-product": "Create product",
@@ -188,7 +215,36 @@
         },
         "Update": {
           "update-product": "Update product",
-          "Form": {}
+          "Form": {
+            "title": "title",
+            "description": "Description",
+            "3d-model": "3D model",
+            "arabic-title": "Arabic title",
+            "arabic-description": "Arabic description",
+            "images": "Images",
+            "stock": "Stock",
+            "price": "Price",
+            "discount": "Discount",
+            "category": "Category",
+            "Quality": {
+              "quality": "Quality",
+              "low": "Low",
+              "medium": "Medium",
+              "high": "High"
+            },
+            "add-colors": "Add colors",
+            "enter-color": "Enter colors",
+            "add-sizes": "Add sizes",
+            "enter-size": "Enter sizes",
+            "add-tags": "Add tags",
+            "enter-tag": "Enter tags",
+            "Info": {
+              "add": "Add",
+              "arabic": "Arabic info",
+              "english": "English info"
+            },
+            "update": "Update"
+          }
         }
       }
     }

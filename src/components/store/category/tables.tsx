@@ -5,8 +5,11 @@ import PropTypes from "prop-types";
 import useEffectOnce from "react-use/lib/useEffectOnce";
 import { deleteCategory } from "~/api/store";
 import CategoryTable from "./table";
+import { useTranslations } from "next-intl";
 
 const CategoriesTable: FC<Props> = ({ queryFn }) => {
+  const t = useTranslations()
+  const tTables = useTranslations("Dashboard.Store.Categories.Tables")
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffectOnce(() => {
@@ -25,7 +28,7 @@ const CategoriesTable: FC<Props> = ({ queryFn }) => {
 
   return categories.length === 0 ? (
     <div className="w-full h-screen grid place-content-center">
-      <h1 className="text-5xl font-bold">Empty</h1>
+      <h1 className="text-5xl font-bold">{t("empty")}</h1>
     </div>
   ) : (
     <div className="overflow-x-auto w-full mt-5">
@@ -33,9 +36,9 @@ const CategoriesTable: FC<Props> = ({ queryFn }) => {
         <thead>
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Views</th>
-            <th>Products</th>
+            <th>{tTables("name")}</th>
+            <th>{tTables("views")}</th>
+            <th>{tTables("products")}</th>
             <th></th>
           </tr>
         </thead>

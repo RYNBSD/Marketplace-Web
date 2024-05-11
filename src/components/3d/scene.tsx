@@ -17,19 +17,19 @@ function Loader() {
 
 const Scene: FC<Props> = ({ model }) => {
   return (
-    <Center>
-      <Stage
-        preset="rembrandt"
-        intensity={1}
-        adjustCamera
-        environment="apartment"
-        shadows
-      >
+    <Stage
+      preset="rembrandt"
+      intensity={1}
+      adjustCamera
+      environment="apartment"
+      shadows
+    >
+      <Center>
         <Suspense fallback={<Loader />}>
           <Model model={model} />
         </Suspense>
-      </Stage>
-    </Center>
+      </Center>
+    </Stage>
   );
 };
 
