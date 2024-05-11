@@ -9,8 +9,8 @@ import { useModel } from "./state";
 import { useHitTest } from "@react-three/xr";
 
 const Model: FC<Props> = ({ model }) => {
-  const { scene } = useGLTF("/golden_globe_decoration.glb");
-  // const { scene } = useGLTF(model);
+  // const { scene } = useGLTF("/golden_globe_decoration.glb");
+  const { scene } = useGLTF(model);
   const meshRef = useRef<ElementRef<"mesh">>(null);
   const { state } = useModel((state) => state);
 
