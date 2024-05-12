@@ -48,7 +48,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: process.env.NODE_ENV === "production" ? "https" : "http",
-        hostname: process.env.NODE_ENV === "production" ? "marketplace-server-4g1f.onrender.com" : "localhost",
+        hostname: process.env.NODE_ENV === "production" ? "marketplace-server-die9.onrender.com" : "localhost",
         port: process.env.NODE_ENV === "production" ? "" : "8000",
         pathname: "/upload/**",
       },
