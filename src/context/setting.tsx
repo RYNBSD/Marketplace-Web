@@ -5,11 +5,11 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useState,
   useTransition,
 } from "react";
 import useUpdateEffect from "react-use/lib/useUpdateEffect";
+import useEffectOnce from "react-use/lib/useEffectOnce";
 import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { KEYS } from "~/constant";
@@ -29,7 +29,7 @@ export default function SittingProvider({ children }: Props) {
     locale: "en",
   });
 
-  useEffect(() => {
+  useEffectOnce(() => {
     const localSetting =
       localStorage.getItem(BROWSER.LOCALE_STORAGE.SETTING) ?? "";
     if (localSetting.length === 0) return;
@@ -46,7 +46,7 @@ export default function SittingProvider({ children }: Props) {
       const newPathName = pathname.replace("/ar", "/en");
       router.push(newPathName);
     }
-  }, [pathname, router]);
+  });
 
   useUpdateEffect(() => {
     const html = document.querySelector("html")!;

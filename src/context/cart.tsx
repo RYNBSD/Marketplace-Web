@@ -5,10 +5,10 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import useUpdateEffect from "react-use/lib/useUpdateEffect"
+import useEffectOnce from "react-use/lib/useEffectOnce";
 import { KEYS } from "~/constant";
 
 const CartContext = createContext<TCartContext | null>(null);
@@ -17,18 +17,19 @@ const { CART } = KEYS.BROWSER.LOCALE_STORAGE;
 export default function CartProvider({ children }: Props) {
   const [cart, setCart] = useState<LocalCart>([]);
 
-  useEffect(() => {
+  useEffectOnce(() => {
     try {
       const localCart = localStorage.getItem(CART) ?? "";
       if (localCart.length === 0) return;
-      const cart = JSON.parse(localCart) as LocalCart;
+      const cart = JSON.parse(localCart);
       setCart(cart);
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  });
 
   useUpdateEffect(() => {
+    if (cart?.length === 0) return;
     const stringify = JSON.stringify(cart);
     localStorage.setItem(CART, stringify);
   }, [cart])

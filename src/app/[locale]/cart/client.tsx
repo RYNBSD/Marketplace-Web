@@ -7,16 +7,17 @@ import { useCallback } from "react";
 import { createOrder } from "~/api/user";
 import { KEYS, LOCALE } from "~/constant";
 import { useCart } from "~/context";
+import { FaTrash } from "react-icons/fa";
 
 const { BASE_URL } = KEYS;
 
 export function Orders() {
   const locale = useLocale();
-  const { cart } = useCart()!;
+  const { cart, removeFromCart, changeQuantityOfProduct } = useCart()!;
 
   return cart.map((c) => (
-    <div key={c.id} className="w-full flex justify-between items-center">
-      <div>
+    <div key={c.id} className="w-full flex justify-around items-center">
+      <div className="flex gap-5 items-start">
         <Image
           src={`${BASE_URL}${c.image}`}
           alt={`${c.title} | ${c.titleAr}`}
@@ -24,19 +25,48 @@ export function Orders() {
           height={150}
           className="rounded"
         />
+        <div>
+          <h1 className="font-bold text-2xl">
+            {locale === LOCALE[0] ? c.titleAr : c.title}
+          </h1>
+          <h2 className="text-lg">{c.price} $</h2>
+        </div>
       </div>
-      <div>
-        <h1>{locale === LOCALE[0] ? c.titleAr : c.title}</h1>
-        <h2>Quantity: {c.quantity}</h2>
-        <h2>Price: {c.price}</h2>
+      <div className="flex gap-5">
+        <div className="flex items-center justify-center">
+          <button
+            type="button"
+            className="btn btn-neutral"
+            onClick={() =>
+              c.quantity === 1 ? null : changeQuantityOfProduct(c.id, -1)
+            }
+          >
+            -
+          </button>
+          <h2 className="m-2">{c.quantity}</h2>
+          <button
+            type="button"
+            className="btn btn-neutral"
+            onClick={() => changeQuantityOfProduct(c.id, 1)}
+          >
+            +
+          </button>
+        </div>
+        <button
+          type="button"
+          className="btn btn-error"
+          onClick={() => removeFromCart(c.id)}
+        >
+          <FaTrash />
+        </button>
       </div>
     </div>
   ));
 }
 
 export function OrderBtn() {
-  const locale = useLocale()
-  const router = useRouter()
+  const locale = useLocale();
+  const router = useRouter();
   const { cart } = useCart()!;
 
   const onClick = useCallback(async () => {
@@ -46,8 +76,8 @@ export function OrderBtn() {
       totalPrice: c.quantity * c.price,
     }));
 
-    await createOrder(orders)
-    router.push(`/${locale}`)
+    await createOrder(orders);
+    router.push(`/${locale}`);
   }, [cart, locale, router]);
 
   return <button type="button" onClick={onClick}></button>;

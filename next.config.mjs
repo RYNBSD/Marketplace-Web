@@ -40,7 +40,10 @@ const nextConfig = {
   swcMinify: true,
   compress: true,
   env: {
-    BASE_URL: process.env.BASE_URL,
+    BASE_URL:
+      process.env.NODE_ENV === "production"
+        ? "https://marketplace-server-die9.onrender.com"
+        : "http://localhost:8000",
   },
   images: {
     formats: ["image/webp"],
@@ -48,7 +51,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: process.env.NODE_ENV === "production" ? "https" : "http",
-        hostname: process.env.NODE_ENV === "production" ? "marketplace-server-die9.onrender.com" : "localhost",
+        hostname:
+          process.env.NODE_ENV === "production"
+            ? "marketplace-server-die9.onrender.com"
+            : "localhost",
         port: process.env.NODE_ENV === "production" ? "" : "8000",
         pathname: "/upload/**",
       },
@@ -61,7 +67,7 @@ const nextConfig = {
   },
   typescript: {
     tsconfigPath: "./tsconfig.json",
-    ignoreBuildErrors: true
+    ignoreBuildErrors: true,
   },
   compiler: {
     // removeConsole: process.env.NODE_ENV === "production",
