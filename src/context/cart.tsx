@@ -1,13 +1,8 @@
 "use client";
 import type { ReactNode } from "react";
 import type { LocalStorage } from "~/types";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
-import useUpdateEffect from "react-use/lib/useUpdateEffect"
+import { createContext, useCallback, useContext, useState } from "react";
+import useUpdateEffect from "react-use/lib/useUpdateEffect";
 import useEffectOnce from "react-use/lib/useEffectOnce";
 import { KEYS } from "~/constant";
 
@@ -32,26 +27,26 @@ export default function CartProvider({ children }: Props) {
     if (cart?.length === 0) return;
     const stringify = JSON.stringify(cart);
     localStorage.setItem(CART, stringify);
-  }, [cart])
+  }, [cart]);
 
   const addToCart = useCallback((option: CartOption) => {
     setCart((prev) => [...prev, option]);
   }, []);
 
   const removeFromCart = useCallback((id: string) => {
-    setCart((prev) => prev.filter((c) => c.id !== id));
+    setCart((prev) => [...prev.filter((c) => c.id !== id)]);
   }, []);
 
   const changeQuantityOfProduct = useCallback((id: string, value: 1 | -1) => {
-    setCart((prev) =>
-      prev.map((c) => {
+    setCart((prev) => [
+      ...prev.map((c) => {
         if (c.id === id) {
           c.quantity += value;
           return c;
         }
         return c;
-      })
-    );
+      }),
+    ]);
   }, []);
 
   return (

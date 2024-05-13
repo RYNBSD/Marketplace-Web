@@ -7,14 +7,18 @@ export default async function Footer() {
     <Container bg="bg-base-300">
       <footer className="footer items-center p-4 bg-base-300 text-base-content">
         <aside className="items-center grid-flow-col">
-          <Image
-            src="/assets/icons/512x512.png"
-            alt="logo"
-            width={36}
-            height={36}
-            loading="lazy"
-            style={{ objectFit: "cover" }}
-          />
+          <div className="avatar">
+            <div className="w-9 rounded">
+              <Image
+                src="/assets/icons/512x512.png"
+                alt="logo"
+                width={36}
+                height={36}
+                loading="lazy"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+          </div>
           <p>
             Copyright &copy; {new Date().getFullYear()} - All right reserved
           </p>

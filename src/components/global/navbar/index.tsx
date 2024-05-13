@@ -3,6 +3,7 @@ import Container from "../container";
 import { getLocale } from "next-intl/server";
 import NavbarCart from "./cart";
 import NavbarProfile from "./profile";
+import Image from "next/image";
 
 export default async function Navbar() {
   const locale = await getLocale();
@@ -11,7 +12,20 @@ export default async function Navbar() {
     <Container bg="bg-base-100">
       <nav className="navbar bg-base-100">
         <div className="flex-1">
-          <Link href={`/${locale}`}>Marketplace</Link>
+          <Link href={`/${locale}`}>
+            <div className="avatar">
+              <div className="w-9 rounded">
+                <Image
+                  src="/assets/icons/512x512.png"
+                  alt="logo"
+                  width={36}
+                  height={36}
+                  loading="lazy"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            </div>
+          </Link>
         </div>
         <div className="flex-none gap-2">
           <Link href={`/${locale}/search`}>

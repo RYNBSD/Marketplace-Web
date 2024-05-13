@@ -6,11 +6,11 @@ import { memo, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import PropTypes from "prop-types";
 import { useModel } from "./state";
-import { useHitTest } from "@react-three/xr";
+import { useHitTest, useXR } from "@react-three/xr";
 
 const Model: FC<Props> = ({ model }) => {
-  // const { scene } = useGLTF("/golden_globe_decoration.glb");
-  const { scene } = useGLTF(model);
+  const { isPresenting } = useXR()
+  const { scene } = useGLTF(isPresenting ? "/golden_globe_decoration.glb" : model);
   const meshRef = useRef<ElementRef<"mesh">>(null);
   const { state } = useModel((state) => state);
 

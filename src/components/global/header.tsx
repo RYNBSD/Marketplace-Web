@@ -16,13 +16,13 @@ const Header: FC<Props> = ({
     <Container bg="bg-base-200">
       <header className="hero h-screen bg-base-200">
         <div
-          className={`hero-content ${img ? "flex-col" : "text-center"} lg:${
+          className={`hero-content lg:${
             reverse ? "flex-row-reverse" : "flex-row"
           }`}
         >
           {img && (
             <Image
-              className="max-w-sm rounded-lg shadow-2xl"
+              className="max-w-sm rounded-lg shadow-2xl object-cover"
               src={img.src}
               alt={img.alt}
               width={img.width}
