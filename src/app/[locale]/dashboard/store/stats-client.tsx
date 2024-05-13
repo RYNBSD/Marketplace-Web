@@ -1,32 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { storeStats, usersStats } from "~/api/admin";
-
+import { useState } from "react";
 import { Line } from "react-chartjs-2";
+import useEffectOnce from "react-use/lib/useEffectOnce";
+import { categoriesStats, productsStats } from "~/api/store";
 
-export function Users() {
+export function CreatedCategories() {
   const [labels, setLabels] = useState<string[]>([]);
   const [data, setData] = useState<string[]>([]);
 
-  useEffect(() => {
-    usersStats()
-      .then((res) => res.json())
+  useEffectOnce(() => {
+    categoriesStats()
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
       .then((json) => {
-        const { users } = json.data;
+        const { categories } = json.data;
 
         const labels: string[] = [];
         const data: string[] = [];
 
-        users.map((user: any) => {
+        categories.map((user: any) => {
           labels.push(user.createdAt);
-          data.push(user.users);
+          data.push(user.categories);
         });
 
         setLabels(labels);
         setData(data);
       });
-  }, []);
+  });
 
   return (
     <Line
@@ -38,7 +40,7 @@ export function Users() {
           },
           title: {
             display: true,
-            text: "Users",
+            text: "Created categories",
           },
         },
       }}
@@ -56,28 +58,30 @@ export function Users() {
   );
 }
 
-export function Stores() {
+export function CreatedProducts() {
   const [labels, setLabels] = useState<string[]>([]);
   const [data, setData] = useState<string[]>([]);
 
-  useEffect(() => {
-    storeStats()
-      .then((res) => res.json())
+  useEffectOnce(() => {
+    productsStats()
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
       .then((json) => {
-        const { stores } = json.data;
+        const { products } = json.data;
 
         const labels: string[] = [];
         const data: string[] = [];
 
-        stores.map((store: any) => {
-          labels.push(store.createdAt);
-          data.push(store.stores);
+        products.map((user: any) => {
+          labels.push(user.createdAt);
+          data.push(user.products);
         });
 
         setLabels(labels);
         setData(data);
       });
-  }, []);
+  });
 
   return (
     <Line
@@ -89,7 +93,7 @@ export function Stores() {
           },
           title: {
             display: true,
-            text: "Stores",
+            text: "Created products",
           },
         },
       }}

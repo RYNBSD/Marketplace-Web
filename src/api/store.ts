@@ -47,6 +47,10 @@ export async function deleteCategory(id: string) {
   });
 }
 
+export async function categoriesStats() {
+  return request("/api/dashboard/store/stats/categories")
+}
+
 export async function allProducts() {
   return request(`/api/dashboard/store/products`);
 }
@@ -76,4 +80,8 @@ export async function deleteProduct(id: string) {
   return request(`/api/dashboard/store/products/${id}`, {
     method: "DELETE",
   });
+}
+
+export async function productsStats() {
+  return request("/api/dashboard/store/stats/products")
 }

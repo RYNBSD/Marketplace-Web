@@ -10,11 +10,19 @@ import XR from "./xr/canvas";
 import Camera from "./camera";
 import Scene from "./scene";
 
+function Loading() {
+  return (
+    <div className="w-full h-full grid place-content-center">
+      <span className="loading loading-spinner text-neutral"></span>
+    </div>
+  );
+}
+
 const Canvas3D: FC<Props> = ({ model }) => {
   const isMobile = useIsMobile();
 
   return (
-    <Suspense>
+    <Suspense fallback={<Loading />}>
       {!isMobile && <Stats />}
       {isMobile && (
         <ARButton sessionInit={{ requiredFeatures: ["hit-test"] }} />

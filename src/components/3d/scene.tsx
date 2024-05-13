@@ -17,7 +17,7 @@ function Loader() {
 
 const Scene: FC<Props> = ({ model }) => {
   return (
-    <Center>
+    <Suspense fallback={<Loader />}>
       <Stage
         preset="rembrandt"
         intensity={1}
@@ -25,13 +25,13 @@ const Scene: FC<Props> = ({ model }) => {
         environment="apartment"
         shadows
       >
-        <Resize width>
-          <Suspense fallback={<Loader />}>
+        <Center>
+          <Resize width height depth precise>
             <Model model={model} />
-          </Suspense>
-        </Resize>
+          </Resize>
+        </Center>
       </Stage>
-    </Center>
+    </Suspense>
   );
 };
 

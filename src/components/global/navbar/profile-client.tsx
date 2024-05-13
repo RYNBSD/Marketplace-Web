@@ -24,8 +24,8 @@ export function Img() {
       alt={username ?? "Blank picture"}
       height={40}
       width={40}
-      priority
       style={{ objectFit: "cover" }}
+      priority
     />
   );
 }

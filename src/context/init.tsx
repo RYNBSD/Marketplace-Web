@@ -4,6 +4,16 @@
  */
 
 import { createContext, useCallback, type ReactNode } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import useEffectOnce from "react-use/lib/useEffectOnce";
 import Cookies from "js-cookie";
 import { me as meApi } from "~/api/auth";
@@ -12,6 +22,16 @@ import { KEYS } from "~/constant";
 import { useUser } from "~/hooks";
 
 const { COOKIE } = KEYS;
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const InitContext = createContext(null);
 

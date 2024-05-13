@@ -27,6 +27,7 @@ const Header: FC<Props> = ({
               alt={img.alt}
               width={img.width}
               height={img.height}
+              priority
             />
           )}
           <div>
