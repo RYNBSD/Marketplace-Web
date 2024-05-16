@@ -2,7 +2,7 @@
 
 import type { FC } from "react";
 import { memo, Suspense } from "react";
-import { Center, Html, Resize, Stage, useProgress } from "@react-three/drei";
+import { Html, Resize, Stage, useProgress } from "@react-three/drei";
 import PropTypes from "prop-types";
 import Model from "./model";
 
@@ -25,11 +25,9 @@ const Scene: FC<Props> = ({ model }) => {
         environment="apartment"
         shadows
       >
-        <Center>
-          <Resize width height depth precise>
-            <Model model={model} />
-          </Resize>
-        </Center>
+        <Resize width>
+          <Model model={model} />
+        </Resize>
       </Stage>
     </Suspense>
   );

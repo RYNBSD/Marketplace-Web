@@ -23,10 +23,14 @@ export default function CartProvider({ children }: Props) {
     }
   });
 
-  useUpdateEffect(() => {
-    if (cart?.length === 0) return;
+  const saveLocally = useCallback((cart: LocalCart) => {
     const stringify = JSON.stringify(cart);
     localStorage.setItem(CART, stringify);
+  }, []);
+
+  useUpdateEffect(() => {
+    if (cart?.length === 0) return;
+    saveLocally(cart);
   }, [cart]);
 
   const addToCart = useCallback((option: CartOption) => {
@@ -34,8 +38,12 @@ export default function CartProvider({ children }: Props) {
   }, []);
 
   const removeFromCart = useCallback((id: string) => {
-    setCart((prev) => [...prev.filter((c) => c.id !== id)]);
-  }, []);
+    setCart((prev) => {
+      const deleted = prev.filter((c) => c.id !== id);
+      saveLocally(deleted);
+      return deleted;
+    });
+  }, [saveLocally]);
 
   const changeQuantityOfProduct = useCallback((id: string, value: 1 | -1) => {
     setCart((prev) => [

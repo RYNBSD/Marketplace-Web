@@ -1,11 +1,13 @@
-import Profile from './profile'
-import Stats from './stats'
+import Orders from "./orders";
+import Profile from "./profile";
 
 export default function Seller() {
   return (
     <div>
       <Profile />
-      <Stats />
+      <section className="mt-5">
+        <Orders />
+      </section>
     </div>
-  )
+  );
 }

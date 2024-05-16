@@ -24,7 +24,7 @@ const Model: FC<Props> = ({ model }) => {
   });
 
   return (
-    <mesh ref={meshRef} receiveShadow castShadow {...state}>
+    <mesh {...state} ref={meshRef} receiveShadow castShadow>
       <primitive object={scene} />
     </mesh>
   );

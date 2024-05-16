@@ -16,17 +16,16 @@ const Header: FC<Props> = ({
     <Container bg="bg-base-200">
       <header className="hero h-screen bg-base-200">
         <div
-          className={`hero-content lg:${
-            reverse ? "flex-row-reverse" : "flex-row"
-          }`}
+          className={`hero-content lg:flex-row flex-col`}
         >
           {img && (
             <Image
-              className="max-w-sm rounded-lg shadow-2xl object-cover"
+              className="rounded-lg shadow-2xl object-cover"
+              fetchPriority="high"
               src={img.src}
               alt={img.alt}
               width={img.width}
-              height={img.height}
+              height={img.width * 1.25}
               priority
             />
           )}
@@ -55,7 +54,6 @@ Header.propTypes = {
     src: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
     with: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
   }),
   reserve: PropTypes.bool,
 };
@@ -71,7 +69,6 @@ type Props = {
     src: string;
     alt: string;
     width: number;
-    height: number;
   };
   reverse?: boolean;
 };

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Img, Name, DeleteBtn } from "./profile-client";
+import { FaBox } from "react-icons/fa";
 
 export default async function Profile() {
   const locale = await getLocale();

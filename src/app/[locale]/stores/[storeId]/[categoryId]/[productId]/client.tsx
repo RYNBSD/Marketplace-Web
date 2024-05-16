@@ -14,7 +14,7 @@ export const ThreeD = memo(function ThreeD({ model }: { model: string }) {
   return (
     is3D && (
       <>
-        <div className="h-[250px] w-full grid place-content-center">
+        <div className="w-full h-64 grid place-content-center">
           <Canvas3D model={`${BASE_URL}${model}`} />
         </div>
         <div className="flex gap-2 items-center justify-center">

@@ -38,7 +38,8 @@ export default async function Product({
     locale
   );
 
-  const discountPrice = product.price - (product.discount * product.price) / 100
+  const discountPrice =
+    product.price - (product.discount * product.price) / 100;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 p-1">
@@ -50,23 +51,24 @@ export default async function Product({
           {locale === LOCALE[0] ? product.descriptionAr : product.description}
         </p>
       </div>
-      <div className="flex flex-col gap-1 items-center justify-center">
-        <Images hasModel={!!product.model}>
-          <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
-            {product.images.map((image: string) => (
-              <div key={image} className="carousel-item">
-                <Image
-                  className="rounded-box aspect-square object-cover"
-                  src={`${BASE_URL}${image}`}
-                  alt={`${product.title - product.titleAr}`}
-                  width={250}
-                  height={250}
-                />
-              </div>
-            ))}
-          </div>
-        </Images>
-        {product.model && <ThreeD model={product.model} />}
+      <div className="flex flex-col gap-1 items-center justify-center ">
+          <Images hasModel={!!product.model}>
+            <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
+              {product.images.map((image: string) => (
+                <div key={image} className="carousel-item">
+                  <Image
+                    className="rounded-box aspect-square object-cover"
+                    src={`${BASE_URL}${image}`}
+                    alt={`${product.title - product.titleAr}`}
+                    width={250}
+                    height={250}
+                  />
+                </div>
+              ))}
+            </div>
+          </Images>
+          {product.model && <ThreeD model={product.model} />}
+        
       </div>
       <div>
         {LOCALE[1] === locale &&

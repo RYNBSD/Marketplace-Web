@@ -32,14 +32,15 @@ const ProductCard: FC<Props> = ({
   return (
     <Link
       href={`/${locale}/stores/${storeId}/${categoryId}/${id}`}
-      className="card card-compact w-96 bg-base-100 shadow-xl"
+      className="card card-compact w-64 bg-base-100 shadow-xl"
     >
       <figure>
         <Image
           src={`${BASE_URL}${image}`}
           alt={title}
-          width={384}
-          height={384}
+          width={256}
+          height={256}
+          className="aspect-square object-cover"
           loading="lazy"
         />
       </figure>

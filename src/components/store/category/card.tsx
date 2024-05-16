@@ -29,7 +29,7 @@ const CategoryCard: FC<Props> = ({ id, image, storeId, ...props }) => {
             alt={name}
             width={96}
             height={96}
-            className="aspect-square"
+            className="aspect-square object-cover"
           />
         </div>
       </div>

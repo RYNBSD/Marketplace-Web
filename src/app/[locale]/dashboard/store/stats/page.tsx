@@ -1,4 +1,4 @@
-import { CreatedCategories, CreatedProducts } from "./stats-client";
+import { CreatedCategories, CreatedProducts } from "./page-client";
 
 export default async function Stats() {
   return (

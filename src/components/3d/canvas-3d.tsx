@@ -2,7 +2,7 @@
 
 import { Suspense, memo, type FC } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Preload, Stats } from "@react-three/drei";
+import { Preload } from "@react-three/drei";
 import { ARButton } from "@react-three/xr";
 import PropTypes from "prop-types";
 import { useIsMobile } from "~/hooks";
@@ -23,11 +23,14 @@ const Canvas3D: FC<Props> = ({ model }) => {
 
   return (
     <Suspense fallback={<Loading />}>
-      {!isMobile && <Stats />}
       {isMobile && (
         <ARButton sessionInit={{ requiredFeatures: ["hit-test"] }} />
       )}
-      <Canvas shadows frameloop="demand">
+      <Canvas
+        shadows
+        frameloop="demand"
+        resize={{ debounce: 0 }}
+      >
         <XR>
           <Camera />
           <Scene model={model} />

@@ -38,8 +38,16 @@ export async function createOrder(orders: object) {
   return request("/api/user/orders", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ orders })
-  })
+    body: JSON.stringify({ orders }),
+  });
+}
+
+export async function allOrders() {
+  return request(`/api/user/orders`);
+}
+
+export async function deleteOrders(id: string) {
+  return request(`/api/user/orders/${id}`, { method: "DELETE" });
 }

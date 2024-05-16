@@ -48,7 +48,7 @@ export async function deleteCategory(id: string) {
 }
 
 export async function categoriesStats() {
-  return request("/api/dashboard/store/stats/categories")
+  return request("/api/dashboard/store/stats/categories");
 }
 
 export async function allProducts() {
@@ -66,14 +66,22 @@ export async function createProduct(formData: FormData) {
   });
 }
 
-export async function updateProduct(
-  id: string,
-  formData: FormData,
-) {
+export async function updateProduct(id: string, formData: FormData) {
   return request(`/api/dashboard/store/products/${id}`, {
     method: "PUT",
     body: formData,
   });
+}
+
+export async function allOrders() {
+  return request("/api/dashboard/store/orders");
+}
+
+export async function patchOrders(id: string, status: string) {
+  return request(
+    `/api/dashboard/store/orders/${id}?status=${encodeURIComponent(status)}`,
+    { method: "PATCH" }
+  );
 }
 
 export async function deleteProduct(id: string) {
@@ -83,5 +91,5 @@ export async function deleteProduct(id: string) {
 }
 
 export async function productsStats() {
-  return request("/api/dashboard/store/stats/products")
+  return request("/api/dashboard/store/stats/products");
 }

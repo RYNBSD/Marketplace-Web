@@ -1,8 +1,8 @@
 "use client";
 
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { useSetting } from "~/context";
 import { useXR } from "@react-three/xr";
+import { useSetting } from "~/context";
 
 export default function Camera() {
   const { isPresenting } = useXR()
@@ -17,6 +17,7 @@ export default function Camera() {
         minPolarAngle={0} // Limit the angle to prevent flipping
         minDistance={1} // Limit the minimum distance of zoom
         maxDistance={10} // Limit the maximum distance of zoom
+        makeDefault
       />
       <PerspectiveCamera makeDefault position={[0, 1, 2.5]} />
     </>

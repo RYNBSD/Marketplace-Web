@@ -1,6 +1,6 @@
 "use client";
 /**
- * This context is used for initialize user info, setting, cart... in client side
+ * This context is used to initialize client side
  */
 
 import { createContext, useCallback, type ReactNode } from "react";
