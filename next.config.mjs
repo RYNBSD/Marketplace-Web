@@ -35,10 +35,10 @@ const nextConfig = {
   transpilePackages: ["three"],
   crossOrigin: "anonymous",
   poweredByHeader: false,
-  reactStrictMode: true,
   optimizeFonts: true,
   swcMinify: true,
   compress: true,
+  reactStrictMode: process.env.NODE_ENV === "development",
   env: {
     BASE_URL:
       process.env.NODE_ENV === "production"
@@ -70,7 +70,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   compiler: {
-    // removeConsole: process.env.NODE_ENV === "production",
+    removeConsole: process.env.NODE_ENV === "production",
   },
   async headers() {
     return [
