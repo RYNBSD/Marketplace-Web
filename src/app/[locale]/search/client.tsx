@@ -75,7 +75,7 @@ export function Products() {
     products.length > 0 && (
       <>
         <div className="divider">Products</div>
-        <div className="flex flex-wrap gap-5 items-center justify-center">
+        <div className="flex flex-wrap gap-5 items-start justify-center">
           {products.map((product: any) => (
             <ProductCard key={product.id} {...product} />
           ))}

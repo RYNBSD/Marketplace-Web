@@ -7,11 +7,9 @@ import { useGLTF } from "@react-three/drei";
 import PropTypes from "prop-types";
 import { useModel } from "./state";
 import { useHitTest } from "@react-three/xr";
-import { useIsMobile } from "~/hooks";
 
 const Model: FC<Props> = ({ model }) => {
-  const isMobile = useIsMobile()
-  const { scene } = useGLTF(isMobile ? "/golden_globe_decoration.glb" : model);
+  const { scene } = useGLTF(model);
   const meshRef = useRef<ElementRef<"mesh">>(null);
   const { state } = useModel((state) => state);
 

@@ -32,10 +32,10 @@ export default async function Sellers({ params: { locale } }: Props) {
                 <Image
                   src={`${BASE_URL}${store.image}`}
                   alt={store.name}
-                  width={96}
-                  height={96}
+                  width={256}
+                  height={256}
                   loading="lazy"
-                  className="rounded-full"
+                  className="rounded-full object-cover"
                 />
               </div>
             </div>

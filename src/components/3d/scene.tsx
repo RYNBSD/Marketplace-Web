@@ -5,6 +5,7 @@ import { memo, Suspense } from "react";
 import { Html, Resize, Stage, useProgress } from "@react-three/drei";
 import PropTypes from "prop-types";
 import Model from "./model";
+import { useXR } from "@react-three/xr";
 
 function Loader() {
   const { progress } = useProgress();
@@ -16,6 +17,7 @@ function Loader() {
 }
 
 const Scene: FC<Props> = ({ model }) => {
+  const { isPresenting } = useXR();
   return (
     <Suspense fallback={<Loader />}>
       <Stage
@@ -25,9 +27,13 @@ const Scene: FC<Props> = ({ model }) => {
         environment="apartment"
         shadows
       >
-        <Resize width>
+        {isPresenting ? (
           <Model model={model} />
-        </Resize>
+        ) : (
+          <Resize width>
+            <Model model={model} />
+          </Resize>
+        )}
       </Stage>
     </Suspense>
   );

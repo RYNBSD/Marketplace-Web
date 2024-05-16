@@ -60,8 +60,10 @@ export default async function Product({
                     className="rounded-box aspect-square object-cover"
                     src={`${BASE_URL}${image}`}
                     alt={`${product.title - product.titleAr}`}
-                    width={250}
-                    height={250}
+                    width={256}
+                    height={256}
+                    quality={100}
+                    loading="lazy"
                   />
                 </div>
               ))}

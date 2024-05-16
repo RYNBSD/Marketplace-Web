@@ -46,10 +46,10 @@ const ProductCard: FC<Props> = ({
       </figure>
       <div className="card-body">
         <h2 className="card-title">
-          {title.substring(0, 20)}
-          {title.length >= 20 ? "..." : ""}
+          {title.substring(0, 10)}
+          {title.length > 10 && "..."}
         </h2>
-        <p>{description}</p>
+        <p>{description.substring(0, 100)}{description.length > 100 && "..."}</p>
         <h2>{price} $</h2>
       </div>
     </Link>

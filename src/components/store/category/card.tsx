@@ -27,8 +27,8 @@ const CategoryCard: FC<Props> = ({ id, image, storeId, ...props }) => {
           <Image
             src={`${BASE_URL}${image}`}
             alt={name}
-            width={96}
-            height={96}
+            width={256}
+            height={256}
             className="aspect-square object-cover"
           />
         </div>

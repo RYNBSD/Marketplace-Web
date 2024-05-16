@@ -20,10 +20,11 @@ const StoreAvatar: FC<Props> = ({ id, name, image }) => {
           <Image
             src={`${BASE_URL}${image}`}
             alt={name}
-            width={96}
-            height={96}
+            width={256}
+            height={256}
+            quality={100}
             loading="lazy"
-            className="rounded-full"
+            className="rounded-full w-24 h-24 object-cover"
           />
         </div>
       </div>

@@ -25,8 +25,8 @@ export default async function Store({ params: { locale, storeId } }: Props) {
           <Image
             src={`${BASE_URL}${store.image}`}
             alt={store.name}
-            width={150}
-            height={150}
+            width={256}
+            height={256}
             className="rounded-full"
           />
           <h1>{store.name}</h1>
