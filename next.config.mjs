@@ -40,22 +40,16 @@ const nextConfig = {
   compress: true,
   reactStrictMode: process.env.NODE_ENV === "development",
   env: {
-    BASE_URL:
-      process.env.NODE_ENV === "production"
-        ? "https://marketplace-server-die9.onrender.com"
-        : "http://localhost:8000",
+    BASE_URL: "http://localhost:8000",
   },
   images: {
     formats: ["image/webp"],
     minimumCacheTTL: 60,
     remotePatterns: [
       {
-        protocol: process.env.NODE_ENV === "production" ? "https" : "http",
-        hostname:
-          process.env.NODE_ENV === "production"
-            ? "marketplace-server-die9.onrender.com"
-            : "localhost",
-        port: process.env.NODE_ENV === "production" ? "" : "8000",
+        protocol: "http",
+        hostname: "localhost",
+        port: "8000",
         pathname: "/upload/**",
       },
     ],

@@ -107,7 +107,8 @@
         "update": "تحديث",
         "delete": "حذف",
         "categories": "فئات",
-        "products": "منتجات"
+        "products": "منتجات",
+        "stats": "احصائيات"
       },
       "Update": {
         "update-store": "تحديث المتجر",

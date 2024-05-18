@@ -55,6 +55,13 @@ export default async function Profile() {
         >
           {tProfile("products")}
         </Link>
+        <Link
+          type="button"
+          className="btn"
+          href={`/${locale}/dashboard/store/stats`}
+        >
+          {tProfile("stats")}
+        </Link>
       </div>
     </section>
   );
